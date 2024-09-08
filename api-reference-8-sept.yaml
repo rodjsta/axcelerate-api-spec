@@ -20,6 +20,12 @@ servers:
       subdomain:
         default: demo
         description: Subdomain provisioned by aXcelerate for your staging client account.
+  - description: Testing Environment
+    url: https://{subdomain}.tst.axcelerate.com/api
+    variables:
+      subdomain:
+        default: demo
+        description: Subdomain provisioned by aXcelerate for your staging client account.
 paths:
   /agent:
     post:
