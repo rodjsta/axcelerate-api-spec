@@ -1,0 +1,4903 @@
+openapi: 3.0.3
+info:
+  title: aXcelerate API
+  version: 1.0.0
+  contact:
+    email: support@axcelerate.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - description: Production Environment
+    url: https://{subdomain}.app.axcelerate.com/api
+    variables:
+      subdomain:
+        default: demo
+        description: Subdomain provisioned by aXcelerate for your production client account.
+  - description: Staging Environment
+    url: https://{subdomain}.stg.axcelerate.com/api
+    variables:
+      subdomain:
+        default: demo
+        description: Subdomain provisioned by aXcelerate for your staging client account.
+paths:
+  /agent:
+    post:
+      tags:
+        - Agent
+      summary: Create a new agent
+      description: >-
+        Create a new agent. This endpoint is only available for clients using
+        the Marketing/Sales Agents feature.
+      operationId: createANewAgent
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                commissionRate:
+                  description: >-
+                    The percentage commission, between 0 and 100, that the agent
+                    will receive.
+                  type: string
+                  example: '11'
+                contactId:
+                  description: The contact ID of the marketing agent.
+                  type: string
+                  example: '13955345'
+                custom_Field_[VariableName]:
+                  description: >-
+                    Custom fields may be updated by specifying their variable
+                    name prefixed by custom_field_ EG: custom_field_region,
+                    custom_field_specialty. Values used should correspond to the
+                    custom field specified. Note: this will not create custom
+                    fields, they must already exist.
+                  type: string
+                  example: ''
+                taxRuleId:
+                  description: >-
+                    The tax rule to be specified for this agent. 1 = Excluding
+                    GST, 2 = Including GST, 3 = Exempt.
+                  type: string
+                  example: '1'
+  /agent/13955345:
+    get:
+      tags:
+        - Agent
+      summary: Retrieve an existing agent
+      description: >-
+        Retrieve an existing agent. This endpoint is only available for clients
+        using the Marketing/Sales Agents feature.
+      operationId: retrieveAnExistingAgent
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Agent
+      summary: Update an agent
+      description: >-
+        Update an existing agent. This endpoint is only available for clients
+        using the Marketing/Sales Agents feature.
+      operationId: updateAnAgent
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                commissionRate:
+                  description: >-
+                    The percentage commission, between 0 and 100, that the agent
+                    will receive.
+                  type: string
+                  example: '20'
+                contactId:
+                  description: The contact ID of the marketing agent.
+                  type: string
+                  example: '13955345'
+                customfield_[VariableName]:
+                  description: >-
+                    Custom fields may be updated by specifying their variable
+                    name prefixed by customfield_ EG: customfield_region,
+                    customfield_specialty. Values used should correspond to the
+                    custom field specified. Note: this will not create custom
+                    fields, they must already exist.
+                  type: string
+                  example: ''
+                taxRuleId:
+                  description: >-
+                    The tax rule to be specified for this agent. 1 = Excluding
+                    GST, 2 = Including GST, 3 = Exempt.
+                  type: string
+                  example: '1'
+      responses:
+        '200':
+          description: ''
+  /accounting/invoice:
+    get:
+      tags:
+        - Accounting
+      summary: /accounting/invoice
+      description: /accounting/invoice
+      operationId: accountingInvoice
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '6341338'
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Accounting
+      summary: /accounting/invoice
+      description: /accounting/invoice
+      operationId: accountingInvoice1
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '6341338'
+        - name: firstname
+          in: query
+          schema:
+            type: string
+            example: Rodney
+        - name: surname
+          in: query
+          schema:
+            type: string
+            example: Staines
+        - name: aItem
+          in: query
+          schema:
+            type: string
+            example: >-
+              [{"DESCRIPTION":"SomeOrderInformation","QTY":1,"ITEMCODE":"001","FINANCECODE":"200","TAXPERCENT":10,"HASCHILDREN":false,"UNITPRICEGROSS":100}]
+        - name: invoiceDate
+          in: query
+          schema:
+            type: string
+            example: '2024-06-01'
+        - name: orderDate
+          in: query
+          schema:
+            type: string
+            example: '2024-06-01'
+        - name: lockItems
+          in: query
+          schema:
+            type: string
+            example: '0'
+        - name: SERVICEDATE
+          in: query
+          schema:
+            type: string
+            example: '2023-05-10'
+        - name: issueSequenceNo
+          in: query
+          schema:
+            type: string
+            example: '1'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: ''
+  /accounting/transaction:
+    post:
+      tags:
+        - Accounting
+      summary: /accounting/transaction
+      description: /accounting/transaction
+      operationId: accountingTransaction
+      parameters:
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: '13968282'
+        - name: invoiceId
+          in: query
+          schema:
+            type: string
+            example: '3047133'
+        - name: transDate
+          in: query
+          schema:
+            type: string
+            example: '2024-05-02'
+        - name: amount
+          in: query
+          schema:
+            type: string
+            example: '150'
+        - name: paymentMethodID
+          in: query
+          schema:
+            type: string
+            example: '4'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: ''
+  /accounting/invoice/3049379:
+    get:
+      tags:
+        - Accounting
+      summary: /accounting/invoice/:invoiceId
+      description: /accounting/invoice/:invoiceId
+      operationId: accountingInvoiceInvoiceid
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '11933753'
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1152374'
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: P
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Accounting
+      summary: /accounting/invoice/:invoiceId
+      description: /accounting/invoice/:invoiceId
+      operationId: accountingInvoiceInvoiceid1
+      parameters:
+        - name: aItem
+          in: query
+          schema:
+            type: string
+            example: >-
+              [{"TOTALTAX":0,"CHILDREN":{},"UNITPRICETAX":0,"DOMAINID":0,"HASCHILDREN":0,"PARTID":0,"UNITPRICENETT":200,"QTY":1,"TAXPERCENT":0,"TOTALGROSS":200,"ITEMCODE":"GumiWS","FINANCECODE":null,"TOTALNETT":200,"SOURCEID":0,"HASH":"AA1EA2CE878A7D3A74FA223C287560B2","SERVICEDATE":"2024-07-05","UNITPRICEGROSS":200,"ITEMID":5387110,"DESCRIPTION":"updatedline","COSTCENTRECODE":null},{"TOTALTAX":0,"CHILDREN":{},"UNITPRICETAX":0,"DOMAINID":0,"HASCHILDREN":0,"PARTID":0,"UNITPRICENETT":200,"QTY":1,"TAXPERCENT":0,"TOTALGROSS":200,"ITEMCODE":"GumiWS","FINANCECODE":null,"TOTALNETT":200,"SOURCEID":0,"SERVICEDATE":"2024-07-05","UNITPRICEGROSS":200,"DESCRIPTION":"anotherline","COSTCENTRECODE":null}]
+        - name: lockItems
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: isarchived
+          in: query
+          schema:
+            type: string
+            example: '0'
+        - name: forceNotExportable
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: AREITEMSLOCKED
+          in: query
+          schema:
+            type: string
+            example: '0'
+        - name: comment
+          in: query
+          schema:
+            type: string
+            example: rod update dddd
+      responses:
+        '200':
+          description: ''
+  /accounting/invoice/3047093/paymenturl:
+    get:
+      tags:
+        - Accounting
+      summary: /accounting/invoice/:invoiceId/paymenturl
+      description: /accounting/invoice/:invoiceId/paymenturl
+      operationId: accountingInvoiceInvoiceidPaymenturl
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '11933753'
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1152374'
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: P
+      responses:
+        '200':
+          description: ''
+  /accounting/invoice/2FA2C39F-B2B6-4301-9943667E7AC43FFE/approve:
+    put:
+      tags:
+        - Accounting
+      summary: /accounting/invoice/:invoiceGuid/approve
+      description: /accounting/invoice/:invoiceGuid/approve
+      operationId: accountingInvoiceInvoiceguidApprove
+      responses:
+        '200':
+          description: ''
+  /accounting/ecommerce/payment/form:
+    post:
+      tags:
+        - Accounting
+      summary: /accounting/ecommerce/payment/form
+      description: /accounting/ecommerce/payment/form
+      operationId: accountingEcommercePaymentForm
+      parameters:
+        - name: reference
+          in: query
+          schema:
+            type: string
+            example: gRef-123
+        - name: invoiceGUID
+          in: query
+          schema:
+            type: string
+            example: 0CF1D0BC-798A-4DDF-9CD9CD841EAD2533
+        - name: redirectURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au?gRef-123
+        - name: cancelURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au
+      responses:
+        '200':
+          description: ''
+  /accounting/ecommerce/payment/url:
+    get:
+      tags:
+        - Accounting
+      summary: /accounting/ecommerce/payment/url
+      description: /accounting/ecommerce/payment/url
+      operationId: accountingEcommercePaymentUrl
+      parameters:
+        - name: reference
+          in: query
+          schema:
+            type: string
+            example: gRef-123
+        - name: invoiceGUID
+          in: query
+          schema:
+            type: string
+            example: 564C1B9F-ACD8-4CE3-B1EF16A9AFA94754
+        - name: redirectURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au?gRef-123
+        - name: cancelURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au
+        - name: invoiceId
+          in: query
+          schema:
+            type: string
+            example: '3047130'
+      responses:
+        '200':
+          description: ''
+  /accounting/ecommerce/payment/ref/gRef-123:
+    get:
+      tags:
+        - Accounting
+      summary: /accounting/ecommerce/payment/ref/:refId
+      description: /accounting/ecommerce/payment/ref/:refId
+      operationId: accountingEcommercePaymentRefRefid
+      parameters:
+        - name: reference
+          in: query
+          schema:
+            type: string
+            example: gRef-123
+        - name: invoiceGUID
+          in: query
+          schema:
+            type: string
+            example: 0CF1D0BC-798A-4DDF-9CD9CD841EAD2533
+        - name: redirectURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au?gRef-123
+        - name: cancelURL
+          in: query
+          schema:
+            type: string
+            example: https://goboat.com.au
+      responses:
+        '200':
+          description: ''
+  /contactCategories:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve contact categories
+      description: Retrieve a list of contact categories.
+      operationId: retrieveContactCategories
+      responses:
+        '200':
+          description: ''
+  /trainingCategories:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve training categories
+      description: Retrieve all defined training categories.
+      operationId: retrieveTrainingCategories
+      responses:
+        '200':
+          description: ''
+  /contact/sources:
+    get:
+      tags:
+        - Categories
+      summary: Retrieve contact sources
+      description: >-
+        A source is a marketing tool that lets you track how contacts heard
+        about your organisation or service.
+      operationId: retrieveContactSources
+      parameters:
+        - name: onlyPublic
+          in: query
+          schema:
+            type: string
+            example: 'true'
+          description: Set to true to return only publicly exposed marketing sources.
+        - name: onlyActive
+          in: query
+          schema:
+            type: string
+            example: 'true'
+          description: Set to true to return only currently active marketing sources.
+      responses:
+        '200':
+          description: ''
+  /contact/enrolment/certificate:
+    get:
+      tags:
+        - Certificate
+      summary: Retrieve a certificate for an enrolment
+      description: >-
+        Retrieve an issued certificate PDF for a completed enrolment. The PDF
+        will be returned as a base64 string.
+      operationId: retrieveACertificateForAnEnrolment
+      parameters:
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: '6531423'
+        - name: enrolId
+          in: query
+          schema:
+            type: string
+            example: '14520487'
+      responses:
+        '200':
+          description: ''
+  /contact/enrolment/verifyCertificate/6531423-8918096:
+    get:
+      tags:
+        - Certificate
+      summary: Verify a certificate
+      description: >-
+        Verify a certificate with the given certificate ID. The response will
+        include information about the document, result, and any relevant
+        messages.
+      operationId: verifyACertificate
+      responses:
+        '200':
+          description: ''
+  /contact:
+    post:
+      tags:
+        - Contact
+      summary: Create a new contact
+      description: Create a new Contact.
+      operationId: createANewContact
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ANZSCOCode:
+                  description: >-
+                    Australian and New Zealand Standard Classification of
+                    Occupations (ANZSCO), ABS catalogue no.1220.0, 2009. The
+                    major group of this code is used for the Victorian AVETMISS
+                    field Client Occupation Identifier (left most digit).
+                  type: string
+                  example: ''
+                ANZSICCode:
+                  description: >-
+                    Australian and New Zealand Standard Industrial
+                    Classification (ANZSIC), ABS catalogue no.1292.0, 2006. The
+                    division of this code is used for the Victorian AVETMISS
+                    field Client Industry of Employment (see ABS catalogue).
+                  type: string
+                  example: ''
+                LUI:
+                  description: >-
+                    The Queensland Studies Authority Learner Unique Identifier
+                    (LUI). A 10-digit, numeric code.
+                  type: string
+                  example: ''
+                PoBox:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                SACEStudentId:
+                  description: >-
+                    South Australian Certificate of Education student
+                    identifier. It should consist of six numbers and one alpha
+                    letter, for e.g., 123456A.
+                  type: string
+                  example: ''
+                TFN:
+                  description: >-
+                    The student's Tax File Number, used for VET Student Loans
+                    reporting. The number must pass the ATO's check alorithm.
+                  type: string
+                  example: ''
+                USI:
+                  description: >-
+                    Unique Student Identifier (USI). A 10-digit code. If passed,
+                    this code must conform to the minimum validation: It must be
+                    10 digits in length and consist of only capital letters and
+                    numbers, excluding I, 1, 0 and O.
+                  type: string
+                  example: ''
+                VSN:
+                  description: >-
+                    The Victorian Student Number The VSN is a student
+                    identification number that is assigned by the Department of
+                    Education and Early Childhood Development to all students in
+                    government and non‑government schools, and students in
+                    Vocational Education and Training institutions.
+                  type: string
+                  example: ''
+                address1:
+                  description: >-
+                    First line of POSTAL address - address fields will be used
+                    only if AVETMISS 7.0 fields not passed. The return structure
+                    will also include these fields.
+                  type: string
+                  example: ''
+                address2:
+                  description: Second line of postal address.
+                  type: string
+                  example: ''
+                agentContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Agent for
+                    this Contact.
+                  type: string
+                  example: ''
+                atSchoolFlag:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether the contact
+                    is currently at secondary school.
+                  type: string
+                  example: ''
+                atSchoolName:
+                  description: The name of the contact's current secondary school.
+                  type: string
+                  example: ''
+                buildingName:
+                  description: >-
+                    AVETMISS 7.0 fields - will take these fields over address1
+                    and address2 if passed. Note, you cannot search contacts by
+                    these discrete fields.
+                  type: string
+                  example: ''
+                categoryIds:
+                  description: A list of valid category IDs. (adds to Contact ONLY)
+                  type: string
+                  example: ''
+                citizenStatusId:
+                  description: >-
+                    Citizenship status. The valid values are numbers 1-11. For a
+                    list of the meanings of these numbers, please contact
+                    aXcelerate.
+                  type: string
+                  example: ''
+                city:
+                  description: Postal suburb, locality or town.
+                  type: string
+                  example: ''
+                cityOfBirth:
+                  description: >-
+                    City of Birth. This data is used if later creating a USI for
+                    this contact.
+                  type: string
+                  example: ''
+                coachContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Coach for
+                    this Contact.
+                  type: string
+                  example: ''
+                contactActive:
+                  description: Activate or Deactivate the Contact
+                  type: string
+                  example: ''
+                country:
+                  description: Postal Country.
+                  type: string
+                  example: ''
+                countryId:
+                  description: >-
+                    Postal Country - a 4-digit SACC code. This is only used if
+                    the full AVETMISS 7.0 address details are passed. Otherwise
+                    this field is ignored. Use Country instead.
+                  type: string
+                  example: ''
+                countryOfBirthId:
+                  description: >-
+                    Country of Birth as a valid 4-digit SACC code. For a list of
+                    codes, please refer to NCVER website www.ncver.edu.au.
+                  type: string
+                  example: ''
+                countryofCitizenId:
+                  description: >-
+                    Country of citizenship as a valid 4-digit SACC code. For a
+                    list of codes, please refer to NCVER website
+                    www.ncver.edu.au.
+                  type: string
+                  example: ''
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to update a customField value against the contact. If
+                    updating a custom field that supports multiple values, you
+                    can use comma-delimited values or a JSON array. If using
+                    comma-delimited, it is expected the data is URL encoded
+                    first. For example, to get 2 values: 'A,B' and 'C' you would
+                    either pass: "['A,B','C']" or "A%2CB,C".
+                  type: string
+                  example: ''
+                disabilityFlag:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether the contact
+                    considers themselves to have a disability, impairment or
+                    long-term condition.
+                  type: string
+                  example: ''
+                disabilityTypeIds:
+                  description: >-
+                    A comma delimited list of AVETMISS disability type
+                    identifiers. For valid values see the AVETMISS
+                    documentation.
+                  type: string
+                  example: ''
+                division:
+                  description: Division within the organisation.
+                  type: string
+                  example: ''
+                dob:
+                  description: >-
+                    Date of Birth in the format YYYY-MM-DD. This cannot be dated
+                    in the future.
+                  type: string
+                  example: '1977-03-18'
+                domainIds:
+                  description: >-
+                    A list of domainIDs to set against the contact. This will
+                    overwrite any existing domains against the contact. Requires
+                    the Contact Domains feature to be enabled in the account.
+                  type: string
+                  example: ''
+                emailAddress:
+                  description: Email address. Must be a valid email address.
+                  type: string
+                  example: thomas.mcgregor@prabbit.com
+                emailAddressAlternative:
+                  description: AVETMISS 8.0 Alternate email address.
+                  type: string
+                  example: ''
+                emergencyContact:
+                  description: Name of an emergency contact.
+                  type: string
+                  example: ''
+                emergencyContactPhone:
+                  description: The phone number of the emergency contact.
+                  type: string
+                  example: ''
+                emergencyContactRelation:
+                  description: The relationship of the emergency contact (eg sister).
+                  type: string
+                  example: ''
+                employerContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Employer of
+                    this Contact.
+                  type: string
+                  example: ''
+                englishAssistanceFlag:
+                  description: >-
+                    A true/false flag to indicate whether English assistance is
+                    required.
+                  type: string
+                  example: ''
+                englishProficiencyId:
+                  description: >-
+                    AVETMISS Proficiency in spoken English. For valid values see
+                    the AVETMISS documentation.
+                  type: string
+                  example: ''
+                fax:
+                  description: Fax number.
+                  type: string
+                  example: ''
+                givenName:
+                  description: Given (first) name. Maximum 40 characters.
+                  type: string
+                  example: Thomas
+                highestSchoolLevelId:
+                  description: >-
+                    AVETMISS highest school level completed identifier. For
+                    valid values see the AVETMISS documentation.
+                  type: string
+                  example: ''
+                highestSchoolLevelYear:
+                  description: >-
+                    The year the highest school level was completed. Must be a
+                    valid year no later than the current year.
+                  type: string
+                  example: ''
+                historicClientId:
+                  description: >-
+                    The Historical ID used with the student record. IMPORTANT
+                    IF: you have reported a person previously with a different
+                    SMS.
+                  type: string
+                  example: ''
+                indigenousStatusId:
+                  description: >-
+                    AVETMISS indigenous status identifier to indicates a contact
+                    who self-identifies as being of Australian Aboriginal or
+                    Torres Strait Islander descent. For valid values see the
+                    AVETMISS documentation.
+                  type: string
+                  example: ''
+                internationalContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the International
+                    Contact for this Contact (CRICOS).
+                  type: string
+                  example: ''
+                labourForceId:
+                  description: >-
+                    AVETMISS Labour force status identifier. For valid values
+                    see the AVETMISS documentation.
+                  type: string
+                  example: ''
+                mainLanguageId:
+                  description: >-
+                    AVETMISS Main language other than English spoken at home
+                    identifier as a valid 4-digit SACC code. For a list of
+                    codes, please refer to NCVER website www.ncver.edu.au.
+                  type: string
+                  example: ''
+                middleName:
+                  description: Middle name(s). Maximum 40 characters.
+                  type: string
+                  example: ''
+                mobilephone:
+                  description: Mobile phone number.
+                  type: string
+                  example: ''
+                optionalId:
+                  description: An optional identifier to use for this Contact record.
+                  type: string
+                  example: ''
+                orgId:
+                  description: Organisation ID for the Contact
+                  type: string
+                  example: ''
+                organisation:
+                  description: Organisation name.
+                  type: string
+                  example: ''
+                payerContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Payer of this
+                    Contact.
+                  type: string
+                  example: ''
+                phone:
+                  description: Home phone number.
+                  type: string
+                  example: ''
+                position:
+                  description: Position within the organisation.
+                  type: string
+                  example: ''
+                postcode:
+                  description: Postal postcode.
+                  type: string
+                  example: ''
+                priorEducationIds:
+                  description: >-
+                    A comma delimited list of AVETMISS prior educational
+                    achievement identifiers to indicate prior higher education.
+                    For valid values see the AVETMISS documentation. The
+                    Victorian AVETMISS field Prior Educational Achievement
+                    Recognition Identifier may be appended (e.g. 420A). Also
+                    accepts @ if not specified.
+                  type: string
+                  example: ''
+                priorEducationStatus:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether a contact has
+                    successfully completed some post-secondary education. A true
+                    value here will be ignored without also passing
+                    PriorEducationIDs.
+                  type: string
+                  example: ''
+                residencyStatusId:
+                  description: >-
+                    Residency status. For a list of valid numbers/codes, please
+                    refer to the TAMS 1.2 specifications.
+                  type: string
+                  example: ''
+                sAddress1:
+                  description: >-
+                    First line of STREET / residential address - address fields
+                    will be deprecated with the coming of AVETMISS 7.0 which
+                    will break the address into further fields (eg Flat/unit
+                    number, Street Name).
+                  type: string
+                  example: ''
+                sAddress2:
+                  description: >-
+                    Second line of street / residential address - to be
+                    deprecated in the future.
+                  type: string
+                  example: ''
+                sBuildingName:
+                  description: >-
+                    AVETMISS 7.0 fields - will take these fields over address1
+                    and address2 if passed. Note, you cannot search contacts by
+                    these discrete fields.
+                  type: string
+                  example: ''
+                sCity:
+                  description: Residential suburb, locality or town.
+                  type: string
+                  example: ''
+                sCountry:
+                  description: Residential Country.
+                  type: string
+                  example: ''
+                sCountryId:
+                  description: >-
+                    Residential Country - a 4-digit SACC code. This is only used
+                    if the full AVETMISS 7.0 address details are passed.
+                    Otherwise this field is ignored. Use SCountry instead.
+                  type: string
+                  example: ''
+                sPoBox:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sPostcode:
+                  description: Residential postcode.
+                  type: string
+                  example: ''
+                sState:
+                  description: >-
+                    Residential state / Territory. NOTE: This field is tailored
+                    for Australia and accepts only the following values: NSW,
+                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                sStreetName:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sStreetNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sUnitNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                section:
+                  description: Section within the organisation.
+                  type: string
+                  example: ''
+                sex:
+                  description: >-
+                    Must be only a single letter. Valid values are M, F or X
+                    (for Other).
+                  type: string
+                  example: m
+                sourceCodeId:
+                  description: >-
+                    The client-specific sourceID from the list set up in
+                    aXcelerate and returned from the contact/sources resource.
+                  type: string
+                  example: ''
+                state:
+                  description: >-
+                    Postal state / Territory. NOTE: This field is tailored for
+                    Australia and accepts only the following values: NSW, VIC,
+                    QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                streetName:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                streetNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                supervisorContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Supervisor of
+                    this Contact.
+                  type: string
+                  example: ''
+                surname:
+                  description: Surname (last name). Maximum 40 characters.
+                  type: string
+                  example: Mcgregor
+                surveyContactStatusCode:
+                  description: >-
+                    AVETMISS 8.0 Survey contact status - Survey contact status
+                    identifies reasons to exclude clients from the Student
+                    Outcomes Survey and other communications. For a list of
+                    possible codes, please refer to the data definitions on the
+                    NCVER website AVETMISS Data element definitions.
+                  type: string
+                  example: ''
+                termAddress1:
+                  description: >-
+                    First line of TERM address. Term address is only available
+                    for clients who have enabled the VET Student Loan feature.
+                  type: string
+                  example: ''
+                termAddress2:
+                  description: Second line of term address.
+                  type: string
+                  example: ''
+                termCity:
+                  description: Term Address suburb, locality or town.
+                  type: string
+                  example: ''
+                termCountry:
+                  description: Term Address Country.
+                  type: string
+                  example: ''
+                termCountryId:
+                  description: >-
+                    Term Address Country - a 4-digit SACC code. You can use this
+                    or termCountry.
+                  type: string
+                  example: ''
+                termPostcode:
+                  description: Term Address postcode.
+                  type: string
+                  example: ''
+                termState:
+                  description: >-
+                    Term Address state / Territory. NOTE: This field is tailored
+                    for Australia and accepts only the following values: NSW,
+                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                title:
+                  description: |
+                    Tile/salutation
+                  type: string
+                  example: Mr
+                unitNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                workReadyParticipantNumber:
+                  description: >-
+                    This field was formerly knows as 'Skills for All Number'. A
+                    South Australian student identifier.
+                  type: string
+                  example: ''
+                workphone:
+                  description: Work phone number.
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /contact/{contactId}:
+    get:
+      tags:
+        - Contact
+      summary: Retrieve an existing contact
+      description: Retrieve a specific Contact.
+      operationId: retrieveAnExistingContact
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: '6531423'
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Contact
+      summary: Update a contact
+      description: Update an existing Contact.
+      operationId: updateAContact
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ANZSCOCode:
+                  description: >-
+                    Australian and New Zealand Standard Classification of
+                    Occupations (ANZSCO), ABS catalogue no.1220.0, 2009. The
+                    major group of this code is used for the Victorian AVETMISS
+                    field Client Occupation Identifier (left most digit).
+                  type: string
+                  example: ''
+                ANZSICCode:
+                  description: >-
+                    Australian and New Zealand Standard Industrial
+                    Classification (ANZSIC), ABS catalogue no.1292.0, 2006. The
+                    division of this code is used for the Victorian AVETMISS
+                    field Client Industry of Employment (see ABS catalogue).
+                  type: string
+                  example: ''
+                LUI:
+                  description: >-
+                    The Queensland Studies Authority Learner Unique Identifier
+                    (LUI). A 10-digit, numeric code.
+                  type: string
+                  example: ''
+                PoBox:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                SACEStudentId:
+                  description: >-
+                    South Australian Certificate of Education student
+                    identifier. It should consist of six numbers and one alpha
+                    letter, for e.g., 123456A.
+                  type: string
+                  example: ''
+                TFN:
+                  description: >-
+                    The student's Tax File Number, used for VET Student Loans
+                    reporting. The number must pass the ATO's check alorithm.
+                  type: string
+                  example: ''
+                USI:
+                  description: >-
+                    Unique Student Identifier (USI). A 10-digit code. If passed,
+                    this code must conform to the minimum validation: It must be
+                    10 digits in length and consist of only capital letters and
+                    numbers, excluding I, 1, 0 and O.
+                  type: string
+                  example: ''
+                VSN:
+                  description: >-
+                    The Victorian Student Number The VSN is a student
+                    identification number that is assigned by the Department of
+                    Education and Early Childhood Development to all students in
+                    government and non‑government schools, and students in
+                    Vocational Education and Training institutions.
+                  type: string
+                  example: ''
+                address1:
+                  description: >-
+                    First line of POSTAL address - address fields will be used
+                    only if AVETMISS 7.0 fields not passed. The return structure
+                    will also include these fields.
+                  type: string
+                  example: ''
+                address2:
+                  description: Second line of postal address.
+                  type: string
+                  example: ''
+                agentContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Agent for
+                    this Contact.
+                  type: string
+                  example: ''
+                atSchoolFlag:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether the contact
+                    is currently at secondary school.
+                  type: string
+                  example: ''
+                atSchoolName:
+                  description: The name of the contact's current secondary school.
+                  type: string
+                  example: ''
+                buildingName:
+                  description: >-
+                    AVETMISS 7.0 fields - will take these fields over address1
+                    and address2 if passed. Note, you cannot search contacts by
+                    these discrete fields.
+                  type: string
+                  example: ''
+                categoryIds:
+                  description: A list of valid category IDs. (adds to Contact ONLY)
+                  type: string
+                  example: ''
+                citizenStatusId:
+                  description: >-
+                    Citizenship status. The valid values are numbers 1-11. For a
+                    list of the meanings of these numbers, please contact
+                    aXcelerate.
+                  type: string
+                  example: ''
+                city:
+                  description: Postal suburb, locality or town.
+                  type: string
+                  example: ''
+                cityOfBirth:
+                  description: >-
+                    City of Birth. This data is used if later creating a USI for
+                    this contact.
+                  type: string
+                  example: ''
+                coachContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Coach for
+                    this Contact.
+                  type: string
+                  example: ''
+                contactActive:
+                  description: Activate or Deactivate the Contact
+                  type: string
+                  example: 'true'
+                country:
+                  description: Postal Country.
+                  type: string
+                  example: ''
+                countryId:
+                  description: >-
+                    Postal Country - a 4-digit SACC code. This is only used if
+                    the full AVETMISS 7.0 address details are passed. Otherwise
+                    this field is ignored. Use Country instead.
+                  type: string
+                  example: ''
+                countryOfBirthId:
+                  description: >-
+                    Country of Birth as a valid 4-digit SACC code. For a list of
+                    codes, please refer to NCVER website www.ncver.edu.au.
+                  type: string
+                  example: ''
+                countryofCitizenId:
+                  description: >-
+                    Country of citizenship as a valid 4-digit SACC code. For a
+                    list of codes, please refer to NCVER website
+                    www.ncver.edu.au.
+                  type: string
+                  example: ''
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to update a customField value against the contact. If
+                    updating a custom field that supports multiple values, you
+                    can use comma-delimited values or a JSON array. If using
+                    comma-delimited, it is expected the data is URL encoded
+                    first. For example, to get 2 values: 'A,B' and 'C' you would
+                    either pass: "['A,B','C']" or "A%2CB,C".
+                  type: string
+                  example: ''
+                disabilityFlag:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether the contact
+                    considers themselves to have a disability, impairment or
+                    long-term condition.
+                  type: string
+                  example: ''
+                disabilityTypeIds:
+                  description: >-
+                    A comma delimited list of AVETMISS disability type
+                    identifiers. For valid values see the AVETMISS
+                    documentation.
+                  type: string
+                  example: ''
+                division:
+                  description: Division within the organisation.
+                  type: string
+                  example: ''
+                dob:
+                  description: >-
+                    Date of Birth in the format YYYY-MM-DD. This cannot be dated
+                    in the future.
+                  type: string
+                  example: '2018-06-14'
+                domainIds:
+                  description: >-
+                    A list of domainIDs to set against the contact. This will
+                    overwrite any existing domains against the contact. Requires
+                    the Contact Domains feature to be enabled in the account.
+                  type: string
+                  example: ''
+                emailAddress:
+                  description: Email address. Must be a valid email address.
+                  type: string
+                  example: ''
+                emailAddressAlternative:
+                  description: AVETMISS 8.0 Alternate email address.
+                  type: string
+                  example: thomas.mcgregor@prabbit.com
+                emergencyContact:
+                  description: Name of an emergency contact.
+                  type: string
+                  example: ''
+                emergencyContactPhone:
+                  description: The phone number of the emergency contact.
+                  type: string
+                  example: ''
+                emergencyContactRelation:
+                  description: The relationship of the emergency contact (eg sister).
+                  type: string
+                  example: ''
+                employerContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Employer of
+                    this Contact.
+                  type: string
+                  example: ''
+                englishAssistanceFlag:
+                  description: >-
+                    A true/false flag to indicate whether English assistance is
+                    required.
+                  type: string
+                  example: ''
+                englishProficiencyId:
+                  description: >-
+                    AVETMISS Proficiency in spoken English. For valid values see
+                    the AVETMISS documentation.
+                  type: string
+                  example: ''
+                fax:
+                  description: Fax number.
+                  type: string
+                  example: ''
+                givenName:
+                  description: Given (first) name. Maximum 40 characters.
+                  type: string
+                  example: ''
+                highestSchoolLevelId:
+                  description: >-
+                    AVETMISS highest school level completed identifier. For
+                    valid values see the AVETMISS documentation.
+                  type: string
+                  example: ''
+                highestSchoolLevelYear:
+                  description: >-
+                    The year the highest school level was completed. Must be a
+                    valid year no later than the current year.
+                  type: string
+                  example: ''
+                historicClientId:
+                  description: >-
+                    The Historical ID used with the student record. IMPORTANT
+                    IF: you have reported a person previously with a different
+                    SMS.
+                  type: string
+                  example: ''
+                indigenousStatusId:
+                  description: >-
+                    AVETMISS indigenous status identifier to indicates a contact
+                    who self-identifies as being of Australian Aboriginal or
+                    Torres Strait Islander descent. For valid values see the
+                    AVETMISS documentation.
+                  type: string
+                  example: ''
+                internationalContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the International
+                    Contact for this Contact (CRICOS).
+                  type: string
+                  example: ''
+                labourForceId:
+                  description: >-
+                    AVETMISS Labour force status identifier. For valid values
+                    see the AVETMISS documentation.
+                  type: string
+                  example: ''
+                mainLanguageId:
+                  description: >-
+                    AVETMISS Main language other than English spoken at home
+                    identifier as a valid 4-digit SACC code. For a list of
+                    codes, please refer to NCVER website www.ncver.edu.au.
+                  type: string
+                  example: ''
+                middleName:
+                  description: Middle name(s). Maximum 40 characters.
+                  type: string
+                  example: ''
+                mobilephone:
+                  description: Mobile phone number.
+                  type: string
+                  example: ''
+                optionalId:
+                  description: An optional identifier to use for this Contact record.
+                  type: string
+                  example: ''
+                organisation:
+                  description: Organisation name.
+                  type: string
+                  example: ''
+                payerContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Payer of this
+                    Contact.
+                  type: string
+                  example: ''
+                phone:
+                  description: Home phone number.
+                  type: string
+                  example: ''
+                position:
+                  description: Position within the organisation.
+                  type: string
+                  example: ''
+                postcode:
+                  description: Postal postcode.
+                  type: string
+                  example: ''
+                priorEducationIds:
+                  description: >-
+                    A comma delimited list of AVETMISS prior educational
+                    achievement identifiers to indicate prior higher education.
+                    For valid values see the AVETMISS documentation. The
+                    Victorian AVETMISS field Prior Educational Achievement
+                    Recognition Identifier may be appended (e.g. 420A). Also
+                    accepts @ if not specified.
+                  type: string
+                  example: ''
+                priorEducationStatus:
+                  description: >-
+                    A true/false AVETMISS flag to indicate whether a contact has
+                    successfully completed some post-secondary education. A true
+                    value here will be ignored without also passing
+                    PriorEducationIDs.
+                  type: string
+                  example: ''
+                residencyStatusId:
+                  description: >-
+                    Residency status. For a list of valid numbers/codes, please
+                    refer to the TAMS 1.2 specifications.
+                  type: string
+                  example: ''
+                sAddress1:
+                  description: >-
+                    First line of STREET / residential address - address fields
+                    will be deprecated with the coming of AVETMISS 7.0 which
+                    will break the address into further fields (eg Flat/unit
+                    number, Street Name).
+                  type: string
+                  example: ''
+                sAddress2:
+                  description: >-
+                    Second line of street / residential address - to be
+                    deprecated in the future.
+                  type: string
+                  example: ''
+                sBuildingName:
+                  description: >-
+                    AVETMISS 7.0 fields - will take these fields over address1
+                    and address2 if passed. Note, you cannot search contacts by
+                    these discrete fields.
+                  type: string
+                  example: ''
+                sCity:
+                  description: Residential suburb, locality or town.
+                  type: string
+                  example: ''
+                sCountry:
+                  description: Residential Country.
+                  type: string
+                  example: ''
+                sCountryId:
+                  description: >-
+                    Residential Country - a 4-digit SACC code. This is only used
+                    if the full AVETMISS 7.0 address details are passed.
+                    Otherwise this field is ignored. Use SCountry instead.
+                  type: string
+                  example: ''
+                sPoBox:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sPostcode:
+                  description: Residential postcode.
+                  type: string
+                  example: ''
+                sState:
+                  description: >-
+                    Residential state / Territory. NOTE: This field is tailored
+                    for Australia and accepts only the following values: NSW,
+                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                sStreetName:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sStreetNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                sUnitNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                section:
+                  description: Section within the organisation.
+                  type: string
+                  example: ''
+                sex:
+                  description: >-
+                    Must be only a single letter. Valid values are M, F or X
+                    (for Other).
+                  type: string
+                  example: m
+                sourceCodeId:
+                  description: >-
+                    The client-specific sourceID from the list set up in
+                    aXcelerate and returned from the contact/sources resource.
+                  type: string
+                  example: ''
+                state:
+                  description: >-
+                    Postal state / Territory. NOTE: This field is tailored for
+                    Australia and accepts only the following values: NSW, VIC,
+                    QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                streetName:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                streetNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                supervisorContactId:
+                  description: >-
+                    The ContactID of the Contact Record who is the Supervisor of
+                    this Contact.
+                  type: string
+                  example: ''
+                surname:
+                  description: Surname (last name). Maximum 40 characters.
+                  type: string
+                  example: ''
+                surveyContactStatusCode:
+                  description: >-
+                    AVETMISS 8.0 Survey contact status - Survey contact status
+                    identifies reasons to exclude clients from the Student
+                    Outcomes Survey and other communications. For a list of
+                    possible codes, please refer to the data definitions on the
+                    NCVER website AVETMISS Data element definitions.
+                  type: string
+                  example: ''
+                termAddress1:
+                  description: >-
+                    First line of TERM address. Term address is only available
+                    for clients who have enabled the VET Student Loan feature.
+                  type: string
+                  example: ''
+                termAddress2:
+                  description: Second line of term address.
+                  type: string
+                  example: ''
+                termCity:
+                  description: Term Address suburb, locality or town.
+                  type: string
+                  example: ''
+                termCountry:
+                  description: Term Address Country.
+                  type: string
+                  example: ''
+                termCountryId:
+                  description: >-
+                    Term Address Country - a 4-digit SACC code. You can use this
+                    or termCountry.
+                  type: string
+                  example: ''
+                termPostcode:
+                  description: Term Address postcode.
+                  type: string
+                  example: ''
+                termState:
+                  description: >-
+                    Term Address state / Territory. NOTE: This field is tailored
+                    for Australia and accepts only the following values: NSW,
+                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
+                    Australian Territory') or OVS (which means 'Overseas').
+                  type: string
+                  example: ''
+                title:
+                  description: |
+                    Tile/salutation
+                  type: string
+                  example: ''
+                unitNo:
+                  description: AVETMISS 7.0 fields.
+                  type: string
+                  example: ''
+                workReadyParticipantNumber:
+                  description: >-
+                    This field was formerly knows as 'Skills for All Number'. A
+                    South Australian student identifier.
+                  type: string
+                  example: ''
+                workphone:
+                  description: Work phone number.
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /contact/6341338/uploadPhoto:
+    post:
+      tags:
+        - Contact
+      summary: Add a contact photo
+      description: Add a contact photo
+      operationId: addAContactPhoto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                photoFile:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: ''
+  /contacts/search:
+    get:
+      tags:
+        - Contact
+      summary: Search for contacts
+      description: Search for contacts
+      operationId: searchForContacts
+      parameters:
+        - name: optionalID
+          in: query
+          schema:
+            type: string
+            example: AX1100
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '6341338'
+        - name: lastUpdated
+          in: query
+          schema:
+            type: string
+            example: '2024-05-07'
+        - name: emailAddress
+          in: query
+          schema:
+            type: string
+            example: Sherridan_3@hotmail.com
+        - name: givenName
+          in: query
+          schema:
+            type: string
+            example: Sherridan
+        - name: displayLength
+          in: query
+          schema:
+            type: string
+            example: '70'
+        - name: surname
+          in: query
+          schema:
+            type: string
+            example: broadhurst
+      responses:
+        '200':
+          description: ''
+  /log/contactMergeHistory:
+    post:
+      tags:
+        - Contact
+      summary: Search for merged contacts
+      description: Search for merged contacts
+      operationId: searchForMergedContacts
+      parameters:
+        - name: dateStart
+          in: query
+          schema:
+            type: string
+            example: '2024-01-01'
+        - name: dateEnd
+          in: query
+          schema:
+            type: string
+            example: '2024-01-04'
+        - name: mergedByContactID
+          in: query
+          schema:
+            type: string
+            example: ''
+        - name: oldContactID
+          in: query
+          schema:
+            type: string
+            example: ''
+        - name: currentContactID
+          in: query
+          schema:
+            type: string
+            example: ''
+        - name: sampleRow
+          in: query
+          schema:
+            type: string
+            example: ''
+      responses:
+        '200':
+          description: ''
+  /contact/note:
+    post:
+      tags:
+        - Contact
+      summary: Create a contact note
+      description: Create a contact note
+      operationId: createAContactNote
+      parameters:
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: '12661901'
+        - name: noteTypeID
+          in: query
+          schema:
+            type: string
+            example: ''
+        - name: contactNote
+          in: query
+          schema:
+            type: string
+            example: new note here
+        - name: emailNote
+          in: query
+          schema:
+            type: string
+            example: 1234,12345
+      responses:
+        '200':
+          description: ''
+  /contact/13955224/message:
+    get:
+      tags:
+        - Contact Message
+      summary: Retrieve a contact's message
+      description: Retrieve the message assigned to a specific contact.
+      operationId: retrieveAContactSMessage
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Contact Message
+      summary: Update a contact's message
+      description: Update the message assigned to a contact.
+      operationId: updateAContactSMessage
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                message:
+                  description: Message to be saved for the contact.
+                  type: string
+                  example: >-
+                    hello there api user<br /><strong>rod</strong><span
+                    color='red'>I am red</span>
+                showAlert:
+                  description: >-
+                    Whether a modal alert should be shown when viewing the
+                    contact's profile.
+                  type: string
+                  example: '1'
+      responses:
+        '200':
+          description: ''
+  /contactRoles:
+    get:
+      tags:
+        - Contact Role
+      summary: Search contact roles
+      description: Search contact roles
+      operationId: searchContactRoles
+      responses:
+        '200':
+          description: ''
+  /course:
+    post:
+      tags:
+        - Course
+      summary: Create a new course
+      description: Create a new Workshop Type
+      operationId: createANewCourse
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                GST_type:
+                  description: GST type; 0- no GST, 1- GST included, 2 - GST excluded
+                  type: string
+                  example: ''
+                cost:
+                  description: The cost per student for new Workshop Type instance
+                  type: string
+                  example: ''
+                optionalID:
+                  description: The optionalID for new Workshop Type instance
+                  type: string
+                  example: ''
+                program:
+                  description: Title for new Workshop Type instance
+                  type: string
+                  example: ''
+                programCode:
+                  description: Program Code for new Workshop Type instance
+                  type: string
+                  example: ''
+                shortDescription:
+                  description: The short Description for new Workshop Type instance
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /courses:
+    get:
+      tags:
+        - Course
+      summary: Search for courses
+      description: Search for courses
+      operationId: searchForCourses
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: ID of the course to filter.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Course type to return. w = workshop, p = accredited program, el =
+            e-learning, all = All types.
+        - name: searchTerm
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: The term to use when filtering activities.
+        - name: trainingArea
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Training Area (Training Category) to search.
+        - name: current
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Current courses flag. True to show only current courses.
+        - name: public
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Whether to include public courses only. If false, returns all couse
+            types regardless of public settings.
+        - name: isActive
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Whether to include active/inactive courses only. By default both
+            will be included.
+        - name: lastUpdated_min
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The course last updated date must be
+            greater than or equal to this datetime. Courses last updated prior
+            to Nov 2018 may not appear. Time is optional and in client's current
+            timezone. Only applicable to w or p types.
+        - name: lastUpdated_max
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The course last updated date must be
+            less than or equal to this datetime. Courses last updated prior to
+            Nov 2018 may not appear. Time is optional and in client's current
+            timezone. Only applicable to w or p types.
+        - name: offset
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Paging, start at record X
+        - name: displayLength
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Paging, total number of records to retrieve.
+        - name: sortColumn
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Column index to sort results by.
+        - name: sortDirection
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Sort by direction 'ASC' or 'DESC'.
+      responses:
+        '200':
+          description: ''
+  /course/detail:
+    get:
+      tags:
+        - Course
+      summary: Retrieve course details
+      description: Returns details of a specific course or activity.
+      operationId: retrieveCourseDetails
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: p
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: '368'
+      responses:
+        '200':
+          description: ''
+  /venues:
+    post:
+      tags:
+        - Course
+      summary: Search for venues
+      description: |-
+        ### Search Venues
+
+        Search for Venues using any venue related field.
+      operationId: searchForVenues
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactID:
+                  description: The ID of the related Contact.
+                  type: string
+                  example: '6432069'
+                displayLength:
+                  description: >-
+                    Maximum number of records to return (up to a system maximum
+                    of 100).
+                  type: string
+                  example: '10'
+                mobilePhone:
+                  description: Venue Contact mobile phone.
+                  type: string
+                  example: ''
+                name:
+                  description: The Name of the Venue.
+                  type: string
+                  example: ''
+                offset:
+                  description: Used for paging - start at record.
+                  type: string
+                  example: '0'
+                sAddress1:
+                  description: Venue address line 1.
+                  type: string
+                  example: ''
+                sAddress2:
+                  description: Venue address line 2.
+                  type: string
+                  example: ''
+                sCity:
+                  description: Venue City.
+                  type: string
+                  example: ''
+                sPostcode:
+                  description: Venue Post Code.
+                  type: string
+                  example: ''
+                sState:
+                  description: Venue State.
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /course/enquire:
+    post:
+      tags:
+        - Course
+      summary: Create a course enquiry
+      description: Create a course enquiry
+      operationId: createACourseEnquiry
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ID:
+                  description: >-
+                    The ID relating to the course type. Leave blank or don't
+                    include for a general enquiry.
+                  type: string
+                  example: '33623'
+                comments:
+                  description: The content of the enquiry.
+                  type: string
+                  example: hello, I am interested
+                contactID:
+                  description: >-
+                    The contactID of the user. This is the value returned by the
+                    create contact API method.
+                  type: string
+                  example: '6341338'
+                emailTo:
+                  description: >-
+                    An email to send the enquiry to. It can be a comma delimited
+                    list of emails. If blank, an email will not be sent.
+                  type: string
+                  example: joe@dirt.com
+                noteCodeID:
+                  description: >-
+                    The noteCodeID for the aXcelerate note to attach to the
+                    contact. If left blank will default to leaving a system
+                    message
+                  type: string
+                  example: '37816'
+                type:
+                  description: >-
+                    The course type. w = workshop, p = accredited program, el =
+                    e-learning. Don't use this param for a general enquiry.
+                  type: string
+                  example: w
+      responses:
+        '200':
+          description: ''
+  /course/instances:
+    get:
+      tags:
+        - Course Instance
+      summary: Retrieve course instances
+      description: Retrieve instances of an activity type.
+      operationId: retrieveCourseInstances
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+            example: '107128'
+          description: Id of the course the instance belongs to
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: w
+          description: >-
+            The type of the activity. w = workshop, p = accredited program, el =
+            e-learning.
+        - name: public
+          in: query
+          schema:
+            type: string
+            example: 'true'
+          description: >-
+            Whether to include public courses only. If false, returns ALL course
+            instances for type 'w' and 'el'. For type 'p', passing false will
+            return ONLY non-public classes.
+        - name: current
+          in: query
+          schema:
+            type: string
+            example: 'false'
+          description: >-
+            Whether to include only current courses. A current course instance
+            is a course that is currently running, or coming up. If false,
+            returns all couse instances.
+        - name: isActive
+          in: query
+          schema:
+            type: string
+            example: '0'
+          description: >-
+            Whether to include active/inactive courses instances only. By
+            default both will be included.
+        - name: enrolmentOpen
+          in: query
+          schema:
+            type: string
+            example: 'true'
+          description: >-
+            Relating to the course instance dates and respective 'close' days
+            and time.
+        - name: lastUpdated_min
+          in: query
+          schema:
+            type: string
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The course instance last updated date
+            must be greater than or equal to this datetime. Instances last
+            updated prior to Nov 2018 may not appear. Time is optional and in
+            client's current timezone. Only applicable to w or p types.
+        - name: lastUpdated_max
+          in: query
+          schema:
+            type: string
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The course instance last updated date
+            must be less than or equal to this datetime. Instances last updated
+            prior to Nov 2018 may not appear. Time is optional and in client's
+            current timezone. Only applicable to w or p types.
+      responses:
+        '200':
+          description: ''
+  /course/instance/search:
+    post:
+      tags:
+        - Course Instance
+      summary: Search course instances
+      description: Advanced and flexible search for instances of courses.
+      operationId: searchCourseInstances
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                code:
+                  description: 'The course code to search – Uses Like operator: code%.'
+                  type: string
+                  example: ''
+                deliveryLocationId:
+                  description: >-
+                    For type = p only. The unique ID of an accredited delivery
+                    location, reported to NCVER. Refers to locations listed
+                    under the course/deliveryLocations endpoint.
+                  type: string
+                  example: ''
+                displayLength:
+                  description: >-
+                    Currently the API will cache the query for 30 seconds –
+                    Setting this flag to true gets the latest data.
+                  type: string
+                  example: ''
+                domainID:
+                  description: >-
+                    The DomainID the instance belongs to (the domainID of the
+                    user).
+                  type: string
+                  example: ''
+                enrolmentOpen:
+                  description: Return Course Instances that are open for enrolment.
+                  type: string
+                  example: 'false'
+                finishDate_max:
+                  description: >-
+                    The course finish date must be less than this date. Null
+                    values will also be returned for el and p types.
+                  type: string
+                  example: ''
+                finishDate_min:
+                  description: >-
+                    The course finish date must be greater than this date. Null
+                    values will also be returned for el and p types.
+                  type: string
+                  example: ''
+                groupedCourseId:
+                  description: >-
+                    Whether to include public courses. If false, returns only
+                    In-House course instances.
+                  type: string
+                  example: ''
+                groupedCourseName:
+                  description: Sort by direction 'ASC' or 'DESC'.
+                  type: string
+                  example: ''
+                id:
+                  description: The Activity Type ID.
+                  type: string
+                  example: '107128'
+                instanceID:
+                  description: The Instance Id to search.
+                  type: string
+                  example: ''
+                isActive:
+                  description: Paging, total records to retrieve.
+                  type: string
+                  example: ''
+                lastUpdated_max:
+                  description: >-
+                    In 'YYYY-MM-DD hh:mm' format with time optional. The course
+                    instance last updated date must be less than or equal to
+                    this datetime.
+                  type: string
+                  example: ''
+                lastUpdated_min:
+                  description: >-
+                    In 'YYYY-MM-DD hh:mm' format with time optional. The course
+                    instance last updated date must be greater than or equal to
+                    this datetime. NOTE: lastUpdated_min & max must be used
+                    together (unless ID is passed) and can be up to 90 days
+                    apart. These fields are mutually exclusive with start and
+                    finish date min/max searches and are both ignored if
+                    instanceID is passed.
+                  type: string
+                  example: ''
+                location:
+                  description: >-
+                    The course location to search – Uses Like operator %value%.
+                    Only works with type 'w' instances.
+                  type: string
+                  example: ''
+                name:
+                  description: The course name to search – Uses Like operator %name%
+                  type: string
+                  example: API
+                offset:
+                  description: Include or exclude Deleted / Archived and Inactive courses.
+                  type: string
+                  example: ''
+                orgId:
+                  description: The organisation ID of the Client Contact of the course.
+                  type: string
+                  example: ''
+                orgIdTree:
+                  description: >-
+                    The Client Contact of the course is either this Organisation
+                    ID or a child organisation of this Organisation ID.
+                  type: string
+                  example: ''
+                public:
+                  description: Paging, start at record X.
+                  type: string
+                  example: ''
+                purgeCache:
+                  description: Column index to sort results by.
+                  type: string
+                  example: ''
+                searchTerm:
+                  description: For a general search use this paramater.
+                  type: string
+                  example: ''
+                sortColumn:
+                  description: >-
+                    If the Grouped Workshop Data flag is on in your account, you
+                    can search by the Grouped Course Name (Type W Only).
+                  type: string
+                  example: ''
+                sortDirection:
+                  description: >-
+                    If the Grouped Workshop Data flag is on in your account, you
+                    can search by the Grouped Course ID (Type W Only).
+                  type: string
+                  example: ''
+                startDate_max:
+                  description: >-
+                    The course start date must be less than this date. Null
+                    values will also be returned for el and p types. Ignored if
+                    instanceID is provided.
+                  type: string
+                  example: ''
+                startDate_min:
+                  description: >-
+                    The course start date must be greater than this date. Null
+                    values will also be returned for el and p types. Ignored if
+                    instanceID is provided.
+                  type: string
+                  example: ''
+                state:
+                  description: >-
+                    The course State to search – works with type 'w' & 'p'
+                    instances.
+                  type: string
+                  example: ''
+                trainerContactID:
+                  description: >-
+                    The ContactID of the Trainer/Consultant the instance is
+                    assigned to.
+                  type: string
+                  example: ''
+                trainingCategory:
+                  description: The Training Category to Search – Uses Like operator %value%
+                  type: string
+                  example: ''
+                type:
+                  description: >-
+                    The type of the activity. w = workshop, p = accredited
+                    program, el = e-learning, all = workshops, accredited
+                    programs and e-learning.
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /course/instance:
+    put:
+      tags:
+        - Course Instance
+      summary: Update a course instance
+      description: >-
+        Update a specific activity instance. Only applicable to instances of a
+        Workshop.
+      operationId: updateACourseInstance
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                FWBRate:
+                  description: FWB Rate
+                  type: string
+                  example: '11.11'
+                GST_type:
+                  description: GST type; 0- no GST, 1- GST included, 2 - GST excluded.
+                  type: string
+                  example: '2'
+                accom:
+                  description: Is accommodation required?
+                  type: string
+                  example: 'false'
+                closeDays:
+                  description: >-
+                    Close Days. If provided without closeMinutes parameter -
+                    Closes will be calculated 'at midnight'.
+                  type: string
+                  example: '3'
+                closeMinutes:
+                  description: >-
+                    Close Minutes. If provided - Closes will be calculated
+                    'before start time'
+                  type: string
+                  example: '45'
+                comments:
+                  description: Comments for the activity.
+                  type: string
+                  example: Students will need their laptops.
+                consultantId:
+                  description: Contact ID of the Trainer for the activity.
+                  type: string
+                  example: '13955224'
+                contactID:
+                  description: Contact ID of the Owner for the activity.
+                  type: string
+                  example: '6432498'
+                cost:
+                  description: Cost per student.
+                  type: string
+                  example: '99.50'
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to set a customField value against the enrolment (if
+                    enabled and set up). If updating a custom field that
+                    supports multiple values, you can use comma-delimited values
+                    or a JSON array. If using comma-delimited, it is expected
+                    the data is URL encoded first. For example, to get 2 values:
+                    'A,B' and 'C' you would either pass: "['A,B','C']" or
+                    "A%2CB,C".
+                  type: string
+                  example: ''
+                dateDescriptor:
+                  description: >-
+                    Specific to type 'w' - The Date Descriptor (e.g. Between 2-5
+                    PM on Friday the 12/07/2024).
+                  type: string
+                  example: Second Two Day Course
+                domainID:
+                  description: Domain ID of the activity.
+                  type: string
+                  example: '2705'
+                durationType:
+                  description: >-
+                    Specific to type 'w' - The Duration Type i.e: hour, hours,
+                    day, days, half-day, session, sessions.
+                  type: string
+                  example: days
+                estimatedParticipants:
+                  description: >-
+                    Specific to type 'w' - The Estimated Participants expected
+                    to enrol.
+                  type: string
+                  example: '25'
+                facilitatorFee:
+                  description: Facilitator Fee
+                  type: string
+                  example: '25'
+                facilitatorInvRec:
+                  description: Facilitator InvRec
+                  type: string
+                  example: 'false'
+                finCodeID:
+                  description: Valid finCodeID.
+                  type: string
+                  example: ''
+                id:
+                  description: ID of the activity to be updated.
+                  type: string
+                  example: '1890222'
+                inclusions:
+                  description: What are the inclusions?
+                  type: string
+                  example: This is what is included.
+                jobCardId:
+                  description: Job Card Id
+                  type: string
+                  example: ''
+                location:
+                  description: Location for the activity.
+                  type: string
+                  example: Postman Parade
+                maxParticipants:
+                  description: Specific to type 'w' - The Maxium Participants.
+                  type: string
+                  example: '25'
+                minParticipants:
+                  description: Specific to type 'w' - The Minimum Participants.
+                  type: string
+                  example: '1'
+                pDuration:
+                  description: Specific to type 'w' - The Duration numerical value.
+                  type: string
+                  example: '2'
+                pFinishDate:
+                  description: Finish date for the activity.
+                  type: string
+                  example: '2024-07-18'
+                pFinishTime:
+                  description: Finish time for the activity.
+                  type: string
+                  example: '17:00'
+                pStartDate:
+                  description: Start date for the activity
+                  type: string
+                  example: '2024-07-15'
+                pStartTime:
+                  description: Start time for the activity.
+                  type: string
+                  example: '08:00'
+                pType:
+                  description: >-
+                    Specific to type 'w' -  Coordination type of the Workshop.
+                    Valid types are: 'In-House', 'Public Workshop', 'Timetabled
+                    Unit'.
+                  type: string
+                  example: Public Workshop
+                programName:
+                  description: The activity name.
+                  type: string
+                  example: Updated - A two day learnings about APIs
+                syncDateDescriptor:
+                  description: >-
+                    Specific to type 'w' - Date Descriptor field will be
+                    automatically set based on workshop start and finish dates
+                  type: string
+                  example: 'true'
+                travel:
+                  description: Is travel required?
+                  type: string
+                  example: 'false'
+                type:
+                  description: >-
+                    The activity type of the activity. w = workshop, p =
+                    accredited program, el = e-learning.
+                  type: string
+                  example: w
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Course Instance
+      summary: Create a new workshop instance
+      description: Create a new instance of a Workshop Type.
+      operationId: createANewWorkshopInstance
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                FWBRate:
+                  description: FWB Rate
+                  type: string
+                  example: '21'
+                GST_type:
+                  description: GST type; 0- no GST, 1- GST included, 2 - GST excluded.
+                  type: string
+                  example: '2'
+                accom:
+                  description: Is accommodation required?
+                  type: string
+                  example: 'false'
+                closeDays:
+                  description: >-
+                    Close Days. If provided without closeMinutes parameter -
+                    Closes will be calculated 'at midnight'.
+                  type: string
+                  example: '2'
+                closeMinutes:
+                  description: >-
+                    Close Minutes. If provided - Closes will be calculated
+                    'before start time'
+                  type: string
+                  example: '45'
+                comments:
+                  description: Comments for the activity.
+                  type: string
+                  example: Bring your best attitude.
+                contactID:
+                  description: Contact ID of the Owner for the activity.
+                  type: string
+                  example: '10141719'
+                cost:
+                  description: Cost per student.
+                  type: string
+                  example: '177'
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to set a customField value against the enrolment (if
+                    enabled and set up). If updating a custom field that
+                    supports multiple values, you can use comma-delimited values
+                    or a JSON array. If using comma-delimited, it is expected
+                    the data is URL encoded first. For example, to get 2 values:
+                    'A,B' and 'C' you would either pass: "['A,B','C']" or
+                    "A%2CB,C".
+                  type: string
+                  example: ''
+                dateDescriptor:
+                  description: >-
+                    Specific to type 'w' - The Date Descriptor (e.g. Between 2-5
+                    PM on Friday the 12/07/2024).
+                  type: string
+                  example: Second Two Day Course
+                domainID:
+                  description: Domain ID of the activity.
+                  type: string
+                  example: '2705'
+                duration:
+                  description: Specific to type 'w' - The Duration numerical value.
+                  type: string
+                  example: '2'
+                durationType:
+                  description: >-
+                    Specific to type 'w' - The Duration Type i.e: hour, hours,
+                    day, days, half-day, session, sessions.
+                  type: string
+                  example: days
+                estimatedParticipants:
+                  description: >-
+                    Specific to type 'w' - The Estimated Participants expected
+                    to enrol.
+                  type: string
+                  example: '25'
+                facilitatorFee:
+                  description: Facilitator Fee
+                  type: string
+                  example: '25'
+                facilitatorInvRec:
+                  description: Facilitator InvRec
+                  type: string
+                  example: 'false'
+                finCodeID:
+                  description: Valid finCodeID.
+                  type: string
+                  example: ''
+                finishDate:
+                  description: Finish date for the activity.
+                  type: string
+                  example: '2024-08-17'
+                finishTime:
+                  description: Finish time for the activity.
+                  type: string
+                  example: '17:00'
+                id:
+                  description: >-
+                    The Type ID of the activity you want to Create - For now:
+                    the API can only create Workshop Instances (accredited [a
+                    linked class will be created] / non-accredited).
+                  type: string
+                  example: '49030'
+                inclusions:
+                  description: What are the inclusions?
+                  type: string
+                  example: This is what is included.
+                jobCardId:
+                  description: Job Card Id
+                  type: string
+                  example: ''
+                location:
+                  description: Location for the activity.
+                  type: string
+                  example: Williams Run
+                maxParticipants:
+                  description: Specific to type 'w' - The Maxium Participants.
+                  type: string
+                  example: '25'
+                minParticipants:
+                  description: Specific to type 'w' - The Minimum Participants.
+                  type: string
+                  example: '1'
+                name:
+                  description: The activity name.
+                  type: string
+                  example: Third Acred two day learnings about APIs
+                public:
+                  description: >-
+                    For Type of 'W', Public refers to the Coordination Type.
+                    In-House (0), Public Workshop (1).
+                  type: string
+                  example: '0'
+                startDate:
+                  description: Start date for the activity
+                  type: string
+                  example: '2024-08-16'
+                startTime:
+                  description: Start time for the activity.
+                  type: string
+                  example: '08:00'
+                syncDateDescriptor:
+                  description: >-
+                    Specific to type 'w' - Date Descriptor field will be
+                    automatically set based on workshop start and finish dates
+                  type: string
+                  example: 'true'
+                trainerContactID:
+                  description: Contact ID of the Trainer for the activity.
+                  type: string
+                  example: '6531197'
+                travel:
+                  description: Is travel required?
+                  type: string
+                  example: 'false'
+                type:
+                  description: >-
+                    The activity type of the activity. w = workshop, p =
+                    accredited program, el = e-learning.
+                  type: string
+                  example: w
+      responses:
+        '200':
+          description: ''
+  /course/instance/detail:
+    get:
+      tags:
+        - Course Instance
+      summary: Retrieve additional course instance detail
+      description: Retrieve details of an activity instance.
+      operationId: retrieveAdditionalCourseInstanceDetail
+      parameters:
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1890224'
+          description: Instance ID of the activity you want details from.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: w
+          description: >-
+            The activity type of the activity. w = workshop, p = accredited
+            program, el = e-learning.
+        - name: includeAssociatedWorkshops
+          in: query
+          schema:
+            type: string
+            example: 'true'
+          description: >-
+            You can chose to include workshops associated to units (type P
+            only).
+      responses:
+        '200':
+          description: ''
+  /course/instance/attendance:
+    get:
+      tags:
+        - Course Instance Attendance
+      summary: Retrieve workshop session attendance
+      description: Retrieve the attendance records for a Workshop with Sessions.
+      operationId: retrieveWorkshopSessionAttendance
+      parameters:
+        - name: instanceId
+          in: query
+          schema:
+            type: string
+            example: '1890225'
+          description: Instance ID of the Workshop you want to retrieve the attendance for.
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: '13955230'
+          description: The Contact ID of the student.
+        - name: complexId
+          in: query
+          schema:
+            type: string
+            example: '5437056'
+          description: The Complex ID of the Session.
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Course Instance Attendance
+      summary: Record workshop session attendance
+      description: Set the attendance records for a Workshop with Sessions.
+      operationId: recordWorkshopSessionAttendance
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                arrival:
+                  description: The date and time the student arrived (yyyy-mm-dd hh:mm).
+                  type: string
+                  example: 2024-07-03 11:35
+                attended:
+                  description: The attended flag, 1 = attended, 0 = did not attend.
+                  type: string
+                  example: '1'
+                comment:
+                  description: Associate a comment with this attendance record.
+                  type: string
+                  example: so lazy they came late and left early.
+                complexId:
+                  description: The Complex ID of the Session.
+                  type: string
+                  example: '5437056'
+                contactId:
+                  description: The Contact ID of the student.
+                  type: string
+                  example: '13955229'
+                departure:
+                  description: The date and time the student departed (yyyy-mm-dd hh:mm).
+                  type: string
+                  example: 2024-07-03 13:47
+                instanceId:
+                  description: >-
+                    Instance ID of the Workshop you want to update attendance
+                    for.
+                  type: string
+                  example: '1890225'
+      responses:
+        '200':
+          description: ''
+  /course/instance/extratrainer/1890238:
+    get:
+      tags:
+        - Course Instance Extra Trainer
+      summary: Retrieve additional trainers for a workshop
+      description: Retrieve Extra Trainers that are assigned to a Workshop Instance.
+      operationId: retrieveAdditionalTrainersForAWorkshop
+      parameters:
+        - name: extraConsId
+          in: query
+          schema:
+            type: string
+            example: '97295'
+          description: Extra Trainer ID (not related to Contact ID)
+        - name: consultantId
+          in: query
+          schema:
+            type: string
+            example: '13955224'
+          description: Contact ID of the Trainer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Course Instance Extra Trainer
+      summary: Update billing values for additional trainer
+      description: >-
+        Update an additional trainer on a workshop that is not included on a
+        session.
+      operationId: updateBillingValuesForAdditionalTrainer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                extraConsId:
+                  description: Extra Trainer ID (not related to Contact ID)
+                  type: string
+                  example: '97294'
+                invReceived:
+                  description: Invoice received (1 or 0).
+                  type: string
+                  example: '0'
+                quantity:
+                  description: Quantity value for the specified type
+                  type: string
+                  example: '3'
+                rate:
+                  description: Rate for the Client
+                  type: string
+                  example: '52'
+                rateCons:
+                  description: Rate value for the Trainer
+                  type: string
+                  example: '21'
+                rateType:
+                  description: Rate type (hours, sessions, days, halfdays)
+                  type: string
+                  example: days
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Course Instance Extra Trainer
+      summary: Add additional trainer to workshop
+      description: >-
+        Add an additional trainer to a workshop that is not included on a
+        session.
+      operationId: addAdditionalTrainerToWorkshop
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                consultantId:
+                  description: Contact ID of the Trainer
+                  type: string
+                  example: '13955224'
+                invReceived:
+                  description: Invoice received (1 or 0).
+                  type: string
+                  example: '0'
+                quantity:
+                  description: Quantity value for the specified type
+                  type: string
+                  example: '5'
+                rate:
+                  description: Rate for the Client
+                  type: string
+                  example: '50'
+                rateCons:
+                  description: Rate value for the Trainer
+                  type: string
+                  example: '25'
+                rateType:
+                  description: Rate type (hours, sessions, days, halfdays)
+                  type: string
+                  example: hours
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Course Instance Extra Trainer
+      summary: Delete an additional workshop trainer
+      description: Delete an Extra Trainer from a Workshop Instance.
+      operationId: deleteAnAdditionalWorkshopTrainer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                extraConsId:
+                  description: Extra Trainer ID (not related to Contact ID)
+                  type: string
+                  example: '97295'
+      responses:
+        '200':
+          description: ''
+  /course/instance/complexdate/1890225:
+    get:
+      tags:
+        - Course Instance Session
+      summary: Retrieve sessions for a workshop
+      description: Retrieve Sessions for a Workshop instance (Complex Dates).
+      operationId: retrieveSessionsForAWorkshop
+      parameters:
+        - name: complexId
+          in: query
+          schema:
+            type: string
+            example: '5437048'
+        - name: withVenue
+          in: query
+          schema:
+            type: string
+            example: '1'
+        - name: withEquipmentList
+          in: query
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Course Instance Session
+      summary: Create a session for a workshop
+      description: Create a new session for a Workshop.
+      operationId: createASessionForAWorkshop
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                breakDuration:
+                  description: Break duration (in minutes) for the new session.
+                  type: string
+                  example: '9'
+                complexDate:
+                  description: Date for the new session.
+                  type: string
+                  example: '2024-07-07'
+                complexFinish:
+                  description: Finish time for new session.
+                  type: string
+                  example: '17:00'
+                complexStart:
+                  description: Start time for new session.
+                  type: string
+                  example: '10:00'
+                consultantID:
+                  description: Contact ID of the Trainer for the session.
+                  type: string
+                  example: '6533788'
+                description:
+                  description: Description for the new session.
+                  type: string
+                  example: A Complex API Session Creation
+                location:
+                  description: Location for new session.
+                  type: string
+                  example: '46566'
+                packupDuration:
+                  description: Packup duration (in minutes) for the new session.
+                  type: string
+                  example: '10'
+                roomId:
+                  description: Room ID for new session.
+                  type: string
+                  example: ''
+                sessionFinishTime:
+                  description: Session start time for new session.
+                  type: string
+                  example: '15:00'
+                sessionStartTime:
+                  description: Session start time for new session.
+                  type: string
+                  example: '11:00'
+                setupDuration:
+                  description: Setup duration (in minutes) for the new session.
+                  type: string
+                  example: '8'
+                trainerFinishTime_[6533788]:
+                  description: Session finish time of the individual trainer
+                  type: string
+                  example: '14:45'
+                trainerIds:
+                  description: >-
+                    Array of trainers on the sesson. Example
+                    [trainerId,trainerId]. Trainer session details are updated
+                    based on the aXcelerate system settings.
+                  type: string
+                  example: '[6533788]'
+                trainerStartTime_[6533788]:
+                  description: Session start time of the individual trainer
+                  type: string
+                  example: '12:00'
+                venueId:
+                  description: Venue ID for the new session.
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /customFields:
+    get:
+      tags:
+        - Custom Field
+      summary: Retrieve and search custom fields
+      description: Retrieve and search custom fields
+      operationId: retrieveAndSearchCustomFields
+      parameters:
+        - name: variableName
+          in: query
+          schema:
+            type: string
+            example: VSRF_address
+        - name: label
+          in: query
+          schema:
+            type: string
+            example: date created
+        - name: linkTo
+          in: query
+          schema:
+            type: string
+            example: workshop
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: date
+        - name: active
+          in: query
+          schema:
+            type: string
+            example: 'false'
+        - name: mandatory
+          in: query
+          schema:
+            type: string
+            example: 'true'
+        - name: availableToExternal
+          in: query
+          schema:
+            type: string
+            example: 'false'
+        - name: offset
+          in: query
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Custom Field
+      summary: Create a custom field
+      description: Create a custom field
+      operationId: createACustomField
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                active:
+                  description: Whether the field is active or not.
+                  type: string
+                  example: '1'
+                availableToExternal:
+                  description: The field is avilable externally.
+                  type: string
+                  example: '1'
+                id:
+                  type: string
+                  example: ''
+                label:
+                  description: The field label for the Custom Field.
+                  type: string
+                  example: Rod API New Route 10
+                linkTo:
+                  description: >-
+                    Where the Custom Field links to. Available options are
+                    [contact,classEnrolment,class,workshop,workshopBooking,organisation,marketingAgent,portfolio,studentActivity,enrolmentGroup,unitEnrolment].
+                  type: string
+                  example: workshop
+                mandatory:
+                  description: >-
+                    Require the field to be present when creating or updating
+                    the associated object.
+                  type: string
+                  example: '0'
+                options:
+                  description: >-
+                    For Custom Fields where a list of values are needed. One of
+                    the listed types must be used
+                    [select,radio,select-multi,checkbox]. The options parameter
+                    must be urlEncoded.
+                  type: string
+                  example: '["One", "Two","Three"]'
+                type:
+                  description: >-
+                    The the of Custom Field - i.e. Text, Select, Radio.
+                    Available options are
+                    [text,number,date,textarea,html,url,select,radio,select-multi,checkbox].
+                  type: string
+                  example: select
+                variableName:
+                  description: >-
+                    The internal name of the Custom Field, used for setting the
+                    value in other endpoints i.e. customField_ant : red.
+                  type: string
+                  example: rod_via_api_new
+      responses:
+        '200':
+          description: ''
+  /customFields/18762:
+    get:
+      tags:
+        - Custom Field
+      summary: Retrieve a single custom field
+      description: Retrieve a single custom field
+      operationId: retrieveASingleCustomField
+      responses:
+        '200':
+          description: ''
+    delete:
+      tags:
+        - Custom Field
+      summary: Delete a single custom field
+      description: Delete a single custom field
+      operationId: deleteASingleCustomField
+      responses:
+        '200':
+          description: ''
+  /customFields/18761:
+    put:
+      tags:
+        - Custom Field
+      summary: Update existing custom field
+      description: Update existing custom field
+      operationId: updateExistingCustomField
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: string
+                  example: '0'
+                availableToExternal:
+                  type: string
+                  example: '1'
+                label:
+                  type: string
+                  example: ROD Api Updated Againsss
+                mandatory:
+                  type: string
+                  example: '0'
+                options:
+                  type: string
+                  example: hey,you,there,sweetie
+                variableName:
+                  type: string
+                  example: ses_unit_locations
+      responses:
+        '200':
+          description: ''
+  /cron/runMoodleCompletions:
+    get:
+      tags:
+        - Cron
+      summary: Run moodle completions
+      description: Run moodle completions
+      operationId: runMoodleCompletions
+      parameters:
+        - name: instanceId
+          in: query
+          schema:
+            type: string
+            example: '14520487'
+          description: instanceId for the course.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: p
+          description: >-
+            The type of course to run completions for. The only valid values
+            are: 'el' (for E-Learning) and 'p' (for Programs).
+        - name: verbose
+          in: query
+          schema:
+            type: string
+            example: '1'
+          description: If set, returns a more verbose report.
+      responses:
+        '200':
+          description: ''
+  /course/deliveryLocations:
+    get:
+      tags:
+        - Delivery Location
+      summary: Retrieve all delivery locations
+      description: Retrieve all delivery locations
+      operationId: retrieveAllDeliveryLocations
+      responses:
+        '200':
+          description: ''
+  /discounts:
+    get:
+      tags:
+        - Discount
+      summary: Retrieve and search discounts
+      description: Searches and returns system discounts.
+      operationId: retrieveAndSearchDiscounts
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Used for searching the status of a discount. Possible values are:
+            ACTIVE, INACTIVE, and EXPIRED
+        - name: discountTypeID
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            The type of discount you are looking for (eg '1=Early Bird'). See
+            below for a list of discount types. This field also supports more
+            than one value as a list.
+        - name: globalCourses
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: If 'true', the discount applies to all courses.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: w
+          description: >-
+            The type of course (w, p, el). If passed with one of instanceID or
+            ID, you can return all discounts linked to that course.
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1890063'
+          description: The instanceID of the course.
+        - name: ID
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: The ID of the course type.
+        - name: directlyLinkedOnly
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Used when searching via courses to pull back discounts that are
+            directly linked only - not those only linked to the type or global.
+      responses:
+        '200':
+          description: ''
+  /course/discounts:
+    get:
+      tags:
+        - Discount
+      summary: Calculate a course discount
+      description: >-
+        Calculates potential discount values given a course instance, a contact,
+        an originalPrice and any other additional information, including group
+        booking size, promo codes etc. It also brings back information on the
+        discounts that were applied. This discountIDs as well as the
+        revisedPrice should be passed into the enrol method to properly apply
+        these discounts to the enrolment.
+      operationId: calculateACourseDiscount
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '13955224'
+          description: >-
+            The contactID - will check against membership, category and
+            organisation discounts.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: w
+          description: The type of course (w, p, el).
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1890063'
+          description: The instanceID of the course.
+        - name: originalPrice
+          in: query
+          schema:
+            type: string
+            example: '100'
+          description: >-
+            The original price of the course. This is the value that will be
+            used to calculate the correct discounted price (returned as
+            revisedPrice in the return struct).
+        - name: groupBookingSize
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            The size of a group booking. Used to find any applicable group
+            booking discounts.
+        - name: bookingDate
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Used to find promo discounts.
+        - name: promoCode
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Used when searching via courses to pull back discounts that are
+            directly linked only - not those only linked to the type or global.
+        - name: concessionDiscountIDs
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            A list of discountIDs of specific concession discounts. Only
+            concession type discounts will apply here and only those that are
+            linked to this course will be considered.
+        - name: bookingInfo
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            A JSON formatted string of any additional information that may
+            affect discounts.
+      responses:
+        '200':
+          description: ''
+  /domain:
+    post:
+      tags:
+        - Domain
+      summary: Create a new domain
+      description: Create a new domain
+      operationId: createANewDomain
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+            example: Rodney Domain API
+      responses:
+        '200':
+          description: ''
+  /domain/473:
+    get:
+      tags:
+        - Domain
+      summary: Retrieve an existing domain
+      description: Retrieve an existing domain
+      operationId: retrieveAnExistingDomain
+      responses:
+        '200':
+          description: ''
+  /domains:
+    get:
+      tags:
+        - Domain
+      summary: Retrieve all domains
+      description: Retrieve all domains
+      operationId: retrieveAllDomains
+      responses:
+        '200':
+          description: ''
+  /contact/enrolments/11936950:
+    get:
+      tags:
+        - Enrolment
+      summary: Retrieve a contact's enrolments
+      description: Retrieve a contact's enrolments
+      operationId: retrieveAContactSEnrolments
+      parameters:
+        - name: contactID
+          in: query
+          schema:
+            type: string
+            example: '8691'
+        - name: instanceID
+          in: query
+          schema:
+            type: string
+            example: '1597109'
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: el
+      responses:
+        '200':
+          description: ''
+  /course/enrolments:
+    get:
+      tags:
+        - Enrolment
+      summary: Retrieve course enrolment(s)
+      description: Retrieve one or more Contacts enrolled in a Class or Workshop.
+      operationId: retrieveCourseEnrolmentS
+      parameters:
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: The ID of the Contact.
+        - name: type
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            The type of the activity. w = workshop, p = accredited program.
+            These are they only supported types for this endpoint.
+        - name: instanceId
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: The ID of the Activity Instance.
+        - name: ID
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            The ID Activity Type - Use this in combination with
+            enrolmentDateLaterThan for performance.
+        - name: orgID
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: The ID of the Organisation.
+        - name: includeOrgChildren
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            When used in conjunction with orgID, will also return enrolments
+            related to children of that organisation.
+        - name: enrolmentDateLaterThan
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Get enrolments after this date. NOTE: this is restricted to 30 days.
+            If you wish to retrieve enrolments older than 30 days, please use
+            the lastUpdated or enrolmentDate min/max params. WARNING:Results
+            will be limited to 25 unless also passing an ID parameter.
+        - name: lastUpdated_min
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The enrolment last updated date must
+            be greater than or equal to this datetime. Enrolments last updated
+            prior to Nov 2018 may not appear. Time is optional and in client's
+            current timezone. NOTE: lastUpdated_min & max must be used together
+            and can be up to 90 days apart.
+        - name: lastUpdated_max
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The enrolment last updated date must
+            be less than or equal to this datetime. Enrolments last updated
+            prior to Nov 2018 may not appear. Time is optional and in client's
+            current timezone.
+        - name: enrolmentDate_min
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The enrolment date must be greater
+            than or equal to this datetime. Time is optional and in client's
+            current timezone. NOTE: enrolmentDate_min & max must be used
+            together and can be up to 30 days apart.
+        - name: enrolmentDate_max
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            In 'YYYY-MM-DD hh:mm' format. The enrolment date must be less than
+            or equal to this datetime. Time is optional and in client's current
+            timezone.
+        - name: offset
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Paging, start at record X.
+        - name: limit
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: Paging, total records to retrieve.
+        - name: filterType
+          in: query
+          schema:
+            type: string
+            example: ''
+          description: >-
+            Filter related activities. s = show Subjects and related eLearning,
+            el = show related eLearning only. Only s & el works at this time. To
+            use this filter you must also pass a contactID for the student.
+      responses:
+        '200':
+          description: ''
+  /course/enrolment:
+    put:
+      tags:
+        - Enrolment
+      summary: Update a course enrolment
+      description: Update a student's enrolment.
+      operationId: updateACourseEnrolment
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                AddElectiveUnit:
+                  description: '[Type=P] List of Unit IDs to add to the elective list.'
+                  type: string
+                  example: ''
+                AddElectiveUnitByCode:
+                  description: >-
+                    [Type=P] List of Unit/Subject Codes to add to the elective
+                    list.
+                  type: string
+                  example: ''
+                AddUnitCompetency:
+                  description: '[Type=P] List of Unit IDs to add to the enrolment.'
+                  type: string
+                  example: ''
+                AddUnitCompetencyByCode:
+                  description: '[Type=P] List of Unit/Subject Codes to add to the enrolment.'
+                  type: string
+                  example: ''
+                CIDApprenticeships:
+                  description: >-
+                    [Type=P] The traineeship/apprenticeship client identifier.
+                    Maximum of 10 characters.
+                  type: string
+                  example: ''
+                DateCommenced:
+                  description: '[Type=P] The Activity Commencement Date.'
+                  type: string
+                  example: ''
+                DateCompleted:
+                  description: '[Type=P] The Actual Completion Date.'
+                  type: string
+                  example: ''
+                DateCompletionExpected:
+                  description: '[Type=P] The Expected Completion Date.'
+                  type: string
+                  example: ''
+                DateEnrolled:
+                  description: '[Type=P,Type=S] The Date the Contact Enrolled.'
+                  type: string
+                  example: ''
+                FundingNational:
+                  description: >-
+                    AVETMISS Funding Source - National (For Accredited
+                    enrolments) - See sample table below for values.
+                  type: string
+                  example: ''
+                FundingState:
+                  description: >-
+                    AVETMISS Funding Source - State (For Accredited enrolments)
+                    - See sample table below for values.
+                  type: string
+                  example: ''
+                ModuleIDList:
+                  description: '[Type=P] List of Module IDs to add (VSL only).'
+                  type: string
+                  example: ''
+                PONum:
+                  description: '[Type=W] Purchase Order Number.'
+                  type: string
+                  example: ''
+                PSTACDateVIC:
+                  description: >-
+                    [Type=P] Program Supervised Teaching Activity Completion
+                    Date - Victoria. Must be a valid date and should be less
+                    than or equal to the final subject activity end date.
+                  type: string
+                  example: ''
+                TCID2:
+                  description: >-
+                    [Type=P] The training/apprenticeship contract identifier.
+                    Maximum of 10 characters.
+                  type: string
+                  example: ''
+                activityEndDate:
+                  description: '[Type=S,Type=EL] Activity End Date.'
+                  type: string
+                  example: ''
+                activityStartDate:
+                  description: '[Type=S,Type=EL] Activity Start Date.'
+                  type: string
+                  example: ''
+                additionalComments:
+                  description: >-
+                    [Type=W] Participant Enrolment (General) Comments (see also
+                    'comments' for Status related commets).
+                  type: string
+                  example: ''
+                allowDuplicateEntry:
+                  description: '[Type=W] Allow duplicate status entry for a Participant.'
+                  type: string
+                  example: ''
+                commencedWhileAtSchool:
+                  description: >-
+                    [Type=P] Commenced While at School Flag for Victorian
+                    AVETMISS reporting.
+                  type: string
+                  example: ''
+                comments:
+                  description: '[Type=S,Type=W,Type=EL] Comments (Brief Comment).'
+                  type: string
+                  example: withdrawn api
+                competent:
+                  description: >-
+                    [Type=S] competency code - To update a Subject use the
+                    UnitID as the InstanceID & ContactID. See Competency Code
+                    table below (use the integer value).
+                  type: string
+                  example: '40'
+                concessionTypeID:
+                  description: '[Type=S] Concesssion Type ID.'
+                  type: string
+                  example: ''
+                contactID:
+                  description: The ID of the Contact.
+                  type: string
+                  example: '6403325'
+                cost:
+                  description: '[Type=S] Subject Cost.'
+                  type: string
+                  example: ''
+                costHourlyRate:
+                  description: '[Type=S] Cost Hourly Rate - Victoria.'
+                  type: string
+                  example: ''
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to update a customField value against the enrolment (if
+                    enabled and set up). If updating a custom field that
+                    supports multiple values, you can use comma-delimited values
+                    or a JSON array. If using comma-delimited, it is expected
+                    the data is URL encoded first. For example, to get 2 values:
+                    'A,B' and 'C' you would either pass: "['A,B','C']" or
+                    "A%2CB,C".
+                  type: string
+                  example: ''
+                deliveryLocationId:
+                  description: '[Type=S] Delivery Location ID.'
+                  type: string
+                  example: ''
+                deliveryModeAVETMISS:
+                  description: >-
+                    [Type=S] Delivery Mode - AVETMISS. This is to be used for
+                    AVETMISS 8.0 reporting. Provide a comma-delimited list of
+                    the applicable delivery modes character codes listed under
+                    "Samples" below. The first value will be treated as the
+                    predominant delivery mode for reporting purposes. Note that
+                    delivery mode is typically stored against a subject OR a
+                    course insteance (type=P), so these values will not be
+                    affected by this endpoint. Examples: "I", "W,E", "E,I,W".
+                  type: string
+                  example: ''
+                deliveryModeRAPT:
+                  description: >-
+                    [Type=S] Delivery Mode - RAPT/TAMS. This is to be used for
+                    RAPT 3.0+ reporting. Provide a comma-delimited list of the
+                    applicable delivery modes character codes listed under
+                    "Samples" below. The second and third values will be
+                    reported as supplementary delivery modes. All values after
+                    that will not be reported. Note that the value "Z - Not
+                    Applicable" cannot be supplied, as this is calculated
+                    dynamically based on the competency status. Note also that
+                    delivery mode is typically stored against a subject OR a
+                    course insteance (type=P), so these values will not be
+                    affected by this endpoint. Examples: "C", "E,S".
+                  type: string
+                  example: ''
+                discountIDs:
+                  description: >-
+                    [Type=W] Any discount IDs that should apply to the
+                    Participant.
+                  type: string
+                  example: ''
+                doNotReportAvetmiss:
+                  description: >-
+                    [Type=S] A flag to prevent this record from being exported
+                    in AVETMISS reports.
+                  type: string
+                  example: ''
+                enrolmentStatus:
+                  description: >-
+                    Updates the enrolment to one of the following statuses:
+
+                    [Type=P]
+
+                    'tent' - Tentative. Rules: No subject enrolments may exist
+
+                    'ip' - In Progress.
+
+                    'canc' - Cancelled. Rules: No interim subject enrolments may
+                    exist
+
+                    'def' - Deferred.
+
+                    'susp' - Suspended.
+
+                    'comp' - Completed. Rules: No interim subject enrolments may
+                    exist
+
+
+                    [Type=EL]
+
+                    'A' - Approved
+
+                    'Cm' - Commenced / In Progress.
+
+                    'C' - Cancelled.
+
+                    'F' - Failed.
+
+                    'Co' - Completed.
+
+                    If an enrolment status change is not successful, no changes
+                    will be applied to the enrolment.
+                  type: string
+                  example: canc
+                finCodeID:
+                  description: >-
+                    [Type=W & P] The Finance Code ID associated with the
+                    Participant.
+                  type: string
+                  example: ''
+                financeModelID:
+                  description: >-
+                    [Type=P] The Finance Model ID to be associated with the
+                    Participant.
+                  type: string
+                  example: ''
+                fundingEligibilityKeyVIC:
+                  description: >-
+                    [Type=P] Funding Eligibility Key - Victoria. Maximum 10
+                    characters alphanumeric.
+                  type: string
+                  example: ''
+                hasRPL:
+                  description: '[Type=P] Update VET Student Loans RPL data (VSL only).'
+                  type: string
+                  example: ''
+                hostEmployerOrgID:
+                  description: >-
+                    [Type=S] Host Employer Organisation ID for AVETMISS
+                    Workplace ABN (VIC).
+                  type: string
+                  example: ''
+                hoursAttended:
+                  description: '[Type=S] Hours attended.'
+                  type: string
+                  example: ''
+                instanceID:
+                  description: >-
+                    The ID of the Activity Instance. (Not required when using
+                    subjectCode).
+                  type: string
+                  example: '675876'
+                invoiceNum:
+                  description: '[Type=W] The Invoice ID associated with the Participant.'
+                  type: string
+                  example: ''
+                logEntryDate:
+                  description: '[Type=W,Type=EL] The date the new status was requested'
+                  type: string
+                  example: ''
+                logType:
+                  description: |-
+                    [Type=W] Change/add status entry for a Participant:
+                    'Tentative' - Tentative.
+                    'Booked' - Booked / In Progress.
+                    'Cancelled' - Cancelled.
+                    'Invoiced' - Invoice has been sent.
+                    'Paid' - Invoice has been paid.
+                    'Completed' - Completed.
+                  type: string
+                  example: ''
+                noFunding:
+                  description: '[Type=S] Not Funded / RAPT/TAMS Funding Removed flag.'
+                  type: string
+                  example: ''
+                outcomeTrainingOrg:
+                  description: >-
+                    [Type=S] competency code - internal (outcome identifier -
+                    training organisation).
+                  type: string
+                  example: ''
+                pleaseSyncLADates:
+                  description: >-
+                    [Type=S] Flag to synchronise (related) Learning Activity
+                    Dates.
+                  type: string
+                  example: ''
+                primaryScheduleID:
+                  description: '[Type=S] Primary Schedule ID.'
+                  type: string
+                  example: ''
+                programInstanceID:
+                  description: >-
+                    This is required when updating a subject enrolment.
+                    (InstanceID of the Accredited Program)
+                  type: string
+                  example: '675876'
+                programUniqueSupervisedHoursVIC:
+                  description: >-
+                    [Type=P] Program Unique Supervised Hours - Victoria. Must be
+                    within range 0-99999.5.
+                  type: string
+                  example: ''
+                proposedEndDate:
+                  description: '[Type=S] Proposed End Date.'
+                  type: string
+                  example: ''
+                scheduleID:
+                  description: '[Type=S] Schedule ID.'
+                  type: string
+                  example: ''
+                scheduledHours:
+                  description: '[Type=S] Scheduled Hours.'
+                  type: string
+                  example: ''
+                schoolOrgID:
+                  description: >-
+                    [Type=P] Organisation that represents the school for this
+                    enrolment.
+                  type: string
+                  example: ''
+                schoolTypeID:
+                  description: >-
+                    [Type=P] School Type Identifier AVETMISS field. See samples
+                    below for valid values.
+                  type: string
+                  example: ''
+                stageDate_[currentStage]:
+                  description: >-
+                    [Type=P] Useage: 'stageDate_1'='2014-12-12' to change the
+                    stage 1 date.
+                  type: string
+                  example: ''
+                studyReason:
+                  description: >-
+                    AVETMISS Study Reason - National (For Accredited enrolments)
+                    - See sample table below for values.
+                  type: string
+                  example: ''
+                subcontractedOrgID:
+                  description: '[Type=S] Subcontracted organisation ID.'
+                  type: string
+                  example: ''
+                subjectCode:
+                  description: >-
+                    This can be used to update a subject enrolment (instead of
+                    InstanceID).
+                  type: string
+                  example: ''
+                tc_aac:
+                  description: >-
+                    [Type=P] The organisation ID for the AAC associated with the
+                    traineeship/apprenticeship.
+                  type: string
+                  example: ''
+                tc_contractType:
+                  description: >-
+                    [Type=P] The traineeship/apprenticeship contract type.
+                    Options: full-time, part-time, school based.
+                  type: string
+                  example: ''
+                tc_dateCommenced:
+                  description: '[Type=P] The traineeship/apprenticeship commencement date.'
+                  type: string
+                  example: ''
+                tc_dateCompleted:
+                  description: >-
+                    [Type=P] The actual completion date of the
+                    traineeship/apprenticeship.
+                  type: string
+                  example: ''
+                tc_dateCompletionExpected:
+                  description: >-
+                    [Type=P] The expected completion date of the
+                    traineeship/apprenticeship.
+                  type: string
+                  example: ''
+                tc_dateTrainingPlanCreated:
+                  description: >-
+                    [Type=P] The traineeship/apprenticeship training plan
+                    creation date.
+                  type: string
+                  example: ''
+                tc_durationMonths:
+                  description: >-
+                    [Type=P] The duration of the traineeship/apprenticeship in
+                    months (0-11) - used in combination with tc_durationYears.
+                  type: string
+                  example: ''
+                tc_durationYears:
+                  description: >-
+                    [Type=P] The duration of the traineeship/apprenticeship in
+                    years (0-20) - used in combination with tc_durationMonths.
+                  type: string
+                  example: ''
+                tc_hostEmployer:
+                  description: >-
+                    [Type=P] The organisation ID for the host employer
+                    associated with the traineeship/apprenticeship.
+                  type: string
+                  example: ''
+                tc_status:
+                  description: >-
+                    [Type=P] The traineeship/apprenticeship status. Options:
+                    active, suspended, cancelled, withdrawn, completed.
+                  type: string
+                  example: ''
+                tc_type:
+                  description: >-
+                    [Type=P] The traineeship/apprenticeship type. Options:
+                    traineeship, apprenticeship.
+                  type: string
+                  example: ''
+                theMethod:
+                  description: >-
+                    [Type=W] How the new status was requested:
+                    'Phone,Email,Fax,In Person,Online,Other'
+                  type: string
+                  example: ''
+                trainerID:
+                  description: >-
+                    [Type=P,Type=S] The Contact ID of the Trainer associated
+                    with this enrolment.
+                  type: string
+                  example: ''
+                type:
+                  description: >-
+                    The type of the activity. w = workshop, p = accredited
+                    program, s = subject (of an accredited program), el =
+                    e-learning.
+                  type: string
+                  example: p
+                updateClassEnrolmentCompletedOrExpectedDate:
+                  description: >-
+                    [Type=S] Flag to update class enrolment Completed or
+                    Expected completion date (depending on compentency status).
+                  type: string
+                  example: ''
+                vicProgramStatusIDCode:
+                  description: >-
+                    [Type=P] The Program Status Identifier field for AVETMISS
+                    reporting. See Samples below for a full list of options.
+                  type: string
+                  example: ''
+                waEnrolmentCategoryID:
+                  description: '[Type=S] WA Enrolment Category ID.'
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /course/enrol:
+    post:
+      tags:
+        - Enrolment
+      summary: Create a course enrolment
+      description: Create a course enrolment
+      operationId: createACourseEnrolment
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                PONumber:
+                  type: string
+                  example: 3PHO3oH1kgp6peSg1Oek0krH
+                contactID:
+                  type: string
+                  example: '13969085'
+                extraBookingItemIds:
+                  type: string
+                  example: '12306'
+                forceBooking:
+                  type: string
+                  example: '1'
+                generateInvoice:
+                  type: string
+                  example: '1'
+                instanceID:
+                  type: string
+                  example: '1885842'
+                invoiceID:
+                  type: string
+                  example: '3047100'
+                lockInvoiceItems:
+                  type: string
+                  example: '0'
+                tentative:
+                  type: string
+                  example: '0'
+                type:
+                  type: string
+                  example: w
+      responses:
+        '200':
+          description: ''
+  /organisations:
+    get:
+      tags:
+        - Organisation
+      summary: Search organisations
+      description: >
+
+        This endpoint makes an HTTP GET request to retrieve a list of
+        organizations based on the search query and active status. The query
+        parameters include 'search' for the search term, 'active' to filter
+        active organizations, 'offset' for pagination, and 'displayLength' to
+        specify the number of results per page.
+
+
+        The response of this request can be documented as a JSON schema to
+        define the structure of the returned data.
+      operationId: searchOrganisations
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+            example: Flowers
+          description: The search term to use.
+        - name: active
+          in: query
+          schema:
+            type: string
+            example: '1'
+          description: >-
+            Actuve status for the organisation. If not provided, both active and
+            inactive organisations will be returned.
+        - name: offset
+          in: query
+          schema:
+            type: string
+            example: '0'
+          description: Paging, starting record.
+        - name: displayLength
+          in: query
+          schema:
+            type: string
+            example: '10'
+          description: Paging, maximum number of records to return.
+      responses:
+        '200':
+          description: ''
+  /organisation:
+    post:
+      tags:
+        - Organisation
+      summary: Create an organisation
+      description: Create an Organisation.
+      operationId: createAnOrganisation
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ABN:
+                  description: Australian Business Number.
+                  type: string
+                  example: ''
+                active:
+                  description: Active status of the Organisation.
+                  type: string
+                  example: ''
+                categoryIds:
+                  description: A list of valid Organisation Category IDs.
+                  type: string
+                  example: ''
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to set a customField value against the Organisation. If
+                    updating a custom field that supports multiple values, you
+                    can use comma-delimited values or a JSON array. If using
+                    comma-delimited, it is expected the data is URL encoded
+                    first. For example, to get 2 values: 'A,B' and 'C' you would
+                    either pass: "['A,B','C']" or "A%2CB,C".
+                  type: string
+                  example: ''
+                employerContactId:
+                  description: Contact ID of the Employer.
+                  type: string
+                  example: ''
+                keyContactIds:
+                  description: A list of valid Contact IDs.
+                  type: string
+                  example: '6533788'
+                legalName:
+                  description: Legal name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm Pty Ltd
+                name:
+                  description: Name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm
+                orgNameAccounting:
+                  description: >-
+                    Name of the Organisation (used by aXcelerate
+                    Accounting/Finance)
+                  type: string
+                  example: McGreggor's Farm Pty Ltd ATF The Farm People Trust
+                orgOptionalId:
+                  description: An optional identifier to use for this organisation record.
+                  type: string
+                  example: ''
+                organisationNotes:
+                  description: Notes field stored against the Organisation
+                  type: string
+                  example: Give them the farm discount.
+                parentOrgId:
+                  description: Parent Organisation ID.
+                  type: string
+                  example: ''
+                payerContactId:
+                  description: Contact ID of the Payer.
+                  type: string
+                  example: ''
+                purchaseOrderRequired:
+                  description: >-
+                    Is a purchase order required when invoicing this
+                    organisation?
+                  type: string
+                  example: 'true'
+                schoolTypeId:
+                  description: >-
+                    School Type Identifier AVETMISS field. See (Codes and
+                    Identifiers: School Type Identifiers)
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /organisation/1120758:
+    get:
+      tags:
+        - Organisation
+      summary: Retrieve an existing organisation
+      description: Retrieve a specific Organisation record.
+      operationId: retrieveAnExistingOrganisation
+      responses:
+        '200':
+          description: ''
+  /organisation/647378:
+    put:
+      tags:
+        - Organisation
+      summary: Update an organisation
+      description: Update a specific Organisation record.
+      operationId: updateAnOrganisation
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ABN:
+                  description: Australian Business Number.
+                  type: string
+                  example: ''
+                active:
+                  description: Active status of the Organisation.
+                  type: string
+                  example: ''
+                categoryIds:
+                  description: A list of valid Organisation Category IDs.
+                  type: string
+                  example: ''
+                customField_[variableName]:
+                  description: >-
+                    Replace [variableName] with the actual customField variable
+                    name to set a customField value against the Organisation. If
+                    updating a custom field that supports multiple values, you
+                    can use comma-delimited values or a JSON array. If using
+                    comma-delimited, it is expected the data is URL encoded
+                    first. For example, to get 2 values: 'A,B' and 'C' you would
+                    either pass: "['A,B','C']" or "A%2CB,C".
+                  type: string
+                  example: ''
+                employerContactId:
+                  description: Contact ID of the Employer.
+                  type: string
+                  example: ''
+                keyContactIds:
+                  description: A list of valid Contact IDs.
+                  type: string
+                  example: '6533788'
+                legalName:
+                  description: Legal name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm Pty Ltd
+                name:
+                  description: Name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm
+                orgNameAccounting:
+                  description: >-
+                    Name of the Organisation (used by aXcelerate
+                    Accounting/Finance)
+                  type: string
+                  example: McGreggor's Farm Pty Ltd ATF The Farm People Trust
+                orgOptionalId:
+                  description: An optional identifier to use for this organisation record.
+                  type: string
+                  example: ''
+                organisationNotes:
+                  description: Notes field stored against the Organisation
+                  type: string
+                  example: Give them the farm discount.
+                parentOrgId:
+                  description: Parent Organisation ID.
+                  type: string
+                  example: '1120758'
+                payerContactId:
+                  description: Contact ID of the Payer.
+                  type: string
+                  example: ''
+                purchaseOrderRequired:
+                  description: >-
+                    Is a purchase order required when invoicing this
+                    organisation?
+                  type: string
+                  example: 'false'
+                schoolTypeId:
+                  description: >-
+                    School Type Identifier AVETMISS field. See (Codes and
+                    Identifiers: School Type Identifiers)
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /organisation/1120758/children:
+    get:
+      tags:
+        - Organisation
+      summary: Retrieve an organisations children
+      description: >-
+        Retrieve a Children Organisations within the Organisation Tree of a
+        specific Organisation record.
+      operationId: retrieveAnOrganisationsChildren
+      responses:
+        '200':
+          description: ''
+  /organisation/1120758/detail:
+    post:
+      tags:
+        - Organisation Detail
+      summary: Create organisation details
+      description: Create a detail entry for an existing Organisation
+      operationId: createOrganisationDetails
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                address1:
+                  description: Address Line 1.
+                  type: string
+                  example: Mac Farm
+                address2:
+                  description: Address Line 2.
+                  type: string
+                  example: 347 Farm Road
+                city:
+                  description: Organisation's City.
+                  type: string
+                  example: Farmsville
+                country:
+                  description: Organisation's Country.
+                  type: string
+                  example: Australia
+                emailAddress:
+                  description: Email address for the Organisation.
+                  type: string
+                  example: mac.farm@farmxxxxs.com
+                fax:
+                  description: Fax number for the Organisation.
+                  type: string
+                  example: '0730543558'
+                phone:
+                  description: Phone number for the Organisation.
+                  type: string
+                  example: '0421448666'
+                postCode:
+                  description: Organisation's Post Code.
+                  type: string
+                  example: '4074'
+                state:
+                  description: Organisation's State.
+                  type: string
+                  example: QLD
+                type:
+                  description: 'Detail type: ''Street Address'' or ''Postal Address''..'
+                  type: string
+                  example: Postal Address
+      responses:
+        '200':
+          description: ''
+  /organisation/1120758/detail/524425:
+    get:
+      tags:
+        - Organisation Detail
+      summary: Retrieve existing organisation details
+      description: Retrieve a specific Detail record for an Organistion\\.
+      operationId: retrieveExistingOrganisationDetails
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Organisation Detail
+      summary: Update organisation details
+      description: Update a specific Detail record for an Organistion\\.
+      operationId: updateOrganisationDetails
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                address1:
+                  description: Address Line 1.
+                  type: string
+                  example: Mac Farmer
+                address2:
+                  description: Address Line 2.
+                  type: string
+                  example: 347 Farm Road
+                city:
+                  description: Organisation's City.
+                  type: string
+                  example: Farmsville
+                country:
+                  description: Organisation's Country.
+                  type: string
+                  example: Australia
+                emailAddress:
+                  description: Email address for the Organisation.
+                  type: string
+                  example: mac.farm@farmxxxxs.com
+                fax:
+                  description: Fax number for the Organisation.
+                  type: string
+                  example: '0730543558'
+                phone:
+                  description: Phone number for the Organisation.
+                  type: string
+                  example: '0421448666'
+                postCode:
+                  description: Organisation's Post Code.
+                  type: string
+                  example: '4074'
+                state:
+                  description: Organisation's State.
+                  type: string
+                  example: QLD
+                type:
+                  description: 'Detail type: ''Street Address'' or ''Postal Address''..'
+                  type: string
+                  example: Postal Address
+      responses:
+        '200':
+          description: ''
+  /report/run:
+    post:
+      tags:
+        - Report
+      summary: Run a report
+      description: This endpoint allows you to run a report with the specified parameters.
+      operationId: runAReport
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                reportReference:
+                  description: >-
+                    The reference for the desired report. This can be found by
+                    either querying the api/report/list API, or as the ref
+                    parameter in the URL when running the report in aXcelerate.
+                    For example, for the Contact Details report is the value is:
+                    contactsSimple
+                  type: string
+                  example: workshopDetails
+                selectedFilterFields:
+                  description: >-
+                    A JSON representation of an array of filter structs to pass
+                    to the report. The structs must have the keys: name, value,
+                    and operator. For a list of available filters for a report,
+                    query the API api/report/fields. For a more comprehensive
+                    list of the values and operators available for a field,
+                    query the API api/report/field and pass the field name as
+                    'fieldReference'. The string is not case sensitive. An
+                    example value for the contactsSimple report, to return all
+                    contacts with the surname 'Jones' would be:
+                    [{name:'vmcontacts.surname', value:'Jones', operator:'IS'}]
+                  type: string
+                  example: >-
+                    [{"name":"workshops.trainercontactid","value":"1238544","operator":"in"}]
+                selectedViewFields:
+                  description: >-
+                    A comma-separated list of field names to include in the
+                    report. The list of available fields can be found for a
+                    report by querying the api/report/fields API. An example
+                    value could be: vmcontacts.surname, vmcontacts.givenName
+                  type: string
+                  example: >-
+                    contacts.contactid,revrec.enrolid,revrec.enrolmentenddate,revrec.recognisedrevenue,revrec.totalenrolmentdays,revrec.totalremainingdays,revrec.enrolmenttotalrevenue,revrec.revrecrecordedvalue,revrec.revrecenrolmentvalue,revrec.revreccommencementvalue,revrec.unrecognisedbalance
+      responses:
+        '200':
+          description: ''
+  /report/saved/run:
+    post:
+      tags:
+        - Report
+      summary: Run a saved report
+      description: >-
+        This HTTP POST request is used to run a saved report with the specified
+        report ID and filter overrides. The request includes parameters for
+        reportID, filterOverride, displayLength, and offsetRows. The
+        filterOverride parameter allows for overriding the default filter values
+        for the report.
+      operationId: runASavedReport
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                displayLength:
+                  type: string
+                  example: '200'
+                filterOverride:
+                  type: string
+                  example: >-
+                    [{NAME:'vmcontacts.contactentrydate', OPERATOR:'On',
+                    VALUE:'2020-07-28', VALUE2:'2020-07-28'}]
+                offsetRows:
+                  type: string
+                  example: '100'
+                reportID:
+                  type: string
+                  example: '38187'
+      responses:
+        '200':
+          description: ''
+  /report/list:
+    get:
+      tags:
+        - Report
+      summary: Retrieve a list of reports
+      description: >-
+        The `GET` request to `/report/list` endpoint retrieves a list of
+        reports.
+      operationId: retrieveAListOfReports
+      responses:
+        '200':
+          description: ''
+  /report/saved/list:
+    get:
+      tags:
+        - Report
+      summary: Retrieve a list of saved reports
+      description: This endpoint retrieves a list of saved reports.
+      operationId: retrieveAListOfSavedReports
+      responses:
+        '200':
+          description: ''
+  /report/saved:
+    get:
+      tags:
+        - Report
+      summary: Retrieve details for a saved report
+      description: >-
+        Returns details on the view fields and filters set for a given saved
+        report. Note that this does **not** run the report. It returns the
+        definition of the report. To run it, use **api/report/saved/run**
+      operationId: retrieveDetailsForASavedReport
+      parameters:
+        - name: reportId
+          in: query
+          schema:
+            type: string
+            example: '38187'
+          description: The reportID of the saved report.
+      responses:
+        '200':
+          description: ''
+  /report/fields:
+    get:
+      tags:
+        - Report
+      summary: Retrieve a list of report fields
+      description: >-
+        Returns details on the view fields and filters available for a given
+        report. The names and operators can be using when running the report
+        (api/report/run).
+      operationId: retrieveAListOfReportFields
+      parameters:
+        - name: reportReference
+          in: query
+          schema:
+            type: string
+            example: contactsExtended
+          description: >-
+            The reference for the desired report. This can be found by either
+            querying the api/report/list API, or as the ref parameter in the URL
+            when running the report in aXcelerate. For example, for the Contact
+            Details report is the value is: contactsSimple
+      responses:
+        '200':
+          description: ''
+  /report/field:
+    get:
+      tags:
+        - Report
+      summary: Retrieve details for a field
+      description: >-
+        More detailed information for a given report field. This will include
+        the list of possible operators and values for fields, if applicable.
+        Note that fields are general and can be used by more than one report,
+        however, not all fields that are filters are available as filters for
+        all reports. Check **api/report/fields** for the filters and fields
+        available for a given report.
+      operationId: retrieveDetailsForAField
+      parameters:
+        - name: fieldReference
+          in: query
+          schema:
+            type: string
+            example: vmcontacts.contactentrydate
+          description: >-
+            The reference for the desired field. This can be found by querying
+            api/report/fields and is the NAME parameter.
+      responses:
+        '200':
+          description: ''
+  /resource/212547:
+    get:
+      tags:
+        - Resource
+      summary: Retrieve a document
+      description: >-
+        Interacts with a specfic Resource Library Document. You can download a
+        document with this endpoint.
+      operationId: retrieveADocument
+      responses:
+        '200':
+          description: ''
+  /trainer:
+    post:
+      tags:
+        - Trainer
+      summary: Create a new trainer
+      description: |-
+        ### Create New Trainer
+
+        Create a new Trainer
+      operationId: createANewTrainer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactHrs:
+                  description: The Trainer's Contact Hours.
+                  type: string
+                  example: '23'
+                contactHrsTimeFrame:
+                  description: The Trainer's Contact Hours - Time Frame.
+                  type: string
+                  example: week
+                contactID:
+                  description: The ID of the Contact.
+                  type: string
+                  example: '13955224'
+                empType:
+                  description: The Trainer's Employment Type.
+                  type: string
+                  example: FT
+                experience:
+                  description: The Trainer's Experience.
+                  type: string
+                  example: ''
+                fillInOnly:
+                  description: Is this Trainer a 'fill-in'?.
+                  type: string
+                  example: 'false'
+                rateAmount:
+                  description: The Trainer's Rate.
+                  type: string
+                  example: '11.65'
+      responses:
+        '200':
+          description: ''
+  /trainer/13955224:
+    get:
+      tags:
+        - Trainer
+      summary: Retrieve an existing trainer
+      description: This endpoint retrieves the details of a specific trainer.
+      operationId: retrieveAnExistingTrainer
+      responses:
+        '200':
+          description: ''
+  /trainer/availability:
+    post:
+      tags:
+        - Trainer
+      summary: Check a trainer's availability
+      description: >-
+        This endpoint allows you to check the availability of a trainer for a
+        specific date and time range.
+      operationId: checkATrainerSAvailability
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  description: The Contact ID of the Trainer
+                  type: string
+                  example: '13955380'
+                date:
+                  description: The date to check
+                  type: string
+                  example: '2024-08-12'
+                finishTime:
+                  description: The end time of the range to check
+                  type: string
+                  example: 2024-08-12 19:58
+                startTime:
+                  description: The start time of the range to check
+                  type: string
+                  example: 2024-08-12 04:58
+      responses:
+        '200':
+          description: ''
+  /user:
+    post:
+      tags:
+        - User
+      summary: Create a new user
+      description: "The\_`POST /user`\_endpoint is used to create a new user in the system."
+      operationId: createANewUser
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  description: The aXcelerate contactId the user is associated with.
+                  type: string
+                  example: '13955224'
+                domainID:
+                  description: The domainId. Set the Domain for the User.
+                  type: string
+                  example: ''
+                roleID:
+                  description: >-
+                    The Role to assign the User to. If this is omitted;
+                    aXcelerate will try to set them to Learner if the Default
+                    Role has been configured (In Additional Options).
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Generate user aXtoken (Login)
+      description: "A user must be sent to one of the following urls, depending on environment.\n\n- [https://app.axcelerate.com/auth/user/login.cfm](https://app.axcelerate.com/auth/user/login.cfm)\n    \n- [https://stg.axcelerate.com/auth/user/login.cfm](https://stg.axcelerate.com/auth/user/login.cfm)\n    \n\nA\_`return_to`\_url parameter can be used to specify where you want the user to return to once they have successfully logged in.\n\n- [https://app.axcelerate.com/auth/user/login.cfm?return_to=https://yoursite.com/login](https://app.axcelerate.com/auth/user/login.cfm?return_to=https://yoursite.com/login)\n    \n\nFor security reasons, you will be required to register your ‘return_to’ URL with aXcelerate in the Approved Applications Register in aXcelerate under System Settings > Web & Other Integrations.\n\nWhen the user logs in and returns from the login page, they will return with a 'access_code' Url Parameter.\n\n- [https://yoursite.com/login?access_code=E2E8C0F5-BA18-4A80-B2C31862BB850232](https://yoursite.com/login?access_code=E2E8C0F5-BA18-4A80-B2C31862BB850232)\n    \n\nThis access code is then used with the user/login endpoint in order to generate an AXTOKEN for use with the API."
+      operationId: generateUserAxtokenLogin
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                accessCode:
+                  type: string
+                  example: 98C6EE14-2761-4E49-AA4392DF17F946BE
+                userId:
+                  type: string
+                  example: '2187515'
+      responses:
+        '200':
+          description: ''
+  /user/logout:
+    post:
+      tags:
+        - User
+      summary: Logout current user
+      description: This endpoint is used to log out the current user.
+      operationId: logoutCurrentUser
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                return_to:
+                  type: string
+                  example: https://www.example.com
+      responses:
+        '200':
+          description: ''
+  /users:
+    post:
+      tags:
+        - User
+      summary: Search users
+      description: "The\_`POST /users`\_endpoint is used to search for users with the provided information."
+      operationId: searchUsers
+      parameters:
+        - name: contactId
+          in: query
+          schema:
+            type: string
+            example: '6341338'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactID:
+                  description: The aXcelerate ContactId
+                  type: string
+                  example: '13955224'
+                email:
+                  description: The Associated Contact's email address
+                  type: string
+                  example: ''
+                givenName:
+                  description: The Associated Contact's Given Name
+                  type: string
+                  example: ''
+                isActive:
+                  description: The User status. Enter 0 = inactive, 1 = active, 2 = all
+                  type: string
+                  example: '1'
+                surname:
+                  description: The Associated Contact's Surname
+                  type: string
+                  example: ''
+                username:
+                  description: The Username
+                  type: string
+                  example: ''
+      responses:
+        '200':
+          description: ''
+  /user/2965673:
+    get:
+      tags:
+        - User
+      summary: Retrieve a user
+      description: The endpoint retrieves user information based on the provided user ID.
+      operationId: retrieveAUser
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - User
+      summary: Update an existing user
+      description: >-
+        This endpoint allows updating user information with the specified user
+        ID.
+      operationId: updateAnExistingUser
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                active:
+                  description: The User's Active status.
+                  type: string
+                  example: '1'
+                domainID:
+                  description: The Domain associated with the User.
+                  type: string
+                  example: '2704'
+                roleID:
+                  description: The User Role associated with the User.
+                  type: string
+                  example: '7786'
+      responses:
+        '200':
+          description: ''
+  /user/roles:
+    get:
+      tags:
+        - User
+      summary: Retrieve user roles
+      description: This endpoint retrieves the roles within your account.
+      operationId: retrieveUserRoles
+      responses:
+        '200':
+          description: ''
+tags:
+  - name: Agent
+  - name: Accounting
+  - name: Categories
+  - name: Certificate
+  - name: Contact
+  - name: Contact Message
+  - name: Contact Role
+  - name: Course
+  - name: Course Instance
+  - name: Course Instance Attendance
+  - name: Course Instance Extra Trainer
+  - name: Course Instance Session
+  - name: Custom Field
+  - name: Cron
+  - name: Delivery Location
+  - name: Discount
+  - name: Domain
+  - name: Enrolment
+  - name: Organisation
+  - name: Organisation Detail
+  - name: Report
+  - name: Resource
+  - name: Trainer
+  - name: User
+components:
+  securitySchemes:
+    AxToken:
+      type: apiKey
+      in: header
+      name: apitoken
+    WsToken:
+      type: apiKey
+      in: header
+      name: wstoken
+security:
+  - AxToken: []
+    WsToken: []
