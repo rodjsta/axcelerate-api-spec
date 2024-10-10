@@ -67,6 +67,9 @@ paths:
                     GST, 2 = Including GST, 3 = Exempt.
                   type: string
                   example: '1'
+      responses:
+        '200':
+          description: ''
   /agent/13955345:
     get:
       tags:
@@ -1073,6 +1076,13 @@ paths:
       summary: Update a contact
       description: Update an existing Contact.
       operationId: updateAContact
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: '6531423'
       requestBody:
         content:
           multipart/form-data:
@@ -1756,6 +1766,13 @@ paths:
       summary: Update a contact's message
       description: Update the message assigned to a contact.
       operationId: updateAContactSMessage
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: '6531423'
       requestBody:
         content:
           multipart/form-data:
@@ -2776,7 +2793,7 @@ paths:
       responses:
         '200':
           description: ''
-  /course/instance/extratrainer/1890238:
+  /course/instance/extratrainer/{instanceId}:
     get:
       tags:
         - Course Instance Extra Trainer
@@ -2784,6 +2801,13 @@ paths:
       description: Retrieve Extra Trainers that are assigned to a Workshop Instance.
       operationId: retrieveAdditionalTrainersForAWorkshop
       parameters:
+        - name: instanceId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1890225
+          description: Instance ID of the Workshop you want to retrieve the extra trainers for.
         - name: extraConsId
           in: query
           schema:
@@ -2796,12 +2820,6 @@ paths:
             type: string
             example: '13955224'
           description: Contact ID of the Trainer
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties: {}
       responses:
         '200':
           description: ''
@@ -2813,6 +2831,14 @@ paths:
         Update an additional trainer on a workshop that is not included on a
         session.
       operationId: updateBillingValuesForAdditionalTrainer
+      parameters:
+        - name: instanceId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1890225
+          description: Instance ID of the Workshop you want to update Extra Trainers for.
       requestBody:
         content:
           multipart/form-data:
@@ -2854,6 +2880,14 @@ paths:
         Add an additional trainer to a workshop that is not included on a
         session.
       operationId: addAdditionalTrainerToWorkshop
+      parameters:
+        - name: instanceId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1890225
+          description: Instance ID of the Workshop where you want to create extra trainers.
       requestBody:
         content:
           multipart/form-data:
@@ -2893,16 +2927,20 @@ paths:
       summary: Delete an additional workshop trainer
       description: Delete an Extra Trainer from a Workshop Instance.
       operationId: deleteAnAdditionalWorkshopTrainer
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                extraConsId:
-                  description: Extra Trainer ID (not related to Contact ID)
-                  type: string
-                  example: '97295'
+      parameters:
+        - name: instanceId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1890225
+          description: Instance ID of the Workshop where you want to delete an extra trainer.
+        - name: extraConsId
+          in: query
+          schema:
+            type: string
+            example: '97295'
+          description: Extra Trainer ID (not related to Contact ID)
       responses:
         '200':
           description: ''
