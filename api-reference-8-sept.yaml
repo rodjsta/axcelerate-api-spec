@@ -1589,13 +1589,20 @@ paths:
       responses:
         '200':
           description: ''
-  /contact/6341338/uploadPhoto:
+  /contact/{contactId}/uploadPhoto:
     post:
       tags:
         - Contact
       summary: Add a contact photo
       description: Add a contact photo
       operationId: addAContactPhoto
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: '6531423'
       requestBody:
         content:
           multipart/form-data:
@@ -1726,13 +1733,20 @@ paths:
       responses:
         '200':
           description: ''
-  /contact/13955224/message:
+  /contact/{contactId}/message:
     get:
       tags:
         - Contact Message
       summary: Retrieve a contact's message
       description: Retrieve the message assigned to a specific contact.
       operationId: retrieveAContactSMessage
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: '6531423'
       responses:
         '200':
           description: ''
@@ -3394,7 +3408,7 @@ paths:
       responses:
         '200':
           description: ''
-  /contact/enrolments/11936950:
+  /contact/enrolments/{contactId}:
     get:
       tags:
         - Enrolment
@@ -3402,11 +3416,12 @@ paths:
       description: Retrieve a contact's enrolments
       operationId: retrieveAContactSEnrolments
       parameters:
-        - name: contactID
-          in: query
+        - name: contactId
+          required: true
+          in: path
           schema:
-            type: string
-            example: '8691'
+            type: integer
+            example: '6531423'
         - name: instanceID
           in: query
           schema:
