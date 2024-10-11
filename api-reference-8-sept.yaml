@@ -319,7 +319,7 @@ paths:
           in: query
           schema:
             type: string
-            example: rod update dddd
+            example: Updated invoice
       responses:
         '200':
           description: ''
@@ -1803,8 +1803,8 @@ paths:
                   description: Message to be saved for the contact.
                   type: string
                   example: >-
-                    hello there api user<br /><strong>rod</strong><span
-                    color='red'>I am red</span>
+                    this contact is a great student and has been very
+                    responsive.
                 showAlert:
                   description: >-
                     Whether a modal alert should be shown when viewing the
@@ -3167,7 +3167,7 @@ paths:
                 label:
                   description: The field label for the Custom Field.
                   type: string
-                  example: Rod API New Route 10
+                  example: Favourite Colour
                 linkTo:
                   description: >-
                     Where the Custom Field links to. Available options are
@@ -3200,7 +3200,7 @@ paths:
                     The internal name of the Custom Field, used for setting the
                     value in other endpoints i.e. customField_ant : red.
                   type: string
-                  example: rod_via_api_new
+                  example: favourite_colour
       responses:
         '200':
           description: ''
@@ -3267,16 +3267,16 @@ paths:
                   example: '1'
                 label:
                   type: string
-                  example: ROD Api Updated Againsss
+                  example: Favourite Colours
                 mandatory:
                   type: string
                   example: '0'
                 options:
                   type: string
-                  example: hey,you,there,sweetie
+                  example: red,blue,green
                 variableName:
                   type: string
-                  example: ses_unit_locations
+                  example: favourite_colours
       responses:
         '200':
           description: ''
@@ -3480,7 +3480,7 @@ paths:
           in: query
           schema:
             type: string
-            example: Rodney Domain API
+            example: 'Offshore'
       responses:
         '200':
           description: ''
