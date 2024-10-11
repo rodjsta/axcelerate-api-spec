@@ -1082,7 +1082,7 @@ paths:
           in: path
           schema:
             type: integer
-            example: '6531423'
+            example: 6531423
       requestBody:
         content:
           multipart/form-data:
@@ -1756,7 +1756,7 @@ paths:
           in: path
           schema:
             type: integer
-            example: '6531423'
+            example: 6531423
       responses:
         '200':
           description: ''
@@ -1772,7 +1772,7 @@ paths:
           in: path
           schema:
             type: integer
-            example: '6531423'
+            example: 6531423
       requestBody:
         content:
           multipart/form-data:
