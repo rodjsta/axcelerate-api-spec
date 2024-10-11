@@ -70,7 +70,7 @@ paths:
       responses:
         '200':
           description: ''
-  /agent/13955345:
+  /agent/{contactId}:
     get:
       tags:
         - Agent
@@ -79,6 +79,14 @@ paths:
         Retrieve an existing agent. This endpoint is only available for clients
         using the Marketing/Sales Agents feature.
       operationId: retrieveAnExistingAgent
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          description: Contact ID of the Marketing Agent.
+          schema:
+            type: integer
+            example: 13955345
       responses:
         '200':
           description: ''
@@ -90,6 +98,14 @@ paths:
         Update an existing agent. This endpoint is only available for clients
         using the Marketing/Sales Agents feature.
       operationId: updateAnAgent
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          description: Contact ID of the Marketing Agent.
+          schema:
+            type: integer
+            example: 13955345
       requestBody:
         content:
           multipart/form-data:
@@ -102,10 +118,6 @@ paths:
                     will receive.
                   type: string
                   example: '20'
-                contactId:
-                  description: The contact ID of the marketing agent.
-                  type: string
-                  example: '13955345'
                 customfield_[VariableName]:
                   description: >-
                     Custom fields may be updated by specifying their variable
@@ -513,7 +525,7 @@ paths:
       responses:
         '200':
           description: ''
-  /contact/enrolment/verifyCertificate/6531423-8918096:
+  /contact/enrolment/verifyCertificate/{certificateId}:
     get:
       tags:
         - Certificate
@@ -523,6 +535,14 @@ paths:
         include information about the document, result, and any relevant
         messages.
       operationId: verifyACertificate
+      parameters:
+        - name: certificateId
+          required: true
+          in: path
+          description: The ID of the certificate to verify.
+          schema:
+            type: string
+            example: '6531423-8918096'
       responses:
         '200':
           description: ''
@@ -2944,7 +2964,7 @@ paths:
       responses:
         '200':
           description: ''
-  /course/instance/complexdate/1890225:
+  /course/instance/complexdate/{instanceId}:
     get:
       tags:
         - Course Instance Session
@@ -2952,6 +2972,13 @@ paths:
       description: Retrieve Sessions for a Workshop instance (Complex Dates).
       operationId: retrieveSessionsForAWorkshop
       parameters:
+        - name: instanceId
+          required: true
+          in: path
+          description: Instance ID of the Workshop you want to retrieve the sessions for.
+          schema:
+            type: integer
+            example: 1890225
         - name: complexId
           in: query
           schema:
@@ -2976,6 +3003,14 @@ paths:
       summary: Create a session for a workshop
       description: Create a new session for a Workshop.
       operationId: createASessionForAWorkshop
+      parameters:
+        - name: instanceId
+          required: true
+          in: path
+          description: Instance ID of the Workshop you want to retrieve the sessions for.
+          schema:
+            type: integer
+            example: 1890225
       requestBody:
         content:
           multipart/form-data:
@@ -3169,13 +3204,21 @@ paths:
       responses:
         '200':
           description: ''
-  /customFields/18762:
+  /customFields/{customFieldId}:
     get:
       tags:
         - Custom Field
       summary: Retrieve a single custom field
       description: Retrieve a single custom field
       operationId: retrieveASingleCustomField
+      parameters:
+        - name: customFieldId
+          required: true
+          in: path
+          description: The ID of the custom field you want to retrieve.
+          schema:
+            type: integer
+            example: 18761
       responses:
         '200':
           description: ''
@@ -3185,16 +3228,31 @@ paths:
       summary: Delete a single custom field
       description: Delete a single custom field
       operationId: deleteASingleCustomField
+      parameters:
+        - name: customFieldId
+          required: true
+          in: path
+          description: The ID of the custom field you want to delete.
+          schema:
+            type: integer
+            example: 18761
       responses:
         '200':
           description: ''
-  /customFields/18761:
     put:
       tags:
         - Custom Field
       summary: Update existing custom field
       description: Update existing custom field
       operationId: updateExistingCustomField
+      parameters:
+        - name: customFieldId
+          required: true
+          in: path
+          description: The ID of the custom field you want to update.
+          schema:
+            type: integer
+            example: 18761
       requestBody:
         content:
           multipart/form-data:
@@ -3426,13 +3484,21 @@ paths:
       responses:
         '200':
           description: ''
-  /domain/473:
+  /domain/{domainId}:
     get:
       tags:
         - Domain
       summary: Retrieve an existing domain
       description: Retrieve an existing domain
       operationId: retrieveAnExistingDomain
+      parameters:
+        - name: domainId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 2705
+          description: The ID of the domain you want to retrieve.
       responses:
         '200':
           description: ''
@@ -4245,23 +4311,38 @@ paths:
       responses:
         '200':
           description: ''
-  /organisation/1120758:
+  /organisation/{orgId}:
     get:
       tags:
         - Organisation
       summary: Retrieve an existing organisation
       description: Retrieve a specific Organisation record.
       operationId: retrieveAnExistingOrganisation
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
       responses:
         '200':
           description: ''
-  /organisation/647378:
     put:
       tags:
         - Organisation
       summary: Update an organisation
       description: Update a specific Organisation record.
       operationId: updateAnOrganisation
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
       requestBody:
         content:
           multipart/form-data:
@@ -4344,7 +4425,7 @@ paths:
       responses:
         '200':
           description: ''
-  /organisation/1120758/children:
+  /organisation/{orgId}/children:
     get:
       tags:
         - Organisation
@@ -4353,16 +4434,32 @@ paths:
         Retrieve a Children Organisations within the Organisation Tree of a
         specific Organisation record.
       operationId: retrieveAnOrganisationsChildren
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
       responses:
         '200':
           description: ''
-  /organisation/1120758/detail:
+  /organisation/{orgId}/detail:
     post:
       tags:
         - Organisation Detail
       summary: Create organisation details
       description: Create a detail entry for an existing Organisation
       operationId: createOrganisationDetails
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
       requestBody:
         content:
           multipart/form-data:
@@ -4412,13 +4509,28 @@ paths:
       responses:
         '200':
           description: ''
-  /organisation/1120758/detail/524425:
+  /organisation/{orgId}/detail/{detailId}:
     get:
       tags:
         - Organisation Detail
       summary: Retrieve existing organisation details
       description: Retrieve a specific Detail record for an Organistion\\.
       operationId: retrieveExistingOrganisationDetails
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
+        - name: detailId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Detail record.
       responses:
         '200':
           description: ''
@@ -4428,6 +4540,21 @@ paths:
       summary: Update organisation details
       description: Update a specific Detail record for an Organistion\\.
       operationId: updateOrganisationDetails
+      parameters:
+        - name: orgId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Organisation.
+        - name: detailId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Detail record.
       requestBody:
         content:
           multipart/form-data:
@@ -4652,7 +4779,7 @@ paths:
       responses:
         '200':
           description: ''
-  /resource/212547:
+  /resource/{documentId}:
     get:
       tags:
         - Resource
@@ -4661,6 +4788,14 @@ paths:
         Interacts with a specfic Resource Library Document. You can download a
         document with this endpoint.
       operationId: retrieveADocument
+      parameters:
+        - name: documentId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the Document.
       responses:
         '200':
           description: ''
@@ -4711,13 +4846,21 @@ paths:
       responses:
         '200':
           description: ''
-  /trainer/13955224:
+  /trainer/{contactId}:
     get:
       tags:
         - Trainer
       summary: Retrieve an existing trainer
       description: This endpoint retrieves the details of a specific trainer.
       operationId: retrieveAnExistingTrainer
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The Contact ID of the Trainer.
       responses:
         '200':
           description: ''
@@ -4760,7 +4903,7 @@ paths:
       tags:
         - User
       summary: Create a new user
-      description: "The\_`POST /user`\_endpoint is used to create a new user in the system."
+      description: "Create a new user in the system."
       operationId: createANewUser
       requestBody:
         content:
@@ -4832,7 +4975,7 @@ paths:
       tags:
         - User
       summary: Search users
-      description: "The\_`POST /users`\_endpoint is used to search for users with the provided information."
+      description: "Search for users by specfic criteria."
       operationId: searchUsers
       parameters:
         - name: contactId
@@ -4873,13 +5016,21 @@ paths:
       responses:
         '200':
           description: ''
-  /user/2965673:
+  /user/{userId}:
     get:
       tags:
         - User
       summary: Retrieve a user
       description: The endpoint retrieves user information based on the provided user ID.
       operationId: retrieveAUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the User.
       responses:
         '200':
           description: ''
@@ -4891,6 +5042,14 @@ paths:
         This endpoint allows updating user information with the specified user
         ID.
       operationId: updateAnExistingUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1120758
+          description: The ID of the User.
       requestBody:
         content:
           multipart/form-data:
@@ -4899,16 +5058,16 @@ paths:
               properties:
                 active:
                   description: The User's Active status.
-                  type: string
-                  example: '1'
+                  type: boolean
+                  example: 1
                 domainID:
                   description: The Domain associated with the User.
-                  type: string
-                  example: '2704'
+                  type: integer
+                  example: 2704
                 roleID:
                   description: The User Role associated with the User.
-                  type: string
-                  example: '7786'
+                  type: integer
+                  example: 7786
       responses:
         '200':
           description: ''
