@@ -140,9 +140,9 @@ paths:
     get:
       tags:
         - Accounting Invoice
-      summary: Search for an item
-      description: Search for an item
-      operationId: searchForAnItem
+      summary: Search for invoices
+      description: Search for invoices by contact ID or external reference.
+      operationId: searchForAnInvoice
       parameters:
         - name: contactID
           in: query
