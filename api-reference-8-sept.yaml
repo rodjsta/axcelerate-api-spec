@@ -1937,16 +1937,6 @@ paths:
       responses:
         '200':
           description: ''
-  /contactRoles:
-    get:
-      tags:
-        - Contact Role
-      summary: Search contact roles
-      description: Search contact roles
-      operationId: searchContactRoles
-      responses:
-        '200':
-          description: ''
   /course:
     post:
       tags:
@@ -3400,37 +3390,6 @@ paths:
                 variableName:
                   type: string
                   example: favourite_colours
-      responses:
-        '200':
-          description: ''
-  /cron/runMoodleCompletions:
-    get:
-      tags:
-        - Cron
-      summary: Run moodle completions
-      description: Run moodle completions
-      operationId: runMoodleCompletions
-      parameters:
-        - name: instanceId
-          in: query
-          schema:
-            type: string
-            example: '14520487'
-          description: instanceId for the course.
-        - name: type
-          in: query
-          schema:
-            type: string
-            example: p
-          description: >-
-            The type of course to run completions for. The only valid values
-            are: 'el' (for E-Learning) and 'p' (for Programs).
-        - name: verbose
-          in: query
-          schema:
-            type: string
-            example: '1'
-          description: If set, returns a more verbose report.
       responses:
         '200':
           description: ''
@@ -5214,14 +5173,12 @@ tags:
   - name: Certificate
   - name: Contact
   - name: Contact Message
-  - name: Contact Role
   - name: Course
   - name: Course Instance
   - name: Course Instance Attendance
   - name: Course Instance Extra Trainer
   - name: Course Instance Session
   - name: Custom Field
-  - name: Cron
   - name: Delivery Location
   - name: Discount
   - name: Domain
