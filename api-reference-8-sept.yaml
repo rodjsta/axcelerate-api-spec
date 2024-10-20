@@ -35,6 +35,10 @@ paths:
       description: >-
         Create a new agent. This endpoint is only available for clients using
         the Marketing/Sales Agents feature.
+
+
+        Agent Custom Fields values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`, `custom_field_specialty`.
+        Values used should correspond to the custom field specified. Note: this will not create custom fields, they must already exist.
       operationId: createANewAgent
       requestBody:
         content:
@@ -52,15 +56,6 @@ paths:
                   description: The contact ID of the marketing agent.
                   type: string
                   example: '13955345'
-                custom_Field_[VariableName]:
-                  description: >-
-                    Custom fields may be updated by specifying their variable
-                    name prefixed by custom_field_ EG: custom_field_region,
-                    custom_field_specialty. Values used should correspond to the
-                    custom field specified. Note: this will not create custom
-                    fields, they must already exist.
-                  type: string
-                  example: ''
                 taxRuleId:
                   description: >-
                     The tax rule to be specified for this agent. 1 = Excluding
@@ -95,8 +90,10 @@ paths:
         - Agent
       summary: Update an agent
       description: >-
-        Update an existing agent. This endpoint is only available for clients
-        using the Marketing/Sales Agents feature.
+        Update an existing agent. This endpoint is only available for clients using the Marketing/Sales Agents feature.
+
+        Agent Custom Fields may be updated by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`, `custom_field_specialty`.
+        Values used should correspond to the custom field specified. Note: this will not create custom fields, they must already exist.
       operationId: updateAnAgent
       parameters:
         - name: contactId
