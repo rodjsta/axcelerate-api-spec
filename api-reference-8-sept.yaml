@@ -3557,15 +3557,23 @@ paths:
       summary: Create a new domain
       description: Create a new domain
       operationId: createANewDomain
-      parameters:
-        - name: name
-          in: query
-          schema:
-            type: string
-            example: 'Offshore'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: The name of the domain.
+                  type: string
+                  example: 'Offshore'
       responses:
         '200':
-          description: ''
+          description: A single domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
   /domain/{domainId}:
     get:
       tags:
@@ -3583,7 +3591,11 @@ paths:
           description: The ID of the domain you want to retrieve.
       responses:
         '200':
-          description: ''
+          description: A single domain
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
   /domains:
     get:
       tags:
@@ -3593,7 +3605,11 @@ paths:
       operationId: retrieveAllDomains
       responses:
         '200':
-          description: ''
+          description: An array of domains
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainsResponse'
   /contact/enrolments/{contactId}:
     get:
       tags:
@@ -5199,6 +5215,23 @@ components:
       type: apiKey
       in: header
       name: wstoken
+  schemas:
+    Domain:
+      type: object
+      properties:
+        DOMAINID:
+          type: integer
+          description: The unique identifier of the domain.
+          example: 472
+        DOMAINNAME:
+          type: string
+          description: The name of the domain.
+          example: "VM Learning"
+
+    DomainsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Domain'
 security:
   - AxToken: []
     WsToken: []
