@@ -116,15 +116,6 @@ paths:
                     will receive.
                   type: string
                   example: '20'
-                customfield_[VariableName]:
-                  description: >-
-                    Custom fields may be updated by specifying their variable
-                    name prefixed by customfield_ EG: customfield_region,
-                    customfield_specialty. Values used should correspond to the
-                    custom field specified. Note: this will not create custom
-                    fields, they must already exist.
-                  type: string
-                  example: ''
                 taxRuleId:
                   description: >-
                     The tax rule to be specified for this agent. 1 = Excluding
