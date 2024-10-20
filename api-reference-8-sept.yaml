@@ -139,321 +139,444 @@ paths:
   /accounting/invoice:
     get:
       tags:
-        - Accounting
-      summary: /accounting/invoice
-      description: /accounting/invoice
-      operationId: accountingInvoice
+        - Accounting Invoice
+      summary: Search for an item
+      description: Search for an item
+      operationId: searchForAnItem
       parameters:
         - name: contactID
           in: query
           schema:
             type: string
             example: '6341338'
+        - name: externalReference
+          in: query
+          schema:
+            type: string
+          description: A reference to external accounting system.
       responses:
         '200':
           description: ''
     post:
       tags:
-        - Accounting
-      summary: /accounting/invoice
-      description: /accounting/invoice
-      operationId: accountingInvoice1
-      parameters:
-        - name: contactID
-          in: query
-          schema:
-            type: string
-            example: '6341338'
-        - name: firstname
-          in: query
-          schema:
-            type: string
-            example: Rodney
-        - name: surname
-          in: query
-          schema:
-            type: string
-            example: Staines
-        - name: aItem
-          in: query
-          schema:
-            type: string
-            example: >-
-              [{"DESCRIPTION":"SomeOrderInformation","QTY":1,"ITEMCODE":"001","FINANCECODE":"200","TAXPERCENT":10,"HASCHILDREN":false,"UNITPRICEGROSS":100}]
-        - name: invoiceDate
-          in: query
-          schema:
-            type: string
-            example: '2024-06-01'
-        - name: orderDate
-          in: query
-          schema:
-            type: string
-            example: '2024-06-01'
-        - name: lockItems
-          in: query
-          schema:
-            type: string
-            example: '0'
-        - name: SERVICEDATE
-          in: query
-          schema:
-            type: string
-            example: '2023-05-10'
-        - name: issueSequenceNo
-          in: query
-          schema:
-            type: string
-            example: '1'
+        - Accounting Invoice
+      summary: Create a new invoice
+      description: Create a new invoice for a contact.
+      operationId: createANewInvoice
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
-              properties: {}
+              properties:
+                aItem:
+                  description: Invoice item(s) data in json format
+                  type: string
+                  example: ''
+                contactID:
+                  description: The contactId for the Invoice
+                  type: string
+                  example: ''
+                externalReference:
+                  description: >-
+                    A reference to external accounting system. This is only
+                    editable via the API (60 characters max).
+                  type: string
+                  example: ''
+                firstname:
+                  description: Given name for the Invoice Bill To
+                  type: string
+                  example: ''
+                invoiceDate:
+                  description: Invoice date yyyy-mm-dd.
+                  type: string
+                  example: ''
+                orderDate:
+                  description: Order date yyyy-mm-dd.
+                  type: string
+                  example: ''
+                surname:
+                  description: Surname for the Invoice Bill To
+                  type: string
+                  example: ''
       responses:
         '200':
           description: ''
-  /accounting/transaction:
-    post:
+  /accounting/invoice/{invoiceId}:
+    get:
       tags:
-        - Accounting
-      summary: /accounting/transaction
-      description: /accounting/transaction
-      operationId: accountingTransaction
+        - Accounting Invoice
+      summary: Retrieve an existing invoice
+      description: Retrieve an existing invoice.
+      operationId: retrieveAnExistingInvoice
       parameters:
-        - name: contactId
-          in: query
-          schema:
-            type: string
-            example: '13968282'
         - name: invoiceId
-          in: query
+          required: true
+          in: path
           schema:
             type: string
-            example: '3047133'
-        - name: transDate
-          in: query
+            example: '3047093'
+      responses:
+        '200':
+          description: ''
+    put:
+      tags:
+        - Accounting Invoice
+      summary: Update an existing invoice
+      description: Update an existing invoice.
+      operationId: updateAnExistingInvoice
+      parameters:
+        - name: invoiceId
+          required: true
+          in: path
           schema:
             type: string
-            example: '2024-05-02'
-        - name: amount
-          in: query
-          schema:
-            type: string
-            example: '150'
-        - name: paymentMethodID
-          in: query
-          schema:
-            type: string
-            example: '4'
+            example: '3047093'
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
-              properties: {}
+              properties:
+                aItem:
+                  description: Invoice item(s) data in json format.
+                  type: string
+                  example: ''
+                address2:
+                  description: Address line 2.
+                  type: string
+                  example: ''
+                city:
+                  description: Address City
+                  type: string
+                  example: ''
+                comment:
+                  description: Comment text.
+                  type: string
+                  example: ''
+                contactId:
+                  description: The contactID for invoice contact.
+                  type: string
+                  example: ''
+                country:
+                  description: Address Country code
+                  type: string
+                  example: ''
+                countryIso3166:
+                  description: Country ISO 3166 code
+                  type: string
+                  example: ''
+                email:
+                  description: Email address.
+                  type: string
+                  example: ''
+                externalReference:
+                  description: >-
+                    A reference to external accounting system. This is only
+                    editable via the API (60 characters max).
+                  type: string
+                  example: ''
+                firstname:
+                  description: Given Names person invoice bill to.
+                  type: string
+                  example: ''
+                houseNr:
+                  description: Address house number
+                  type: string
+                  example: ''
+                invoiceDate:
+                  description: Invoice date yyyy-mm-dd.
+                  type: string
+                  example: ''
+                orderDate:
+                  description: Order date yyyy-mm-dd
+                  type: string
+                  example: ''
+                orderNr:
+                  description: Order number
+                  type: string
+                  example: ''
+                orgId:
+                  description: Organisation ID code.
+                  type: string
+                  example: ''
+                phoneNr:
+                  description: Phone number
+                  type: string
+                  example: ''
+                postCode:
+                  description: Address Post Code
+                  type: string
+                  example: ''
+                shipAddress2:
+                  description: Address line 2 of a shipping address.
+                  type: string
+                  example: ''
+                shipCity:
+                  description: City name on a shipping address
+                  type: string
+                  example: ''
+                shipCountryIso3166:
+                  description: Ship Country ISO 3166 code
+                  type: string
+                  example: ''
+                shipFirstName:
+                  description: Given Names of person on a shipping address.
+                  type: string
+                  example: ''
+                shipHouseNr:
+                  description: House number of a shipping address.
+                  type: string
+                  example: ''
+                shipLastName:
+                  description: Last Names of person on a shipping address.
+                  type: string
+                  example: ''
+                shipPostCode:
+                  description: Post code of a shipping address.
+                  type: string
+                  example: ''
+                shipState:
+                  description: State of a shipping address.
+                  type: string
+                  example: ''
+                shipStreet:
+                  description: Address Street Name
+                  type: string
+                  example: ''
+                state:
+                  description: Address State
+                  type: string
+                  example: ''
+                street:
+                  description: Street name.
+                  type: string
+                  example: ''
+                surname:
+                  description: Last Names person invoice bill to.
+                  type: string
+                  example: ''
       responses:
         '200':
           description: ''
-  /accounting/invoice/3049379:
-    get:
-      tags:
-        - Accounting
-      summary: /accounting/invoice/:invoiceId
-      description: /accounting/invoice/:invoiceId
-      operationId: accountingInvoiceInvoiceid
-      parameters:
-        - name: contactID
-          in: query
-          schema:
-            type: string
-            example: '11933753'
-        - name: instanceID
-          in: query
-          schema:
-            type: string
-            example: '1152374'
-        - name: type
-          in: query
-          schema:
-            type: string
-            example: P
-      responses:
-        '200':
-          description: ''
+  /accounting/invoice/{invoiceGuid}/approve:
     put:
       tags:
-        - Accounting
-      summary: /accounting/invoice/:invoiceId
-      description: /accounting/invoice/:invoiceId
-      operationId: accountingInvoiceInvoiceid1
+        - Accounting Invoice
+      summary: Approve an invoice for payment
+      description: Prepare an invoice for payment, and return payment URL.
+      operationId: approveAnInvoiceForPayment
       parameters:
-        - name: aItem
-          in: query
+        - name: invoiceGuid
+          required: true
+          in: path
           schema:
             type: string
-            example: >-
-              [{"TOTALTAX":0,"CHILDREN":{},"UNITPRICETAX":0,"DOMAINID":0,"HASCHILDREN":0,"PARTID":0,"UNITPRICENETT":200,"QTY":1,"TAXPERCENT":0,"TOTALGROSS":200,"ITEMCODE":"GumiWS","FINANCECODE":null,"TOTALNETT":200,"SOURCEID":0,"HASH":"AA1EA2CE878A7D3A74FA223C287560B2","SERVICEDATE":"2024-07-05","UNITPRICEGROSS":200,"ITEMID":5387110,"DESCRIPTION":"updatedline","COSTCENTRECODE":null},{"TOTALTAX":0,"CHILDREN":{},"UNITPRICETAX":0,"DOMAINID":0,"HASCHILDREN":0,"PARTID":0,"UNITPRICENETT":200,"QTY":1,"TAXPERCENT":0,"TOTALGROSS":200,"ITEMCODE":"GumiWS","FINANCECODE":null,"TOTALNETT":200,"SOURCEID":0,"SERVICEDATE":"2024-07-05","UNITPRICEGROSS":200,"DESCRIPTION":"anotherline","COSTCENTRECODE":null}]
-        - name: lockItems
-          in: query
-          schema:
-            type: string
-            example: '1'
-        - name: isarchived
-          in: query
-          schema:
-            type: string
-            example: '0'
-        - name: forceNotExportable
-          in: query
-          schema:
-            type: string
-            example: '1'
-        - name: AREITEMSLOCKED
-          in: query
-          schema:
-            type: string
-            example: '0'
-        - name: comment
-          in: query
-          schema:
-            type: string
-            example: Updated invoice
+            example: '2FA2C39F-B2B6-4301-9943667E7AC43FFE'
       responses:
         '200':
           description: ''
-  /accounting/invoice/3047093/paymenturl:
+  /accounting/invoice/{invoiceId}/paymenturl:
     get:
       tags:
-        - Accounting
-      summary: /accounting/invoice/:invoiceId/paymenturl
-      description: /accounting/invoice/:invoiceId/paymenturl
-      operationId: accountingInvoiceInvoiceidPaymenturl
+        - Accounting Checkout
+      summary: Retrieve an invoice payment URL
+      description: Retrieve a payment URL for an invoice.
+      operationId: retrieveAnInvoicePaymentUrl
       parameters:
-        - name: contactID
-          in: query
+        - name: invoiceId
+          required: true
+          in: path
           schema:
             type: string
-            example: '11933753'
-        - name: instanceID
-          in: query
-          schema:
-            type: string
-            example: '1152374'
-        - name: type
-          in: query
-          schema:
-            type: string
-            example: P
-      responses:
-        '200':
-          description: ''
-  /accounting/invoice/2FA2C39F-B2B6-4301-9943667E7AC43FFE/approve:
-    put:
-      tags:
-        - Accounting
-      summary: /accounting/invoice/:invoiceGuid/approve
-      description: /accounting/invoice/:invoiceGuid/approve
-      operationId: accountingInvoiceInvoiceguidApprove
+            example: '3047093'
       responses:
         '200':
           description: ''
   /accounting/ecommerce/payment/form:
     post:
       tags:
-        - Accounting
-      summary: /accounting/ecommerce/payment/form
-      description: /accounting/ecommerce/payment/form
-      operationId: accountingEcommercePaymentForm
-      parameters:
-        - name: reference
-          in: query
-          schema:
-            type: string
-            example: gRef-123
-        - name: invoiceGUID
-          in: query
-          schema:
-            type: string
-            example: 0CF1D0BC-798A-4DDF-9CD9CD841EAD2533
-        - name: redirectURL
-          in: query
-          schema:
-            type: string
-            example: https://goboat.com.au?gRef-123
-        - name: cancelURL
-          in: query
-          schema:
-            type: string
-            example: https://goboat.com.au
+        - Accounting Checkout
+      summary: Create a checkout form for payment
+      description: >-
+        Returns the HTML and form action required to process an invoice payment
+        using the payment platform configured in settings.
+      operationId: createACheckoutFormForPayment
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cancelURL:
+                  description: >-
+                    URL for the address where the user should be redirected if
+                    checkout is canceled. Must include URL protocol.
+                  type: string
+                  example: https://www.example.com/canceled-payment
+                invoiceGUID:
+                  description: GUID of the invoice to create a checkout form.
+                  type: string
+                  example: ''
+                redirectURL:
+                  description: >-
+                    URL for the address where the user should be redirected
+                    after payment processing. Must include URL protocol.
+                  type: string
+                  example: https://www.example.com/thank-you
+                reference:
+                  description: External identifier for the payment flow process.
+                  type: string
+                  example: ''
       responses:
         '200':
           description: ''
   /accounting/ecommerce/payment/url:
     get:
       tags:
-        - Accounting
-      summary: /accounting/ecommerce/payment/url
-      description: /accounting/ecommerce/payment/url
-      operationId: accountingEcommercePaymentUrl
+        - Accounting Checkout
+      summary: Create a checkout URL for payment
+      description: Create a checkout URL for payment
+      operationId: createACheckoutUrlForPayment
       parameters:
         - name: reference
           in: query
           schema:
             type: string
-            example: gRef-123
+            example: ''
+          description: External identifier for the payment flow process.
         - name: invoiceGUID
           in: query
           schema:
             type: string
-            example: 564C1B9F-ACD8-4CE3-B1EF16A9AFA94754
+            example: ''
+          description: GUID of the invoice to create a checkout URL.
         - name: redirectURL
           in: query
           schema:
             type: string
-            example: https://goboat.com.au?gRef-123
+            example: https://www.example.com/thank-you
+          description: >-
+            URL for the address where the user should be redirected after
+            payment processing. Must include URL protocol.
         - name: cancelURL
           in: query
           schema:
             type: string
-            example: https://goboat.com.au
-        - name: invoiceId
-          in: query
-          schema:
-            type: string
-            example: '3047130'
+            example: https://www.example.com/canceled-payment
+          description: >-
+            URL for the address where the user should be redirected if checkout
+            is canceled. Must include URL protocol.
       responses:
         '200':
           description: ''
-  /accounting/ecommerce/payment/ref/gRef-123:
+  /accounting/ecommerce/payment/ref/{reference}:
     get:
       tags:
-        - Accounting
-      summary: /accounting/ecommerce/payment/ref/:refId
-      description: /accounting/ecommerce/payment/ref/:refId
-      operationId: accountingEcommercePaymentRefRefid
+        - Accounting Checkout
+      summary: Retrieve state of payment flow
+      description: Returns the current state of a payment flow process.
+      operationId: retrieveStateOfPaymentFlow
       parameters:
         - name: reference
+          required: true
+          in: path
+          schema:
+            type: string
+            example: ''
+          description: External identifier for the payment flow process.
+      responses:
+        '200':
+          description: ''
+  /accounting/transaction:
+    get:
+      tags:
+        - Accounting Payment
+      summary: Search for payments by a contact
+      description: Retrieve a list of transactions for a contact.
+      operationId: searchForPaymentsByAContact
+      parameters:
+        - name: contactId
           in: query
           schema:
             type: string
-            example: gRef-123
-        - name: invoiceGUID
+            example: '13955776'
+          description: >-
+            The contact to search the transaction against. This should be the
+            person who paid.
+        - name: includeFragments
           in: query
           schema:
             type: string
-            example: 0CF1D0BC-798A-4DDF-9CD9CD841EAD2533
-        - name: redirectURL
-          in: query
-          schema:
-            type: string
-            example: https://goboat.com.au?gRef-123
-        - name: cancelURL
-          in: query
-          schema:
-            type: string
-            example: https://goboat.com.au
+            example: 'true'
+          description: Optionally include a fragments array with each transaction.
+      responses:
+        '200':
+          description: ''
+    post:
+      tags:
+        - Accounting Payment
+      summary: Create a new payment for invoice or contact
+      description: Create a new payment transaction for a contact and apply to an invoice.
+      operationId: createANewPaymentForInvoiceOrContact
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                amount:
+                  description: Transaction amount in dollars.
+                  type: string
+                  example: '150'
+                bankBSB:
+                  description: Optional. For cheque types (5).
+                  type: string
+                  example: ''
+                bankName:
+                  description: Optional. For cheque types (5).
+                  type: string
+                  example: ''
+                chequeDrawer:
+                  description: Optional. For cheque types (5).
+                  type: string
+                  example: ''
+                chequeNr:
+                  description: Optional. For cheque types (5).
+                  type: string
+                  example: ''
+                contactId:
+                  description: >-
+                    The contact to record the transaction against. This should
+                    be the person who paid.
+                  type: string
+                  example: '13968282'
+                description:
+                  description: An optional description.
+                  type: string
+                  example: ''
+                invoiceId:
+                  description: >-
+                    If applied, this transaction will be recorded and then
+                    applied against this invoice.
+                  type: string
+                  example: '3047133'
+                paymentMethodId:
+                  description: >-
+                    Recorded payment method. The options are: 1=Cash, 2=Credit
+                    Card, 4=Direct Deposit, 5=Cheque, 6=EFTPOS.
+                  type: string
+                  example: '4'
+                reference:
+                  description: An optional reference / reciept number.
+                  type: string
+                  example: ''
+                transDate:
+                  description: >-
+                    The date of the transaction (yyyy-mm-dd). Default will be
+                    now.
+                  type: string
+                  example: '2024-05-02'
       responses:
         '200':
           description: ''
@@ -5083,7 +5206,10 @@ paths:
           description: ''
 tags:
   - name: Agent
-  - name: Accounting
+  - name: Accounting Items List
+  - name: Accounting Invoice
+  - name: Accounting Checkout
+  - name: Accounting Payment
   - name: Categories
   - name: Certificate
   - name: Contact
