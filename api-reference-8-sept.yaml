@@ -3567,6 +3567,8 @@ paths:
                   description: The name of the domain.
                   type: string
                   example: 'Offshore'
+              required:
+                - name
       responses:
         '200':
           description: A single domain
