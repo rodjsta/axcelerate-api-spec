@@ -92,6 +92,7 @@ paths:
       description: >-
         Update an existing agent. This endpoint is only available for clients using the Marketing/Sales Agents feature.
 
+
         Agent Custom Fields may be updated by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`, `custom_field_specialty`.
         Values used should correspond to the custom field specified. Note: this will not create custom fields, they must already exist.
       operationId: updateAnAgent
