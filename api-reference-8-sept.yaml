@@ -50,18 +50,21 @@ paths:
                   description: >-
                     The percentage commission, between 0 and 100, that the agent
                     will receive.
-                  type: string
-                  example: '11'
+                  type: integer
+                  example: 11
                 contactId:
                   description: The contact ID of the marketing agent.
-                  type: string
-                  example: '13955345'
+                  type: integer
+                  example: 13955345
                 taxRuleId:
                   description: >-
                     The tax rule to be specified for this agent. 1 = Excluding
                     GST, 2 = Including GST, 3 = Exempt.
-                  type: string
-                  example: '1'
+                  type: integer
+                  example: 1
+              required:
+                - contactId
+                - taxRuleId
       responses:
         '200':
           description: ''
@@ -114,14 +117,14 @@ paths:
                   description: >-
                     The percentage commission, between 0 and 100, that the agent
                     will receive.
-                  type: string
-                  example: '20'
+                  type: integer
+                  example: 20
                 taxRuleId:
                   description: >-
                     The tax rule to be specified for this agent. 1 = Excluding
                     GST, 2 = Including GST, 3 = Exempt.
-                  type: string
-                  example: '1'
+                  type: integer
+                  example: 1
       responses:
         '200':
           description: ''
