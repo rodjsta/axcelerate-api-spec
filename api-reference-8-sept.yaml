@@ -133,14 +133,16 @@ paths:
       tags:
         - Accounting Invoice
       summary: Search for invoices
-      description: Search for invoices by contact ID or external reference.
+      description: Search for invoices by Contact ID or External Reference.
       operationId: searchForAnInvoice
       parameters:
-        - name: contactID
+        - name: contactId
           in: query
           schema:
-            type: string
-            example: '6341338'
+            type: integer
+            example: 6341338
+          description: The Contact ID to search invoices against.
+          required: true
         - name: externalReference
           in: query
           schema:
@@ -153,7 +155,52 @@ paths:
       tags:
         - Accounting Invoice
       summary: Create a new invoice
-      description: Create a new invoice for a contact.
+      description: |
+        Create a new invoice for a contact.
+
+        The `aItem` parameter should be an array containing JSON strings of invoice items. For example:
+        ```json
+        [
+          {
+            "description": "string",
+            "qty": "numeric",
+            "itemCode": "string",
+            "itemId": "numeric",
+            "financeCode": "string",
+            "taxPercent": "numeric",
+            "hasChildren": "boolean",
+            "costCentreCode": "string",
+            "unitPriceGross": "numeric",
+            "domainId": "numeric",
+            "serviceDate": "date",
+            "partId": "numeric",
+            "data": "string",
+          }
+        ]
+        ```
+
+        **Item Quantity**
+
+        Must be greater than zero. If `qty` is zero and an `itemId` is defined then the line item matching that `itemId` is removed from the invoice.
+
+        **Item Id**
+
+        To edit an existing line item the `itemId` must be specified, for a new line item this value can be omitted or set to zero. Note: If an `itemId` is specified and `qty` is set to zero then that line item is deleted from the invoice.
+
+        **Service Date**
+
+        The service date associated with the line-item. Supported Formats are: {ts 'YYYY-MM-DDThh:mm:ss'} or YYYY-MM-DDThh:mm:ss
+
+        **aItem Required Parameters**
+
+        * `description` - The description of the item.
+        * `qty` - The quantity of the item.
+        * `itemCode` - The item code associated with this line item.
+        * `financeCode` - The finance code associated with this line item.
+        * `taxPercent` - The tax percentage associated with this line item.
+        * `hasChildren` - A boolean value indicating if this line item has children.
+        * `unitPriceGross` - The gross price for a single quantity of the item (i.e. 15.96 for $15.96)
+
       operationId: createANewInvoice
       requestBody:
         content:
@@ -161,22 +208,8 @@ paths:
             schema:
               type: object
               properties:
-                aItem:
-                  description: Invoice item(s) data in json format
-                  type: string
-                  example: ''
-                contactID:
+                contactId:
                   description: The contactId for the Invoice
-                  type: string
-                  example: ''
-                externalReference:
-                  description: >-
-                    A reference to external accounting system. This is only
-                    editable via the API (60 characters max).
-                  type: string
-                  example: ''
-                firstname:
-                  description: Given name for the Invoice Bill To
                   type: string
                   example: ''
                 invoiceDate:
@@ -187,10 +220,31 @@ paths:
                   description: Order date yyyy-mm-dd.
                   type: string
                   example: ''
+                firstname:
+                  description: Given name for the Invoice Bill To
+                  type: string
+                  example: ''
                 surname:
                   description: Surname for the Invoice Bill To
                   type: string
                   example: ''
+                aItem:
+                  description: Invoice item(s) data in json format as per description.
+                  type: string
+                  example: ''
+                externalReference:
+                  description: >-
+                    A reference to external accounting system. This is only
+                    editable via the API (60 characters max).
+                  type: string
+                  example: ''
+              required:
+                - contactId
+                - firstname
+                - surname
+                - invoiceDate
+                - orderDate
+                - aItem
       responses:
         '200':
           description: ''
@@ -215,7 +269,51 @@ paths:
       tags:
         - Accounting Invoice
       summary: Update an existing invoice
-      description: Update an existing invoice.
+      description: |
+        Update an existing invoice.
+
+        The `aItem` parameter should be an array containing JSON strings of invoice items. For example:
+        ```json
+        [
+          {
+            "description": "string",
+            "qty": "numeric",
+            "itemCode": "string",
+            "itemId": "numeric",
+            "financeCode": "string",
+            "taxPercent": "numeric",
+            "hasChildren": "boolean",
+            "costCentreCode": "string",
+            "unitPriceGross": "numeric",
+            "domainId": "numeric",
+            "serviceDate": "date",
+            "partId": "numeric",
+            "data": "string",
+          }
+        ]
+        ```
+
+        **Item Quantity**
+
+        Must be greater than zero. If `qty` is zero and an `itemId` is defined then the line item matching that `itemId` is removed from the invoice.
+
+        **Item Id**
+
+        To edit an existing line item the `itemId` must be specified, for a new line item this value can be omitted or set to zero. Note: If an `itemId` is specified and `qty` is set to zero then that line item is deleted from the invoice.
+
+        **Service Date**
+
+        The service date associated with the line-item. Supported Formats are: {ts 'YYYY-MM-DDThh:mm:ss'} or YYYY-MM-DDThh:mm:ss
+
+        **aItem Required Parameters**
+
+        * `description` - The description of the item.
+        * `qty` - The quantity of the item.
+        * `itemCode` - The item code associated with this line item.
+        * `financeCode` - The finance code associated with this line item.
+        * `taxPercent` - The tax percentage associated with this line item.
+        * `hasChildren` - A boolean value indicating if this line item has children.
+        * `unitPriceGross` - The gross price for a single quantity of the item (i.e. 15.96 for $15.96)
       operationId: updateAnExistingInvoice
       parameters:
         - name: invoiceId
@@ -230,50 +328,8 @@ paths:
             schema:
               type: object
               properties:
-                aItem:
-                  description: Invoice item(s) data in json format.
-                  type: string
-                  example: ''
-                address2:
-                  description: Address line 2.
-                  type: string
-                  example: ''
-                city:
-                  description: Address City
-                  type: string
-                  example: ''
-                comment:
-                  description: Comment text.
-                  type: string
-                  example: ''
                 contactId:
                   description: The contactID for invoice contact.
-                  type: string
-                  example: ''
-                country:
-                  description: Address Country code
-                  type: string
-                  example: ''
-                countryIso3166:
-                  description: Country ISO 3166 code
-                  type: string
-                  example: ''
-                email:
-                  description: Email address.
-                  type: string
-                  example: ''
-                externalReference:
-                  description: >-
-                    A reference to external accounting system. This is only
-                    editable via the API (60 characters max).
-                  type: string
-                  example: ''
-                firstname:
-                  description: Given Names person invoice bill to.
-                  type: string
-                  example: ''
-                houseNr:
-                  description: Address house number
                   type: string
                   example: ''
                 invoiceDate:
@@ -284,20 +340,86 @@ paths:
                   description: Order date yyyy-mm-dd
                   type: string
                   example: ''
-                orderNr:
-                  description: Order number
+                firstname:
+                  description: Given Names person invoice bill to.
+                  type: string
+                  example: ''
+                surname:
+                  description: Last Names person invoice bill to.
+                  type: string
+                  example: ''
+                email:
+                  description: Email address.
                   type: string
                   example: ''
                 orgId:
                   description: Organisation ID code.
                   type: string
                   example: ''
-                phoneNr:
-                  description: Phone number
+                orderNr:
+                  description: Order number
+                  type: string
+                  example: ''
+                aItem:
+                  description: Invoice item(s) data in json format.
+                  type: string
+                  example: ''
+                houseNr:
+                  description: Address house number
+                  type: string
+                  example: ''
+                address2:
+                  description: Address line 2.
+                  type: string
+                  example: ''
+                street:
+                  description: Street name.
+                  type: string
+                  example: ''
+                city:
+                  description: Address City
+                  type: string
+                  example: ''
+                state:
+                  description: Address State
                   type: string
                   example: ''
                 postCode:
                   description: Address Post Code
+                  type: string
+                  example: ''
+                country:
+                  description: Address Country code
+                  type: string
+                  example: ''
+                countryIso3166:
+                  description: Country ISO 3166 code
+                  type: string
+                  example: ''
+                comment:
+                  description: Comment text.
+                  type: string
+                  example: ''
+                externalReference:
+                  description: >-
+                    A reference to external accounting system. This is only
+                    editable via the API (60 characters max).
+                  type: string
+                  example: ''
+                phoneNr:
+                  description: Phone number
+                  type: string
+                  example: ''
+                shipFirstName:
+                  description: Given Names of person on a shipping address.
+                  type: string
+                  example: ''
+                shipLastName:
+                  description: Last Names of person on a shipping address.
+                  type: string
+                  example: ''
+                shipHouseNr:
+                  description: House number of a shipping address.
                   type: string
                   example: ''
                 shipAddress2:
@@ -312,42 +434,25 @@ paths:
                   description: Ship Country ISO 3166 code
                   type: string
                   example: ''
-                shipFirstName:
-                  description: Given Names of person on a shipping address.
-                  type: string
-                  example: ''
-                shipHouseNr:
-                  description: House number of a shipping address.
-                  type: string
-                  example: ''
-                shipLastName:
-                  description: Last Names of person on a shipping address.
-                  type: string
-                  example: ''
-                shipPostCode:
-                  description: Post code of a shipping address.
+                shipStreet:
+                  description: Address Street Name
                   type: string
                   example: ''
                 shipState:
                   description: State of a shipping address.
                   type: string
                   example: ''
-                shipStreet:
-                  description: Address Street Name
+                shipPostCode:
+                  description: Post code of a shipping address.
                   type: string
                   example: ''
-                state:
-                  description: Address State
-                  type: string
-                  example: ''
-                street:
-                  description: Street name.
-                  type: string
-                  example: ''
-                surname:
-                  description: Last Names person invoice bill to.
-                  type: string
-                  example: ''
+              required:
+                - contactId
+                - firstname
+                - surname
+                - invoiceDate
+                - orderDate
+                - aItem
       responses:
         '200':
           description: ''
