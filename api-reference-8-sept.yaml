@@ -150,7 +150,11 @@ paths:
           description: A reference to external accounting system.
       responses:
         '200':
-          description: ''
+          description: 'An array of Invoice Summary objects.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceSummaryResponse'
     post:
       tags:
         - Accounting Invoice
@@ -264,7 +268,11 @@ paths:
             example: '3047093'
       responses:
         '200':
-          description: ''
+          description: 'An Invoice object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
     put:
       tags:
         - Accounting Invoice
@@ -5326,11 +5334,394 @@ components:
           type: string
           description: The name of the domain.
           example: "VM Learning"
+    Invoice:
+      type: object
+      properties:
+        INVOICENR:
+          type: string
+          description: The invoice number.
+          example: "AX2_10132"
+        PRICEGROSS:
+          type: number
+          description: The gross price of the invoice.
+          example: 200
+        ADDRESS2:
+          type: string
+          nullable: true
+          description: Additional address information.
+          example: null
+        OWNERCONTACTID:
+          type: integer
+          description: The contact ID of the owner.
+          example: 10700277
+        ORGANISATION:
+          type: string
+          description: Organisation name associated with the invoice.
+          example: "1 EDUCATION PTY LTD"
+        SHIPLASTNAME:
+          type: string
+          description: The last name for shipping.
+          example: "Staines"
+        SHIPHOUSENR:
+          type: string
+          nullable: true
+          description: House number for shipping.
+          example: null
+        SHIPORGID:
+          type: integer
+          description: The organisation ID for shipping.
+          example: 831908
+        SHIPPOSTCODE:
+          type: string
+          nullable: true
+          description: Postal code for shipping.
+          example: null
+        COMMENT:
+          type: string
+          nullable: true
+          description: Comments related to the invoice.
+          example: null
+        PHONENR:
+          type: string
+          description: The phone number associated with the invoice.
+          example: "07 3215 8888"
+        ORGID:
+          type: integer
+          description: The organisation ID.
+          example: 831908
+        PAYMENTS:
+          type: array
+          description: Payments made towards the invoice.
+          items:
+            type: object
+        SHIPCOUNTRY:
+          type: string
+          nullable: true
+          description: Shipping country.
+          example: null
+        DUEDATE:
+          type: string
+          format: date
+          description: The due date of the invoice.
+          example: "2024-10-30"
+        SHIPORGANISATION:
+          type: string
+          description: The shipping organisation name.
+          example: "1 EDUCATION PTY LTD"
+        INVOICEID:
+          type: integer
+          description: Unique identifier for the invoice.
+          example: 2522186
+        DUEDATEOFFSET:
+          type: integer
+          description: Offset for the due date.
+          example: 10
+        AREITEMSLOCKED:
+          type: boolean
+          description: Indicates if the items are locked.
+          example: false
+        LASTNAME:
+          type: string
+          description: The last name of the contact.
+          example: "Staines"
+        STREET:
+          type: string
+          nullable: true
+          description: Street address for the invoice.
+          example: null
+        ITEMS:
+          type: array
+          description: Items included in the invoice.
+          items:
+            $ref: '#/components/schemas/InvoiceItem'
+        INVOICEDATE:
+          type: string
+          format: date
+          description: The date the invoice was issued.
+          example: "2024-10-20"
+        CURRENCY:
+          type: string
+          description: Currency for the invoice.
+          example: "AUD"
+        SHIPPRICENETT:
+          type: number
+          description: Shipping price excluding tax.
+          example: 0
+        SHIPSTATE:
+          type: string
+          nullable: true
+          description: Shipping state.
+          example: null
+        CONTACTNAME:
+          type: string
+          description: The name of the contact person.
+          example: "Rod Staines"
+        SHIPCOUNTRYISO3166:
+          type: string
+          nullable: true
+          description: Shipping country ISO 3166 code.
+          example: null
+        SHIPSTREET:
+          type: string
+          nullable: true
+          description: Shipping street.
+          example: null
+        HOUSENR:
+          type: string
+          nullable: true
+          description: House number associated with the invoice.
+          example: null
+        ISARCHIVED:
+          type: boolean
+          description: Indicates if the invoice is archived.
+          example: false
+        ORDERDATE:
+          type: string
+          format: date
+          description: The date the order was placed.
+          example: "2024-10-20"
+        CONTACTID:
+          type: integer
+          description: Unique identifier for the contact.
+          example: 10700277
+        EXTERNALREFERENCE:
+          type: string
+          nullable: true
+          description: External reference for the invoice.
+          example: null
+        SHIPCITY:
+          type: string
+          nullable: true
+          description: Shipping city.
+          example: null
+        SHIPPRICEGROSS:
+          type: number
+          description: Shipping price including tax.
+          example: 0
+        COUNTRYISO3166:
+          type: string
+          nullable: true
+          description: Country ISO 3166 code.
+          example: null
+        ISINVOICENRLOCKED:
+          type: boolean
+          description: Indicates if the invoice number is locked.
+          example: true
+        SHIPTAXPERCENT:
+          type: number
+          description: Shipping tax percentage.
+          example: 0
+        SHIPPRICETAX:
+          type: number
+          description: Shipping tax amount.
+          example: 0
+        STATE:
+          type: string
+          nullable: true
+          description: State associated with the invoice.
+          example: null
+        FIRSTNAME:
+          type: string
+          description: First name of the contact person.
+          example: "Rod"
+        SHIPADDRESS2:
+          type: string
+          nullable: true
+          description: Additional shipping address information.
+          example: null
+        SHIPFIRSTNAME:
+          type: string
+          description: First name for shipping.
+          example: "Rod"
+        CITY:
+          type: string
+          nullable: true
+          description: City associated with the invoice.
+          example: null
+        ORDERNR:
+          type: string
+          nullable: true
+          description: Order number.
+          example: null
+        EMAIL:
+          type: string
+          description: Email address for the contact person.
+          example: "rod.staines@axcelerate.com"
+        PRICENETT:
+          type: number
+          description: The total net price of the invoice.
+          example: 181.82
+        COUNTRY:
+          type: string
+          nullable: true
+          description: Country associated with the invoice.
+          example: null
+        INVGUID:
+          type: string
+          description: Unique identifier for the invoice.
+          example: "45C407BC-B41A-4DBB-9F58AFF49F8FFE6F"
+        BALANCE:
+          type: number
+          description: Outstanding balance for the invoice.
+          example: 200
+        POSTCODE:
+          type: string
+          nullable: true
+    InvoiceItem:
+      type: object
+      properties:
+        TOTALTAX:
+          type: number
+          description: The total tax for the item.
+          example: 18.18
+        CHILDREN:
+          type: object
+          description: Children associated with the item.
+        UNITPRICETAX:
+          type: number
+          description: Unit price tax for the item.
+          example: 18.182
+        DOMAINID:
+          type: integer
+          description: Domain ID associated with the item.
+          example: 0
+        HASCHILDREN:
+          type: integer
+          description: Indicates if the item has children.
+          example: 0
+        PARTID:
+          type: integer
+          description: Part ID associated with the item.
+          example: 0
+        UNITPRICENETT:
+          type: number
+          description: The unit price excluding tax.
+          example: 181.818
+        QTY:
+          type: integer
+          description: Quantity of the item.
+          example: 1
+        TAXPERCENT:
+          type: number
+          description: The tax percentage for the item.
+          example: 10
+        TOTALGROSS:
+          type: number
+          description: The total gross amount.
+          example: 200
+        ITEMCODE:
+          type: string
+          nullable: true
+          description: Code for the item.
+          example: null
+        FINANCECODE:
+          type: string
+          nullable: true
+          description: Finance code for the item.
+          example: null
+        TOTALNETT:
+          type: number
+          description: The total nett amount.
+          example: 181.82
+        SOURCEID:
+          type: integer
+          description: Source ID for the item.
+          example: 0
+        HASH:
+          type: string
+          description: Unique hash for the item.
+          example: "4E30651D13E6B14A7C96C14E6C070A15"
+        SERVICEDATE:
+          type: string
+          nullable: true
+          description: Service date for the item.
+          example: null
+        UNITPRICEGROSS:
+          type: number
+          description: The unit price including tax.
+          example: 200
+        ITEMID:
+          type: integer
+          description: Unique ID for the item.
+          example: 4467252
+        DESCRIPTION:
+          type: string
+          description: Description of the item.
+          example: "ewwewe"
+        COSTCENTRECODE:
+          type: string
+          nullable: true
+          description: Cost centre code.
+          example: null
+
+    InvoiceSummary:
+      type: object
+      properties:
+        INVOICENR:
+          type: string
+          description: The invoice number.
+          example: "AX-10132"
+        PRICEGROSS:
+          type: string
+          description: The gross price of the invoice.
+          example: "200"
+        DUEDATE:
+          type: string
+          format: date
+          description: The due date of the invoice.
+          example: "2024-10-30"
+        INVOICEID:
+          type: string
+          description: The unique identifier of the invoice.
+          example: "2522186"
+        AREITEMSLOCKED:
+          type: boolean
+          description: Indicates if the items in the invoice are locked.
+          example: false
+        LASTNAME:
+          type: string
+          description: The last name of the customer or client.
+          example: "Staines"
+        ISCANCELLED:
+          type: boolean
+          description: Indicates if the invoice has been cancelled.
+          example: false
+        EXTERNALREFERENCE:
+          type: string
+          nullable: true
+          description: An external reference for the invoice.
+          example: null
+        BALANCE:
+          type: string
+          description: The outstanding balance of the invoice.
+          example: "200"
+        FIRSTNAME:
+          type: string
+          description: The first name of the customer or client.
+          example: "Rod"
+        INVOICEDATE:
+          type: string
+          format: date
+          description: The date the invoice was issued.
+          example: "2024-10-20"
+        ISVOID:
+          type: boolean
+          description: Indicates if the invoice is void.
+          example: false
+        ISPAID:
+          type: boolean
+          description: Indicates if the invoice has been paid.
+          example: false
 
     DomainsResponse:
       type: array
       items:
         $ref: '#/components/schemas/Domain'
+    InvoiceSummaryResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/InvoiceSummary'
+
 security:
   - AxToken: []
     WsToken: []
