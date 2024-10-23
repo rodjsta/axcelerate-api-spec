@@ -269,7 +269,11 @@ paths:
                 - aItem
       responses:
         '200':
-          description: ''
+          description: 'An Invoice object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
   /accounting/invoice/{invoiceId}:
     get:
       tags:
