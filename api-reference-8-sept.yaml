@@ -246,8 +246,8 @@ paths:
                   description: Given name for the Invoice Bill To
                   type: string
                   example: ''
-                surname:
-                  description: Surname for the Invoice Bill To
+                lastname:
+                  description: Lastname for the Invoice Bill To
                   type: string
                   example: ''
                 aItem:
@@ -263,7 +263,7 @@ paths:
               required:
                 - contactId
                 - firstname
-                - surname
+                - lastname
                 - invoiceDate
                 - orderDate
                 - aItem
@@ -371,11 +371,11 @@ paths:
                   type: string
                   example: ''
                 firstname:
-                  description: Given Names person invoice bill to.
+                  description: Givename for the invoice bill to.
                   type: string
                   example: ''
-                surname:
-                  description: Last Names person invoice bill to.
+                lastname:
+                  description: Lastname for the invoice bill to.
                   type: string
                   example: ''
                 email:
@@ -479,13 +479,17 @@ paths:
               required:
                 - contactId
                 - firstname
-                - surname
+                - lastname
                 - invoiceDate
                 - orderDate
                 - aItem
       responses:
         '200':
-          description: ''
+          description: 'An Invoice object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
   /accounting/invoice/{invoiceGuid}/approve:
     put:
       tags:
@@ -502,7 +506,11 @@ paths:
             example: '2FA2C39F-B2B6-4301-9943667E7AC43FFE'
       responses:
         '200':
-          description: ''
+          description: 'An Invoice Approval object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceApprovalResponse'
   /accounting/invoice/{invoiceId}/paymenturl:
     get:
       tags:
@@ -5769,7 +5777,13 @@ components:
           type: boolean
           description: Indicates if the invoice has been paid.
           example: false
-
+    InvoiceApprovalResponse:
+          type: object
+          properties:
+            PAYMENTURL:
+              type: string
+              description: URL to process the payment for the invoice.
+              example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
 security:
   - AxToken: []
     WsToken: []
