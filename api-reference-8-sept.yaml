@@ -48,12 +48,6 @@ paths:
             schema:
               type: object
               properties:
-                commissionRate:
-                  description: >-
-                    The percentage commission, between 0 and 100, that the agent
-                    will receive.
-                  type: integer
-                  example: 11
                 contactId:
                   description: The contact ID of the marketing agent.
                   type: integer
@@ -64,6 +58,12 @@ paths:
                     GST, 2 = Including GST, 3 = Exempt.
                   type: integer
                   example: 1
+                commissionRate:
+                  description: >-
+                    The percentage commission, between 0 and 100, that the agent
+                    will receive.
+                  type: integer
+                  example: 11
               required:
                 - contactId
                 - taxRuleId
@@ -125,18 +125,18 @@ paths:
             schema:
               type: object
               properties:
-                commissionRate:
-                  description: >-
-                    The percentage commission, between 0 and 100, that the agent
-                    will receive.
-                  type: integer
-                  example: 20
                 taxRuleId:
                   description: >-
                     The tax rule to be specified for this agent. 1 = Excluding
                     GST, 2 = Including GST, 3 = Exempt.
                   type: integer
                   example: 1
+                commissionRate:
+                  description: >-
+                    The percentage commission, between 0 and 100, that the agent
+                    will receive.
+                  type: integer
+                  example: 20
       responses:
         '200':
           description: 'An Agent object.'
