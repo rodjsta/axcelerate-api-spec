@@ -32,10 +32,12 @@ paths:
       tags:
         - Agent
       summary: Create a new agent
-      description: >-
+      description: |
         Create a new agent. This endpoint is only available for clients using
         the Marketing/Sales Agents feature.
 
+
+        **Custom Fields**
 
         Agent Custom Fields values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`, `custom_field_specialty`.
         Values used should correspond to the custom field specified. Note: this will not create custom fields, they must already exist.
@@ -67,7 +69,11 @@ paths:
                 - taxRuleId
       responses:
         '200':
-          description: ''
+          description: 'An Agent object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
   /agent/{contactId}:
     get:
       tags:
@@ -87,14 +93,20 @@ paths:
             example: 13955345
       responses:
         '200':
-          description: ''
+          description: 'An Agent object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
     put:
       tags:
         - Agent
       summary: Update an agent
-      description: >-
+      description: |
         Update an existing agent. This endpoint is only available for clients using the Marketing/Sales Agents feature.
 
+
+        **Custom Fields**
 
         Agent Custom Fields may be updated by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`, `custom_field_specialty`.
         Values used should correspond to the custom field specified. Note: this will not create custom fields, they must already exist.
@@ -127,7 +139,11 @@ paths:
                   example: 1
       responses:
         '200':
-          description: ''
+          description: 'An Agent object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
   /accounting/invoice:
     get:
       tags:
@@ -154,7 +170,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InvoiceSummaryResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceSummary'
     post:
       tags:
         - Accounting Invoice
@@ -3712,11 +3730,13 @@ paths:
       operationId: retrieveAllDomains
       responses:
         '200':
-          description: An array of domains
+          description: An array of Domain objects
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DomainsResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
   /contact/enrolments/{contactId}:
     get:
       tags:
@@ -5323,6 +5343,40 @@ components:
       in: header
       name: wstoken
   schemas:
+    Agent:
+      type: object
+      properties:
+        MARKETINGAGENTID:
+          type: integer
+          description: Unique identifier for the Marketing Agent.
+          example: 22548
+        CONTACTID:
+          type: integer
+          description: Unique identifier for the Contact associated with the Agent.
+          example: 13970849
+        DEFAULTCOMMISSIONRATE:
+          type: number
+          description: The default commission rate assigned to the Agent.
+          example: 11
+        ACTIVE:
+          type: boolean
+          description: Indicates whether the Agent is active.
+          example: true
+        CUSTOMFIELD_REGION:
+          type: string
+          nullable: true
+          description: Custom field for the Agent's region.
+          example: null
+        CUSTOMFIELD_WBSITE:
+          type: string
+          nullable: true
+          description: Custom field for the Agent's website.
+          example: null
+        CUSTOMFIELD_BDM:
+          type: string
+          nullable: true
+          description: Custom field for the Business Development Manager (BDM).
+          example: null
     Domain:
       type: object
       properties:
@@ -5653,7 +5707,6 @@ components:
           nullable: true
           description: Cost centre code.
           example: null
-
     InvoiceSummary:
       type: object
       properties:
@@ -5712,15 +5765,6 @@ components:
           type: boolean
           description: Indicates if the invoice has been paid.
           example: false
-
-    DomainsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/Domain'
-    InvoiceSummaryResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/InvoiceSummary'
 
 security:
   - AxToken: []
