@@ -4665,7 +4665,13 @@ paths:
                   example: ''
       responses:
         '200':
-          description: ''
+          description: 'An organisation object (in an array)'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organisation'
   /organisation/{orgId}/children:
     get:
       tags:
