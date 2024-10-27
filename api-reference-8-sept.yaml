@@ -4458,7 +4458,13 @@ paths:
           description: Paging, maximum number of records to return.
       responses:
         '200':
-          description: ''
+          description: 'An array of Organisation Summary objects'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganisationSummary'
   /organisation:
     post:
       tags:
@@ -6090,6 +6096,108 @@ components:
           description: URL link to the photo of the key contact.
           example: "https://fs.axcelerate.com.au/images/71456677/students/746012.png"
 
+    OrganisationSummary:
+      type: object
+      properties:
+        ROWID:
+          type: integer
+          description: Unique row identifier for the organisation record.
+          example: 5
+        ORGID:
+          type: integer
+          description: Unique identifier for the organisation.
+          example: 107226
+        NAME:
+          type: string
+          description: Name of the organisation.
+          example: "Flowers by Mercedes Pty Ltd"
+        LEGALNAME:
+          type: string
+          nullable: true
+          description: Legal name of the organisation.
+        ANZSIC:
+          type: string
+          nullable: true
+          description: ANZSIC code representing the organisation's industry classification.
+        ORGANISATIONNOTES:
+          type: string
+          nullable: true
+          description: Additional notes about the organisation.
+        HIERACHYROOT:
+          type: integer
+          description: The top-level root identifier in the organisational hierarchy.
+          example: 107226
+        HIERACHYPATH:
+          type: string
+          description: Hierarchical path indicating organisational structure.
+          example: "/107226/"
+        HIERACHYDEPTH:
+          type: integer
+          description: Depth level within the organisational hierarchy.
+          example: 1
+        BOOKING_NOTES:
+          type: string
+          nullable: true
+          description: Notes related to bookings for the organisation.
+        BOOKING_DISCOUNT:
+          type: number
+          format: float
+          description: Discount percentage applied to bookings.
+          example: 0
+        FINANCESYSTEMCARDID:
+          type: string
+          nullable: true
+          description: Finance system card identifier associated with the organisation.
+        ORGNAMEACCOUNTING:
+          type: string
+          nullable: true
+          description: Accounting name of the organisation.
+        ABN:
+          type: string
+          nullable: true
+          description: Australian Business Number (ABN) of the organisation.
+        PURCHASEORDERREQUIRED:
+          type: integer
+          description: Indicator if a purchase order is required (1 for yes, 0 for no).
+          example: 0
+        NWDF_ORGSIZEBRACKET:
+          type: string
+          nullable: true
+          description: Organisation size bracket based on NWDF classifications.
+        ACTIVE:
+          type: integer
+          description: Indicator if the organisation is active (1 for active, 0 for inactive).
+          example: 1
+        COUNT:
+          type: integer
+          description: Number of related records or associated entries.
+          example: 5
+        DETAILS:
+          type: array
+          description: Collection of detail records associated with the organisation.
+          items:
+            $ref: '#/components/schemas/OrganisationDetail'
+        PARENT:
+          type: object
+          description: Parent organisation details.
+          $ref: '#/components/schemas/OrganisationParent'
+        CATEGORIES:
+          type: array
+          description: List of categories assigned to the organisation.
+          items:
+            $ref: '#/components/schemas/OrganisationCategory'
+        PARENTORGID:
+          type: integer
+          nullable: true
+          description: Identifier of the parent organisation, if applicable.
+        PAYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Identifier of the contact responsible for payments within the organisation.
+        EMPLOYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Identifier of the employer contact associated with the organisation.
 
 
 security:
