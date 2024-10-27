@@ -5875,6 +5875,11 @@ components:
           type: string
           description: Additional notes related to the organisation.
           example: "Testing 9876543210"
+        KEYCONTACTS:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrganisationKeyContact"
+          description: Key contacts associated with the organisation.
         DETAILS:
           type: array
           items:
@@ -6042,6 +6047,43 @@ components:
           type: string
           description: Country for this detail entry.
           example: "AUSTRALIA"
+
+    OrganisationKeyContact:
+      type: object
+      properties:
+        CONTACTID:
+          type: integer
+          description: Unique identifier for the key contact.
+          example: 7460933
+        GIVENNAME:
+          type: string
+          description: First name of the key contact.
+          example: "Rob"
+        SURNAME:
+          type: string
+          description: Surname of the key contact.
+          example: "Fairy"
+        EMAIL:
+          type: string
+          description: Email address of the key contact.
+          example: "rob.emails@emails.com"
+        POSITION:
+          type: string
+          description: Position or role of the key contact within the organisation.
+          example: "Director"
+        MOBILEPHONE:
+          type: string
+          description: Mobile phone number of the key contact.
+          example: "+61 400 000 000"
+        PHOTO:
+          type: integer
+          description: Indicator of whether the contact has an associated photo (1 for yes, 0 for no).
+          example: 1
+        PHOTOURL:
+          type: string
+          description: URL link to the photo of the key contact.
+          example: "https://fs.axcelerate.com.au/images/71456677/students/746012.png"
+
 
 
 security:
