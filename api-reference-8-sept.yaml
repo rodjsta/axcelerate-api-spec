@@ -4565,7 +4565,11 @@ paths:
           description: The ID of the Organisation.
       responses:
         '200':
-          description: ''
+          description: 'An organisation object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organisation'
     put:
       tags:
         - Organisation
@@ -5784,6 +5788,205 @@ components:
               type: string
               description: URL to process the payment for the invoice.
               example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
+
+    Organisation:
+      type: object
+      properties:
+        HIERACHYDEPTH:
+          type: integer
+          description: Level of hierarchy for the organisation.
+          example: 2
+        HIERACHYPATH:
+          type: string
+          description: Path of hierarchy levels in the organisation structure.
+          example: "/264487/264488/"
+        NWDF_ORGSIZEBRACKET:
+          type: string
+          nullable: true
+          description: Size bracket category for the organisation.
+        BANNER:
+          type: string
+          description: HTML content for the organisation's banner.
+          example: "<img src='/images/logo.png'>"
+        ORGNAMEACCOUNTING:
+          type: string
+          nullable: true
+          description: Organisation name for accounting purposes.
+        PURCHASEORDERREQUIRED:
+          type: integer
+          description: Indicates if a purchase order is required (1 or 0).
+          example: 0
+        SCHOOLTYPEID:
+          type: string
+          description: Identifier for the type of school if applicable.
+          example: "91"
+        BOOKING_NOTES:
+          type: string
+          nullable: true
+          description: Additional notes for bookings.
+        LEGALNAME:
+          type: string
+          nullable: true
+          description: Legal name of the organisation.
+        FINANCESYSTEMCARDID:
+          type: string
+          nullable: true
+          description: Identifier for financial system card.
+        HIERACHYROOT:
+          type: integer
+          description: ID of the root organisation in the hierarchy.
+          example: 264487
+        PAYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Contact ID for the organisation's payer.
+        NAME:
+          type: string
+          description: Organisation name.
+          example: "DO Tha VooDoo2"
+        ORGID:
+          type: integer
+          description: Unique identifier for the organisation.
+          example: 264488
+        PARENT:
+          $ref: "#/components/schemas/OrganisationParent"
+        ORGOPTIONALID:
+          type: string
+          description: Optional organisation identifier.
+          example: "1234"
+        EMPLOYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Contact ID for the employer associated with the organisation.
+        ABN:
+          type: string
+          nullable: true
+          description: Australian Business Number for the organisation.
+        ANZSIC:
+          type: string
+          nullable: true
+          description: ANZSIC code for the organisation's industry classification.
+        PARENTORGID:
+          type: integer
+          nullable: true
+          description: Parent organisation's ID.
+          example: 264487
+        ORGANISATIONNOTES:
+          type: string
+          description: Additional notes related to the organisation.
+          example: "Testing 9876543210"
+        DETAILS:
+          type: array
+          items:
+            type: object
+          description: Additional details for the organisation.
+        CATEGORIES:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrganisationCategory"
+        CUSTOMFIELD_MYFIRSTFIELD:
+          type: string
+          description: Custom field containing the first field's information.
+          example: "This is my first field"
+        CUSTOMFIELD_MYMULTISELECT:
+          type: array
+          items:
+            type: string
+          description: Multiselect custom field for the organisation.
+          example: ["A", "B"]
+
+    OrganisationParent:
+      type: object
+      properties:
+        HIERACHYDEPTH:
+          type: integer
+          description: Level of hierarchy for the parent organisation.
+          example: 1
+        HIERACHYPATH:
+          type: string
+          description: Path of hierarchy levels for the parent organisation.
+          example: "/264487/"
+        NWDF_ORGSIZEBRACKET:
+          type: string
+          nullable: true
+          description: Size bracket category for the parent organisation.
+        ORGNAMEACCOUNTING:
+          type: string
+          nullable: true
+          description: Accounting name for the parent organisation.
+        PURCHASEORDERREQUIRED:
+          type: integer
+          description: Indicates if a purchase order is required for the parent organisation (1 or 0).
+          example: 0
+        BOOKING_NOTES:
+          type: string
+          nullable: true
+          description: Booking notes for the parent organisation.
+        LEGALNAME:
+          type: string
+          nullable: true
+          description: Legal name of the parent organisation.
+        FINANCESYSTEMCARDID:
+          type: string
+          nullable: true
+          description: Financial system card ID for the parent organisation.
+        HIERACHYROOT:
+          type: integer
+          description: ID of the root organisation for the hierarchy.
+          example: 264487
+        PAYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Payer contact ID for the parent organisation.
+        NAME:
+          type: string
+          description: Name of the parent organisation.
+          example: "DO Tha VooDoo"
+        ORGID:
+          type: integer
+          description: Unique identifier for the parent organisation.
+          example: 264487
+        EMPLOYERCONTACTID:
+          type: integer
+          nullable: true
+          description: Employer contact ID for the parent organisation.
+        ABN:
+          type: string
+          nullable: true
+          description: Australian Business Number for the parent organisation.
+        ANZSIC:
+          type: string
+          nullable: true
+          description: ANZSIC code for industry classification of the parent organisation.
+        PARENTORGID:
+          type: integer
+          nullable: true
+          description: ID of the organisation's parent (if any).
+        ORGANISATIONNOTES:
+          type: string
+          description: Notes specific to the parent organisation.
+          example: "Testing 543210"
+
+    OrganisationCategory:
+      type: object
+      properties:
+        CATEGORYID:
+          type: integer
+          description: Unique identifier for the category.
+          example: 1234
+        CATEGORYCODE:
+          type: string
+          description: Code representing the organisation category.
+          example: "org101"
+        CATEGORYDESCRIPTOR:
+          type: string
+          description: Description of the organisation category.
+          example: "Organisation Group A"
+        ACTIVE:
+          type: integer
+          description: Status of the category (1 = active, 0 = inactive).
+          example: 1
+
 security:
   - AxToken: []
     WsToken: []
