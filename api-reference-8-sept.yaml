@@ -5878,7 +5878,7 @@ components:
         DETAILS:
           type: array
           items:
-            type: object
+            $ref: "#/components/schemas/OrganisationDetail"
           description: Additional details for the organisation.
         CATEGORIES:
           type: array
@@ -5986,6 +5986,63 @@ components:
           type: integer
           description: Status of the category (1 = active, 0 = inactive).
           example: 1
+
+    OrganisationDetail:
+      type: object
+      properties:
+        DETAILID:
+          type: integer
+          description: Unique identifier for the organisation detail entry.
+          example: 58329
+        ORGID:
+          type: integer
+          description: Unique identifier for the associated organisation.
+          example: 29176
+        TYPE:
+          type: string
+          description: Type of address or contact information.
+          example: "Street Address"
+        PHONE:
+          type: string
+          description: Phone number associated with this detail entry.
+          example: "07 3870 3851"
+        FAX:
+          type: string
+          description: Fax number associated with this detail entry.
+          example: "07 3367 2529"
+        EMAILADDRESS:
+          type: string
+          nullable: true
+          description: Email address associated with this detail entry.
+        WEBSITE:
+          type: string
+          nullable: true
+          description: Website URL associated with this detail entry.
+        ADDRESS1:
+          type: string
+          description: Primary address line for this detail entry.
+          example: "PO Box 624"
+        ADDRESS2:
+          type: string
+          nullable: true
+          description: Secondary address line for this detail entry.
+        CITY:
+          type: string
+          description: City for this detail entry.
+          example: "TOOWONG"
+        STATE:
+          type: string
+          description: State for this detail entry.
+          example: "QLD"
+        POSTCODE:
+          type: string
+          description: Postal code for this detail entry.
+          example: "4066"
+        COUNTRY:
+          type: string
+          description: Country for this detail entry.
+          example: "AUSTRALIA"
+
 
 security:
   - AxToken: []
