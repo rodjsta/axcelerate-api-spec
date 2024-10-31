@@ -4701,7 +4701,11 @@ paths:
           description: The ID of the Organisation.
       responses:
         '200':
-          description: ''
+          description: 'An Organisation Children object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationChildren'
   /organisation/{orgId}/detail:
     post:
       tags:
@@ -6218,6 +6222,207 @@ components:
           type: integer
           description: Unique identifier of the created organisation.
           example: 9999
+
+    OrganisationChildren:
+      type: object
+      properties:
+        HIERACHYDEPTH:
+          type: integer
+          description: The depth level of the organisation within the hierarchy.
+          example: 1
+        NWDF_ORGSIZEBRACKET:
+          type: string
+          nullable: true
+          description: The size bracket category for the organisation.
+          example: null
+        HIERACHYPATH:
+          type: string
+          description: Path indicating the organisation's position in the hierarchy.
+          example: "/351300/"
+        BOOKING_DISCOUNT:
+          type: number
+          description: Discount applicable for bookings.
+          example: 0
+        ORGNAMEACCOUNTING:
+          type: string
+          nullable: true
+          description: The accounting name of the organisation.
+          example: null
+        PURCHASEORDERREQUIRED:
+          type: integer
+          description: Indicates if a purchase order is required (1 = required, 0 = not required).
+          example: 0
+        SCHOOLTYPEID:
+          type: string
+          description: Type ID associated with the school.
+          example: "91"
+        BOOKING_NOTES:
+          type: string
+          nullable: true
+          description: Additional notes related to bookings.
+          example: null
+        LEGALNAME:
+          type: string
+          description: The legal name of the organisation.
+          example: "Nathan Robert Gordon Digital Solutions"
+        FINANCESYSTEMCARDID:
+          type: string
+          nullable: true
+          description: Finance system card identifier.
+          example: null
+        HIERACHYROOT:
+          type: integer
+          description: ID of the root organisation in the hierarchy.
+          example: 351300
+        NAME:
+          type: string
+          description: Name of the organisation.
+          example: "NRG Digital Solutions"
+        ORGID:
+          type: integer
+          description: Unique identifier for the organisation.
+          example: 351300
+        HTMLBADGE:
+          type: string
+          nullable: true
+          description: HTML representation of the organisation's badge or logo.
+          example: null
+        ABN:
+          type: string
+          nullable: true
+          description: Australian Business Number for the organisation.
+          example: null
+        ANZSIC:
+          type: string
+          nullable: true
+          description: ANZSIC code of the organisation's industry classification.
+          example: null
+        ORGANISATIONNOTES:
+          type: string
+          nullable: true
+          description: Notes related to the organisation.
+          example: null
+        DETAILS:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganisationDetail'
+          description: List of organisation details, such as address and contact info.
+        CHILDREN:
+          type: array
+          description: List of child organisations.
+          items:
+            type: object
+            properties:
+              ORGID:
+                type: integer
+                description: Unique identifier for the child organisation.
+                example: 33534
+              NAME:
+                type: string
+                description: Name of the child organisation.
+                example: "NRG Online Pty Ltd"
+              LEGALNAME:
+                type: string
+                nullable: true
+                description: Legal name of the child organisation.
+                example: null
+              ANZSIC:
+                type: string
+                nullable: true
+                description: ANZSIC code of the child organisation's industry classification.
+                example: null
+              ORGANISATIONNOTES:
+                type: string
+                nullable: true
+                description: Notes related to the child organisation.
+                example: null
+              HIERACHYROOT:
+                type: integer
+                description: ID of the root organisation in the hierarchy.
+                example: 351300
+              HIERACHYPATH:
+                type: string
+                description: Path indicating the child organisation's position in the hierarchy.
+                example: "/351300/33534/"
+              HIERACHYDEPTH:
+                type: integer
+                description: The depth level of the child organisation in the hierarchy.
+                example: 2
+              BOOKING_NOTES:
+                type: string
+                nullable: true
+                description: Booking notes for the child organisation.
+                example: null
+              SCHOOLTYPEID:
+                type: string
+                nullable: true
+                description: Type ID associated with the child organisation if applicable.
+                example: null
+              BOOKING_DISCOUNT:
+                type: number
+                description: Discount applicable to bookings at the child organisation.
+                example: 0
+              FINANCESYSTEMCARDID:
+                type: string
+                nullable: true
+                description: Finance system card identifier for the child organisation.
+                example: null
+              ORGNAMEACCOUNTING:
+                type: string
+                nullable: true
+                description: Accounting name for the child organisation.
+                example: null
+              ABN:
+                type: string
+                nullable: true
+                description: Australian Business Number for the child organisation.
+                example: null
+              PURCHASEORDERREQUIRED:
+                type: integer
+                description: Indicates if a purchase order is required (1 = required, 0 = not required).
+                example: 0
+              NWDF_ORGSIZEBRACKET:
+                type: string
+                nullable: true
+                description: Size bracket category for the child organisation.
+                example: null
+              HTMLBADGE:
+                type: string
+                nullable: true
+                description: HTML representation of the child organisation's badge or logo.
+                example: null
+              HASCHILDREN:
+                type: boolean
+                description: Indicates if the child organisation has its own child organisations.
+                example: false
+              PARENTORGID:
+                type: integer
+                description: ID of the parent organisation.
+                example: 351300
+              PAYERCONTACTID:
+                type: integer
+                description: ID of the payer contact, if applicable.
+                example: 0
+              EMPLOYERCONTACTID:
+                type: integer
+                nullable: true
+                description: ID of the employer contact, if applicable.
+                example: null
+        PARENTORGID:
+          type: integer
+          nullable: true
+          description: ID of the parent organisation.
+          example: null
+        PAYERCONTACTID:
+          type: integer
+          description: ID of the payer contact, if applicable.
+          example: 0
+        EMPLOYERCONTACTID:
+          type: integer
+          nullable: true
+          description: ID of the employer contact, if applicable.
+          example: null
+
 
 security:
   - AxToken: []
