@@ -4553,7 +4553,11 @@ paths:
                   example: ''
       responses:
         '200':
-          description: ''
+          description: 'Organisation created successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationCreateResponse'
   /organisation/{orgId}:
     get:
       tags:
@@ -6199,6 +6203,21 @@ components:
           nullable: true
           description: Identifier of the employer contact associated with the organisation.
 
+    OrganisationCreateResponse:
+      type: object
+      properties:
+        MESSAGE:
+          type: string
+          description: Message indicating the result of the organisation creation.
+          example: "Organisation Created Successfully"
+        STATUS:
+          type: string
+          description: Status of the organisation creation process.
+          example: "success"
+        ORGID:
+          type: integer
+          description: Unique identifier of the created organisation.
+          example: 9999
 
 security:
   - AxToken: []
