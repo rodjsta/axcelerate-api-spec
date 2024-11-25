@@ -504,7 +504,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InvoiceApprovalResponse'
+                type: object
+                properties:
+                  PAYMENTURL:
+                    type: string
+                    description: URL to process the payment for the invoice.
+                    example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
   /accounting/invoice/{invoiceId}/paymenturl:
     get:
       tags:
@@ -1328,7 +1333,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactCreateResponse'
+                type: object
+                properties:
+                  EMAILADDRESS:
+                    type: string
+                    format: email
+                    description: "The email address of the contact."
+                    example: "jim.jeffreys@axcelerate.com"
+                  CONTACTID:
+                    type: integer
+                    description: "The unique identifier for the contact."
+                    example: 13971189
+                  SURNAME:
+                    type: string
+                    description: "The surname of the contact."
+                    example: "Jeffreys"
+                  GIVENNAME:
+                    type: string
+                    description: "The given name of the contact."
+                    example: "Jim"
   /contact/{contactId}:
     get:
       tags:
@@ -4555,7 +4578,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrganisationCreateResponse'
+                type: object
+                properties:
+                  MESSAGE:
+                    type: string
+                    description: Message indicating the result of the organisation creation.
+                    example: "Organisation Created Successfully"
+                  STATUS:
+                    type: string
+                    description: Status of the organisation creation process.
+                    example: "success"
+                  ORGID:
+                    type: integer
+                    description: Unique identifier of the created organisation.
+                    example: 256796
   /organisation/{orgId}:
     get:
       tags:
@@ -5429,26 +5465,6 @@ components:
       in: header
       name: wstoken
   schemas:
-    ContactCreateResponse:
-      type: object
-      properties:
-        EMAILADDRESS:
-          type: string
-          format: email
-          description: "The email address of the contact."
-          example: "jim.jeffreys@axcelerate.com"
-        CONTACTID:
-          type: integer
-          description: "The unique identifier for the contact."
-          example: 13971189
-        SURNAME:
-          type: string
-          description: "The surname of the contact."
-          example: "Jeffreys"
-        GIVENNAME:
-          type: string
-          description: "The given name of the contact."
-          example: "Jim"
     Agent:
       type: object
       properties:
@@ -5871,14 +5887,6 @@ components:
           type: boolean
           description: Indicates if the invoice has been paid.
           example: false
-    InvoiceApprovalResponse:
-          type: object
-          properties:
-            PAYMENTURL:
-              type: string
-              description: URL to process the payment for the invoice.
-              example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
-
     Organisation:
       type: object
       properties:
@@ -6276,23 +6284,6 @@ components:
           type: integer
           nullable: true
           description: Identifier of the employer contact associated with the organisation.
-
-    OrganisationCreateResponse:
-      type: object
-      properties:
-        MESSAGE:
-          type: string
-          description: Message indicating the result of the organisation creation.
-          example: "Organisation Created Successfully"
-        STATUS:
-          type: string
-          description: Status of the organisation creation process.
-          example: "success"
-        ORGID:
-          type: integer
-          description: Unique identifier of the created organisation.
-          example: 9999
-
     OrganisationChildren:
       type: object
       properties:
