@@ -5168,19 +5168,25 @@ paths:
               properties:
                 contactId:
                   description: The aXcelerate contactId the user is associated with.
-                  type: string
-                  example: '13955224'
-                domainID:
-                  description: The domainId. Set the Domain for the User.
-                  type: string
-                  example: ''
+                  type: integer
+                  example: 13955224
                 roleID:
                   description: >-
                     The Role to assign the User to. If this is omitted;
                     aXcelerate will try to set them to Learner if the Default
                     Role has been configured (In Additional Options).
-                  type: string
-                  example: ''
+                  type: integer
+                  example: 1
+                domainID:
+                  description: The domainId. Set the Domain for the User.
+                  type: integer
+                  example: 2704
+                sendEmail:
+                  description: >-
+                    Send the user creation invitation email. In most cases, this should be set to true,
+                    except possibly when user access is managed by Corporate Identity Providers.
+                  type: boolean
+                  example: true
       responses:
         '200':
           description: ''
