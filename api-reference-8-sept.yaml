@@ -5191,9 +5191,27 @@ paths:
                     except possibly when user access is managed by Corporate Identity Providers.
                   type: boolean
                   example: true
+              required:
+                - contactId
       responses:
         '200':
-          description: ''
+          description: 'A basic summary of the newly created User.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  USERID:
+                    type: integer
+                    description: "The unique identifier for the User."
+                    example: 2962448
+                  CONTACTID:
+                    type: integer
+                    description: "The unique identifier for the Contact."
+                    example: 13971189
+                  USERNAME:
+                    type: string
+                    description: "The username of the user."
+                    example: "jim.jeffreys"
   /user/login:
     post:
       tags:
@@ -5256,31 +5274,37 @@ paths:
               properties:
                 contactID:
                   description: The aXcelerate ContactId
-                  type: string
-                  example: '13955224'
+                  type: integer
+                  example: 13955224
                 email:
                   description: The Associated Contact's email address
                   type: string
-                  example: ''
+                  example: 'jim.jeffreys@axcelerate.com'
                 givenName:
                   description: The Associated Contact's Given Name
                   type: string
-                  example: ''
-                isActive:
-                  description: The User status. Enter 0 = inactive, 1 = active, 2 = all
-                  type: string
-                  example: '1'
+                  example: 'Jim'
                 surname:
                   description: The Associated Contact's Surname
                   type: string
-                  example: ''
+                  example: 'Jeffreys'
                 username:
                   description: The Username
                   type: string
-                  example: ''
+                  example: 'jim.jeffreys'
+                isActive:
+                  description: The User status. Enter 0 = inactive, 1 = active, 2 = all
+                  type: integer
+                  example: 1
       responses:
         '200':
-          description: ''
+          description: 'An array of User objects'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
   /user/{userId}:
     get:
       tags:
@@ -5298,7 +5322,11 @@ paths:
           description: The ID of the User.
       responses:
         '200':
-          description: ''
+          description: 'A User object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
     put:
       tags:
         - User
@@ -5335,7 +5363,19 @@ paths:
                   example: 7786
       responses:
         '200':
-          description: ''
+          description: 'A simple response with the outcome of the request.'
+          content:
+            application/json:
+              schema:
+                properties:
+                  STATUS:
+                    type: string
+                    description: "Outcome of the request."
+                    example: "success"
+                  MESSAGE:
+                    type: string
+                    description: "Message returned from the request."
+                    example: "User updated successfully."
   /user/roles:
     get:
       tags:
@@ -5345,7 +5385,13 @@ paths:
       operationId: retrieveUserRoles
       responses:
         '200':
-          description: ''
+          description: A list of user roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserRole'
 tags:
   - name: Agent
   - name: Accounting Items List
@@ -6446,8 +6492,102 @@ components:
           nullable: true
           description: ID of the employer contact, if applicable.
           example: null
-
-
+    User:
+      type: object
+      properties:
+        ROLETYPEID:
+          type: integer
+          description: "The type of role assigned to the user."
+          example: 1
+        USERID:
+          type: integer
+          description: "The unique identifier for the user."
+          example: 2962448
+        DOMAINID:
+          type: integer
+          nullable: true
+          description: "The ID of the domain associated with the user, if applicable."
+          example: null
+        FIRSTLOGINDATE:
+          type: string
+          description: "The date and time of the user's first login. Empty if the user has not logged in."
+          example: ""
+        CONTACTID:
+          type: integer
+          description: "The unique identifier of the contact associated with the user."
+          example: 13971189
+        ROLEID:
+          type: integer
+          description: "The unique identifier of the user's role."
+          example: 2386
+        ROLENAME:
+          type: string
+          description: "The name of the user's role."
+          example: "Administrator"
+        PENDINGLOGININVITE:
+          type: boolean
+          description: "Indicates whether a login invite is pending for the user."
+          example: false
+        ACTIVE:
+          type: integer
+          description: "Indicates whether the user is active. 1 means active and 0 means inactive."
+          example: 1
+        PARTNERORGANISATIONID:
+          type: string
+          description: "The identifier of the partner organisation associated with the user, if any."
+          example: ""
+        MIGRATED:
+          type: boolean
+          description: "Indicates whether the user's account has been migrated to a 'Global' login."
+          example: false
+        USERNAME:
+          type: string
+          description: "The username of the user."
+          example: "jim.jeffreys"
+        CONTACT_NAME:
+          type: string
+          description: "The full name of the contact associated with the user."
+          example: "Jim Jeffreys"
+    UserRole:
+      type: object
+      properties:
+        ROLEID:
+          type: integer
+          description: "The unique identifier of the role."
+          example: 2288
+        FKROLETYPEID:
+          type: integer
+          example: 1
+        NAME:
+          type: string
+          description: "The name of the role."
+          example: "Administrator"
+        SSO_ID:
+          type: string
+          description: "The single sign-on identifier for the role (if any)."
+          example: ""
+        SIGNINREQUIREMENT:
+          type: string
+          description: "The sign-in requirement for the role."
+          example: "MFARequired"
+        FKLMSID:
+          type: integer
+          example: 528457344
+        WIDGETDATA:
+          type: string
+          nullable: true
+          example: "[[{\"code\":\"TASKS_USER\",\"collapsed\":0,\"din\":1}]]"
+        PORTALCONFIG:
+          type: string
+          nullable: true
+          example: ""
+        ROLETYPE:
+          type: string
+          description: "The base role type for this role."
+          example: "Administrator"
+        CANDELETE:
+          type: integer
+          example: 0
 security:
   - AxToken: []
     WsToken: []
