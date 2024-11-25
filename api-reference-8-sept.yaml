@@ -1324,7 +1324,11 @@ paths:
                   example: ''
       responses:
         '200':
-          description: ''
+          description: 'Basic details of the newly created Contact.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactCreateResponse'
   /contact/{contactId}:
     get:
       tags:
@@ -5379,6 +5383,26 @@ components:
       in: header
       name: wstoken
   schemas:
+    ContactCreateResponse:
+      type: object
+      properties:
+        EMAILADDRESS:
+          type: string
+          format: email
+          description: "The email address of the contact."
+          example: "jim.jeffreys@axcelerate.com"
+        CONTACTID:
+          type: integer
+          description: "The unique identifier for the contact."
+          example: 13971189
+        SURNAME:
+          type: string
+          description: "The surname of the contact."
+          example: "Jeffreys"
+        GIVENNAME:
+          type: string
+          description: "The given name of the contact."
+          example: "Jim"
     Agent:
       type: object
       properties:
