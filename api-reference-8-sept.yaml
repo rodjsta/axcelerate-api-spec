@@ -2182,7 +2182,11 @@ paths:
             example: 6531423
       responses:
         '200':
-          description: ''
+          description: 'A Contact Message object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactMessage'
     put:
       tags:
         - Contact Message
@@ -2200,23 +2204,14 @@ paths:
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                message:
-                  description: Message to be saved for the contact.
-                  type: string
-                  example: >-
-                    this contact is a great student and has been very
-                    responsive.
-                showAlert:
-                  description: >-
-                    Whether a modal alert should be shown when viewing the
-                    contact's profile.
-                  type: string
-                  example: '1'
+              $ref: '#/components/schemas/ContactMessage'
       responses:
         '200':
-          description: ''
+          description: 'A Contact Message object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactMessage'
   /course:
     post:
       tags:
@@ -5685,6 +5680,20 @@ components:
         ACTIVE:
           type: integer
           enum: [0, 1]
+    ContactMessage:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The message to be displayed.
+          example: "This student has attendance issues. Consider before enrolling."
+        showAlert:
+          type: boolean
+          example: true
+          description: "Indicates whether a modal alert should be shown when viewing the Contact's profile."
+      required:
+        - message
+        - showAlert
     ContactSource:
       type: object
       properties:
