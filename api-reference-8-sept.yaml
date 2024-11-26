@@ -4441,14 +4441,10 @@ paths:
       description: >
 
         This endpoint makes an HTTP GET request to retrieve a list of
-        organizations based on the search query and active status. The query
+        organisations based on the search query and active status. The query
         parameters include 'search' for the search term, 'active' to filter
-        active organizations, 'offset' for pagination, and 'displayLength' to
+        active organisations, 'offset' for pagination, and 'displayLength' to
         specify the number of results per page.
-
-
-        The response of this request can be documented as a JSON schema to
-        define the structure of the returned data.
       operationId: searchOrganisations
       parameters:
         - name: search
@@ -4460,22 +4456,24 @@ paths:
         - name: active
           in: query
           schema:
-            type: string
-            example: '1'
+            type: boolean
+            example: 1
           description: >-
-            Actuve status for the organisation. If not provided, both active and
+            Active status for the organisation. If not provided, both active and
             inactive organisations will be returned.
         - name: offset
           in: query
           schema:
-            type: string
-            example: '0'
+            type: integer
+            example: 0
+            default: 0
           description: Paging, starting record.
         - name: displayLength
           in: query
           schema:
-            type: string
-            example: '10'
+            type: integer
+            example: 10
+            default: 10
           description: Paging, maximum number of records to return.
       responses:
         '200':
@@ -4491,7 +4489,18 @@ paths:
       tags:
         - Organisation
       summary: Create an organisation
-      description: Create an Organisation.
+      description: |
+        This endpoint allows you to create a new Organisation record.
+
+
+        **Custom Fields**
+
+        Organisation Custom Fields values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`,
+        `custom_field_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        must already exist.
+
+        If updating a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
+        it is expected the data is URL encoded first. For example, to get 2 values: 'A,B' and 'C' you would either pass: "['A,B','C']" or "A%2CB,C".
       operationId: createAnOrganisation
       requestBody:
         content:
@@ -4499,79 +4508,70 @@ paths:
             schema:
               type: object
               properties:
-                ABN:
-                  description: Australian Business Number.
-                  type: string
-                  example: ''
-                active:
-                  description: Active status of the Organisation.
-                  type: string
-                  example: ''
-                categoryIds:
-                  description: A list of valid Organisation Category IDs.
-                  type: string
-                  example: ''
-                customField_[variableName]:
-                  description: >-
-                    Replace [variableName] with the actual customField variable
-                    name to set a customField value against the Organisation. If
-                    updating a custom field that supports multiple values, you
-                    can use comma-delimited values or a JSON array. If using
-                    comma-delimited, it is expected the data is URL encoded
-                    first. For example, to get 2 values: 'A,B' and 'C' you would
-                    either pass: "['A,B','C']" or "A%2CB,C".
-                  type: string
-                  example: ''
-                employerContactId:
-                  description: Contact ID of the Employer.
-                  type: string
-                  example: ''
-                keyContactIds:
-                  description: A list of valid Contact IDs.
-                  type: string
-                  example: '6533788'
-                legalName:
-                  description: Legal name of the Organisation.
-                  type: string
-                  example: McGreggor's Farm Pty Ltd
                 name:
                   description: Name of the Organisation.
                   type: string
                   example: McGreggor's Farm
+                legalName:
+                  description: Legal name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm Pty Ltd
+                orgOptionalId:
+                  description: An optional identifier to use for this organisation record.
+                  type: string
+                  example: ''
+                parentOrgId:
+                  description: Parent Organisation ID.
+                  type: integer
+                  example: 123456
+                employerContactId:
+                  description: Contact ID of the Employer.
+                  type: integer
+                  example: 6533788
+                payerContactId:
+                  description: Contact ID of the Payer.
+                  type: integer
+                  example: 6533788
+                ABN:
+                  description: Australian Business Number.
+                  type: integer
+                  example: 46010942613
                 orgNameAccounting:
                   description: >-
                     Name of the Organisation (used by aXcelerate
                     Accounting/Finance)
                   type: string
                   example: McGreggor's Farm Pty Ltd ATF The Farm People Trust
-                orgOptionalId:
-                  description: An optional identifier to use for this organisation record.
-                  type: string
-                  example: ''
                 organisationNotes:
                   description: Notes field stored against the Organisation
                   type: string
                   example: Give them the farm discount.
-                parentOrgId:
-                  description: Parent Organisation ID.
-                  type: string
-                  example: ''
-                payerContactId:
-                  description: Contact ID of the Payer.
-                  type: string
-                  example: ''
                 purchaseOrderRequired:
                   description: >-
                     Is a purchase order required when invoicing this
                     organisation?
-                  type: string
-                  example: 'true'
+                  type: boolean
+                  example: true
                 schoolTypeId:
                   description: >-
                     School Type Identifier AVETMISS field. See (Codes and
                     Identifiers: School Type Identifiers)
+                  type: integer
+                  example: 21
+                categoryIds:
+                  description: A list of valid Organisation Category IDs.
                   type: string
-                  example: ''
+                  example: '2253,1255'
+                keyContactIds:
+                  description: A list of valid Contact IDs.
+                  type: string
+                  example: '6533788,1465655'
+                active:
+                  description: Active status of the Organisation.
+                  type: boolean
+                  example: true
+              required:
+                - name
       responses:
         '200':
           description: 'Organisation created successfully'
@@ -4618,7 +4618,17 @@ paths:
       tags:
         - Organisation
       summary: Update an organisation
-      description: Update a specific Organisation record.
+      description: |
+        This endpoint allows you to update an existing Organisation record.
+
+        **Custom Fields**
+
+        Organisation Custom Fields values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`,
+        `custom_field_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        must already exist.
+
+        If updating a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
+        it is expected the data is URL encoded first. For example, to get 2 values: 'A,B' and 'C' you would either pass: "['A,B','C']" or "A%2CB,C".
       operationId: updateAnOrganisation
       parameters:
         - name: orgId
@@ -4634,79 +4644,68 @@ paths:
             schema:
               type: object
               properties:
-                ABN:
-                  description: Australian Business Number.
-                  type: string
-                  example: ''
-                active:
-                  description: Active status of the Organisation.
-                  type: string
-                  example: ''
-                categoryIds:
-                  description: A list of valid Organisation Category IDs.
-                  type: string
-                  example: ''
-                customField_[variableName]:
-                  description: >-
-                    Replace [variableName] with the actual customField variable
-                    name to set a customField value against the Organisation. If
-                    updating a custom field that supports multiple values, you
-                    can use comma-delimited values or a JSON array. If using
-                    comma-delimited, it is expected the data is URL encoded
-                    first. For example, to get 2 values: 'A,B' and 'C' you would
-                    either pass: "['A,B','C']" or "A%2CB,C".
-                  type: string
-                  example: ''
-                employerContactId:
-                  description: Contact ID of the Employer.
-                  type: string
-                  example: ''
-                keyContactIds:
-                  description: A list of valid Contact IDs.
-                  type: string
-                  example: '6533788'
-                legalName:
-                  description: Legal name of the Organisation.
-                  type: string
-                  example: McGreggor's Farm Pty Ltd
                 name:
                   description: Name of the Organisation.
                   type: string
                   example: McGreggor's Farm
+                legalName:
+                  description: Legal name of the Organisation.
+                  type: string
+                  example: McGreggor's Farm Pty Ltd
+                orgOptionalId:
+                  description: An optional identifier to use for this organisation record.
+                  type: string
+                  example: ''
+                parentOrgId:
+                  description: Parent Organisation ID.
+                  type: integer
+                  example: 123456
+                employerContactId:
+                  description: Contact ID of the Employer.
+                  type: integer
+                  example: 6533788
+                payerContactId:
+                  description: Contact ID of the Payer.
+                  type: integer
+                  example: 6533788
+                ABN:
+                  description: Australian Business Number.
+                  type: integer
+                  example: 46010942613
                 orgNameAccounting:
                   description: >-
                     Name of the Organisation (used by aXcelerate
                     Accounting/Finance)
                   type: string
                   example: McGreggor's Farm Pty Ltd ATF The Farm People Trust
-                orgOptionalId:
-                  description: An optional identifier to use for this organisation record.
-                  type: string
-                  example: ''
                 organisationNotes:
                   description: Notes field stored against the Organisation
                   type: string
                   example: Give them the farm discount.
-                parentOrgId:
-                  description: Parent Organisation ID.
-                  type: string
-                  example: '1120758'
-                payerContactId:
-                  description: Contact ID of the Payer.
-                  type: string
-                  example: ''
                 purchaseOrderRequired:
                   description: >-
                     Is a purchase order required when invoicing this
                     organisation?
-                  type: string
-                  example: 'false'
+                  type: boolean
+                  example: true
                 schoolTypeId:
                   description: >-
                     School Type Identifier AVETMISS field. See (Codes and
                     Identifiers: School Type Identifiers)
+                  type: integer
+                  example: 21
+                categoryIds:
+                  description: A list of valid Organisation Category IDs.
                   type: string
-                  example: ''
+                  example: '2253,1255'
+                keyContactIds:
+                  description: A list of valid Contact IDs.
+                  type: string
+                  example: '6533788,1465655'
+                active:
+                  description: Active status of the Organisation.
+                  type: boolean
+                  example: true
       responses:
         '200':
           description: 'An organisation object (in an array)'
