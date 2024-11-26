@@ -932,525 +932,25 @@ paths:
       tags:
         - Contact
       summary: Create a new contact
-      description: Create a new Contact.
+      description: |
+        Create a new Contact. This endpoint will not search for any existing contacts, but rather create a new one.
+        If you end up creating a duplicate contact, they can be merged later from within aXcelerate.
+
+
+        **Custom Fields**
+
+        Contact Custom Field values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`,
+        `custom_field_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        must already exist.
+
+        If updating a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
+        it is expected the data is URL encoded first. For example, to get 2 values: 'A,B' and 'C' you would either pass: "['A,B','C']" or "A%2CB,C".
       operationId: createANewContact
       requestBody:
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                ANZSCOCode:
-                  description: >-
-                    Australian and New Zealand Standard Classification of
-                    Occupations (ANZSCO), ABS catalogue no.1220.0, 2009. The
-                    major group of this code is used for the Victorian AVETMISS
-                    field Client Occupation Identifier (left most digit).
-                  type: string
-                  example: ''
-                ANZSICCode:
-                  description: >-
-                    Australian and New Zealand Standard Industrial
-                    Classification (ANZSIC), ABS catalogue no.1292.0, 2006. The
-                    division of this code is used for the Victorian AVETMISS
-                    field Client Industry of Employment (see ABS catalogue).
-                  type: string
-                  example: ''
-                LUI:
-                  description: >-
-                    The Queensland Studies Authority Learner Unique Identifier
-                    (LUI). A 10-digit, numeric code.
-                  type: string
-                  example: ''
-                PoBox:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                SACEStudentId:
-                  description: >-
-                    South Australian Certificate of Education student
-                    identifier. It should consist of six numbers and one alpha
-                    letter, for e.g., 123456A.
-                  type: string
-                  example: ''
-                TFN:
-                  description: >-
-                    The student's Tax File Number, used for VET Student Loans
-                    reporting. The number must pass the ATO's check alorithm.
-                  type: string
-                  example: ''
-                USI:
-                  description: >-
-                    Unique Student Identifier (USI). A 10-digit code. If passed,
-                    this code must conform to the minimum validation: It must be
-                    10 digits in length and consist of only capital letters and
-                    numbers, excluding I, 1, 0 and O.
-                  type: string
-                  example: ''
-                VSN:
-                  description: >-
-                    The Victorian Student Number The VSN is a student
-                    identification number that is assigned by the Department of
-                    Education and Early Childhood Development to all students in
-                    government and non‑government schools, and students in
-                    Vocational Education and Training institutions.
-                  type: string
-                  example: ''
-                address1:
-                  description: >-
-                    First line of POSTAL address - address fields will be used
-                    only if AVETMISS 7.0 fields not passed. The return structure
-                    will also include these fields.
-                  type: string
-                  example: ''
-                address2:
-                  description: Second line of postal address.
-                  type: string
-                  example: ''
-                agentContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Agent for
-                    this Contact.
-                  type: string
-                  example: ''
-                atSchoolFlag:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether the contact
-                    is currently at secondary school.
-                  type: string
-                  example: ''
-                atSchoolName:
-                  description: The name of the contact's current secondary school.
-                  type: string
-                  example: ''
-                buildingName:
-                  description: >-
-                    AVETMISS 7.0 fields - will take these fields over address1
-                    and address2 if passed. Note, you cannot search contacts by
-                    these discrete fields.
-                  type: string
-                  example: ''
-                categoryIds:
-                  description: A list of valid category IDs. (adds to Contact ONLY)
-                  type: string
-                  example: ''
-                citizenStatusId:
-                  description: >-
-                    Citizenship status. The valid values are numbers 1-11. For a
-                    list of the meanings of these numbers, please contact
-                    aXcelerate.
-                  type: string
-                  example: ''
-                city:
-                  description: Postal suburb, locality or town.
-                  type: string
-                  example: ''
-                cityOfBirth:
-                  description: >-
-                    City of Birth. This data is used if later creating a USI for
-                    this contact.
-                  type: string
-                  example: ''
-                coachContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Coach for
-                    this Contact.
-                  type: string
-                  example: ''
-                contactActive:
-                  description: Activate or Deactivate the Contact
-                  type: string
-                  example: ''
-                country:
-                  description: Postal Country.
-                  type: string
-                  example: ''
-                countryId:
-                  description: >-
-                    Postal Country - a 4-digit SACC code. This is only used if
-                    the full AVETMISS 7.0 address details are passed. Otherwise
-                    this field is ignored. Use Country instead.
-                  type: string
-                  example: ''
-                countryOfBirthId:
-                  description: >-
-                    Country of Birth as a valid 4-digit SACC code. For a list of
-                    codes, please refer to NCVER website www.ncver.edu.au.
-                  type: string
-                  example: ''
-                countryofCitizenId:
-                  description: >-
-                    Country of citizenship as a valid 4-digit SACC code. For a
-                    list of codes, please refer to NCVER website
-                    www.ncver.edu.au.
-                  type: string
-                  example: ''
-                customField_[variableName]:
-                  description: >-
-                    Replace [variableName] with the actual customField variable
-                    name to update a customField value against the contact. If
-                    updating a custom field that supports multiple values, you
-                    can use comma-delimited values or a JSON array. If using
-                    comma-delimited, it is expected the data is URL encoded
-                    first. For example, to get 2 values: 'A,B' and 'C' you would
-                    either pass: "['A,B','C']" or "A%2CB,C".
-                  type: string
-                  example: ''
-                disabilityFlag:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether the contact
-                    considers themselves to have a disability, impairment or
-                    long-term condition.
-                  type: string
-                  example: ''
-                disabilityTypeIds:
-                  description: >-
-                    A comma delimited list of AVETMISS disability type
-                    identifiers. For valid values see the AVETMISS
-                    documentation.
-                  type: string
-                  example: ''
-                division:
-                  description: Division within the organisation.
-                  type: string
-                  example: ''
-                dob:
-                  description: >-
-                    Date of Birth in the format YYYY-MM-DD. This cannot be dated
-                    in the future.
-                  type: string
-                  example: '1977-03-18'
-                domainIds:
-                  description: >-
-                    A list of domainIDs to set against the contact. This will
-                    overwrite any existing domains against the contact. Requires
-                    the Contact Domains feature to be enabled in the account.
-                  type: string
-                  example: ''
-                emailAddress:
-                  description: Email address. Must be a valid email address.
-                  type: string
-                  example: thomas.mcgregor@prabbit.com
-                emailAddressAlternative:
-                  description: AVETMISS 8.0 Alternate email address.
-                  type: string
-                  example: ''
-                emergencyContact:
-                  description: Name of an emergency contact.
-                  type: string
-                  example: ''
-                emergencyContactPhone:
-                  description: The phone number of the emergency contact.
-                  type: string
-                  example: ''
-                emergencyContactRelation:
-                  description: The relationship of the emergency contact (eg sister).
-                  type: string
-                  example: ''
-                employerContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Employer of
-                    this Contact.
-                  type: string
-                  example: ''
-                englishAssistanceFlag:
-                  description: >-
-                    A true/false flag to indicate whether English assistance is
-                    required.
-                  type: string
-                  example: ''
-                englishProficiencyId:
-                  description: >-
-                    AVETMISS Proficiency in spoken English. For valid values see
-                    the AVETMISS documentation.
-                  type: string
-                  example: ''
-                fax:
-                  description: Fax number.
-                  type: string
-                  example: ''
-                givenName:
-                  description: Given (first) name. Maximum 40 characters.
-                  type: string
-                  example: Thomas
-                highestSchoolLevelId:
-                  description: >-
-                    AVETMISS highest school level completed identifier. For
-                    valid values see the AVETMISS documentation.
-                  type: string
-                  example: ''
-                highestSchoolLevelYear:
-                  description: >-
-                    The year the highest school level was completed. Must be a
-                    valid year no later than the current year.
-                  type: string
-                  example: ''
-                historicClientId:
-                  description: >-
-                    The Historical ID used with the student record. IMPORTANT
-                    IF: you have reported a person previously with a different
-                    SMS.
-                  type: string
-                  example: ''
-                indigenousStatusId:
-                  description: >-
-                    AVETMISS indigenous status identifier to indicates a contact
-                    who self-identifies as being of Australian Aboriginal or
-                    Torres Strait Islander descent. For valid values see the
-                    AVETMISS documentation.
-                  type: string
-                  example: ''
-                internationalContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the International
-                    Contact for this Contact (CRICOS).
-                  type: string
-                  example: ''
-                labourForceId:
-                  description: >-
-                    AVETMISS Labour force status identifier. For valid values
-                    see the AVETMISS documentation.
-                  type: string
-                  example: ''
-                mainLanguageId:
-                  description: >-
-                    AVETMISS Main language other than English spoken at home
-                    identifier as a valid 4-digit SACC code. For a list of
-                    codes, please refer to NCVER website www.ncver.edu.au.
-                  type: string
-                  example: ''
-                middleName:
-                  description: Middle name(s). Maximum 40 characters.
-                  type: string
-                  example: ''
-                mobilephone:
-                  description: Mobile phone number.
-                  type: string
-                  example: ''
-                optionalId:
-                  description: An optional identifier to use for this Contact record.
-                  type: string
-                  example: ''
-                orgId:
-                  description: Organisation ID for the Contact
-                  type: string
-                  example: ''
-                organisation:
-                  description: Organisation name.
-                  type: string
-                  example: ''
-                payerContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Payer of this
-                    Contact.
-                  type: string
-                  example: ''
-                phone:
-                  description: Home phone number.
-                  type: string
-                  example: ''
-                position:
-                  description: Position within the organisation.
-                  type: string
-                  example: ''
-                postcode:
-                  description: Postal postcode.
-                  type: string
-                  example: ''
-                priorEducationIds:
-                  description: >-
-                    A comma delimited list of AVETMISS prior educational
-                    achievement identifiers to indicate prior higher education.
-                    For valid values see the AVETMISS documentation. The
-                    Victorian AVETMISS field Prior Educational Achievement
-                    Recognition Identifier may be appended (e.g. 420A). Also
-                    accepts @ if not specified.
-                  type: string
-                  example: ''
-                priorEducationStatus:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether a contact has
-                    successfully completed some post-secondary education. A true
-                    value here will be ignored without also passing
-                    PriorEducationIDs.
-                  type: string
-                  example: ''
-                residencyStatusId:
-                  description: >-
-                    Residency status. For a list of valid numbers/codes, please
-                    refer to the TAMS 1.2 specifications.
-                  type: string
-                  example: ''
-                sAddress1:
-                  description: >-
-                    First line of STREET / residential address - address fields
-                    will be deprecated with the coming of AVETMISS 7.0 which
-                    will break the address into further fields (eg Flat/unit
-                    number, Street Name).
-                  type: string
-                  example: ''
-                sAddress2:
-                  description: >-
-                    Second line of street / residential address - to be
-                    deprecated in the future.
-                  type: string
-                  example: ''
-                sBuildingName:
-                  description: >-
-                    AVETMISS 7.0 fields - will take these fields over address1
-                    and address2 if passed. Note, you cannot search contacts by
-                    these discrete fields.
-                  type: string
-                  example: ''
-                sCity:
-                  description: Residential suburb, locality or town.
-                  type: string
-                  example: ''
-                sCountry:
-                  description: Residential Country.
-                  type: string
-                  example: ''
-                sCountryId:
-                  description: >-
-                    Residential Country - a 4-digit SACC code. This is only used
-                    if the full AVETMISS 7.0 address details are passed.
-                    Otherwise this field is ignored. Use SCountry instead.
-                  type: string
-                  example: ''
-                sPoBox:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sPostcode:
-                  description: Residential postcode.
-                  type: string
-                  example: ''
-                sState:
-                  description: >-
-                    Residential state / Territory. NOTE: This field is tailored
-                    for Australia and accepts only the following values: NSW,
-                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                sStreetName:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sStreetNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sUnitNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                section:
-                  description: Section within the organisation.
-                  type: string
-                  example: ''
-                sex:
-                  description: >-
-                    Must be only a single letter. Valid values are M, F or X
-                    (for Other).
-                  type: string
-                  example: m
-                sourceCodeId:
-                  description: >-
-                    The client-specific sourceID from the list set up in
-                    aXcelerate and returned from the contact/sources resource.
-                  type: string
-                  example: ''
-                state:
-                  description: >-
-                    Postal state / Territory. NOTE: This field is tailored for
-                    Australia and accepts only the following values: NSW, VIC,
-                    QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                streetName:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                streetNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                supervisorContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Supervisor of
-                    this Contact.
-                  type: string
-                  example: ''
-                surname:
-                  description: Surname (last name). Maximum 40 characters.
-                  type: string
-                  example: Mcgregor
-                surveyContactStatusCode:
-                  description: >-
-                    AVETMISS 8.0 Survey contact status - Survey contact status
-                    identifies reasons to exclude clients from the Student
-                    Outcomes Survey and other communications. For a list of
-                    possible codes, please refer to the data definitions on the
-                    NCVER website AVETMISS Data element definitions.
-                  type: string
-                  example: ''
-                termAddress1:
-                  description: >-
-                    First line of TERM address. Term address is only available
-                    for clients who have enabled the VET Student Loan feature.
-                  type: string
-                  example: ''
-                termAddress2:
-                  description: Second line of term address.
-                  type: string
-                  example: ''
-                termCity:
-                  description: Term Address suburb, locality or town.
-                  type: string
-                  example: ''
-                termCountry:
-                  description: Term Address Country.
-                  type: string
-                  example: ''
-                termCountryId:
-                  description: >-
-                    Term Address Country - a 4-digit SACC code. You can use this
-                    or termCountry.
-                  type: string
-                  example: ''
-                termPostcode:
-                  description: Term Address postcode.
-                  type: string
-                  example: ''
-                termState:
-                  description: >-
-                    Term Address state / Territory. NOTE: This field is tailored
-                    for Australia and accepts only the following values: NSW,
-                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                title:
-                  description: |
-                    Tile/salutation
-                  type: string
-                  example: Mr
-                unitNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                workReadyParticipantNumber:
-                  description: >-
-                    This field was formerly knows as 'Skills for All Number'. A
-                    South Australian student identifier.
-                  type: string
-                  example: ''
-                workphone:
-                  description: Work phone number.
-                  type: string
-                  example: ''
+              $ref: '#/components/schemas/Contact'
       responses:
         '200':
           description: 'Basic details of the newly created Contact.'
@@ -1492,13 +992,54 @@ paths:
             example: '6531423'
       responses:
         '200':
-          description: ''
+          description: 'A Contact object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
     put:
       tags:
         - Contact
       summary: Update a contact
-      description: Update an existing Contact.
+      description: |
+        Update an existing Contact.
+
+
+        **Custom Fields**
+
+        Contact Custom Field values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`,
+        `custom_field_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        must already exist.
+
+        If updating a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
+        it is expected the data is URL encoded first. For example, to get 2 values: 'A,B' and 'C' you would either pass: "['A,B','C']" or "A%2CB,C".
       operationId: updateAContact
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 6531423
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Contact'
+      responses:
+        '200':
+          description: 'A Contact object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+  /contact/{contactId}/uploadPhoto:
+    post:
+      tags:
+        - Contact
+      summary: Add a contact photo
+      description: Add a contact photo to a contact's profile.
+      operationId: addAContactPhoto
       parameters:
         - name: contactId
           required: true
@@ -1512,550 +1053,55 @@ paths:
             schema:
               type: object
               properties:
-                ANZSCOCode:
-                  description: >-
-                    Australian and New Zealand Standard Classification of
-                    Occupations (ANZSCO), ABS catalogue no.1220.0, 2009. The
-                    major group of this code is used for the Victorian AVETMISS
-                    field Client Occupation Identifier (left most digit).
-                  type: string
-                  example: ''
-                ANZSICCode:
-                  description: >-
-                    Australian and New Zealand Standard Industrial
-                    Classification (ANZSIC), ABS catalogue no.1292.0, 2006. The
-                    division of this code is used for the Victorian AVETMISS
-                    field Client Industry of Employment (see ABS catalogue).
-                  type: string
-                  example: ''
-                LUI:
-                  description: >-
-                    The Queensland Studies Authority Learner Unique Identifier
-                    (LUI). A 10-digit, numeric code.
-                  type: string
-                  example: ''
-                PoBox:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                SACEStudentId:
-                  description: >-
-                    South Australian Certificate of Education student
-                    identifier. It should consist of six numbers and one alpha
-                    letter, for e.g., 123456A.
-                  type: string
-                  example: ''
-                TFN:
-                  description: >-
-                    The student's Tax File Number, used for VET Student Loans
-                    reporting. The number must pass the ATO's check alorithm.
-                  type: string
-                  example: ''
-                USI:
-                  description: >-
-                    Unique Student Identifier (USI). A 10-digit code. If passed,
-                    this code must conform to the minimum validation: It must be
-                    10 digits in length and consist of only capital letters and
-                    numbers, excluding I, 1, 0 and O.
-                  type: string
-                  example: ''
-                VSN:
-                  description: >-
-                    The Victorian Student Number The VSN is a student
-                    identification number that is assigned by the Department of
-                    Education and Early Childhood Development to all students in
-                    government and non‑government schools, and students in
-                    Vocational Education and Training institutions.
-                  type: string
-                  example: ''
-                address1:
-                  description: >-
-                    First line of POSTAL address - address fields will be used
-                    only if AVETMISS 7.0 fields not passed. The return structure
-                    will also include these fields.
-                  type: string
-                  example: ''
-                address2:
-                  description: Second line of postal address.
-                  type: string
-                  example: ''
-                agentContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Agent for
-                    this Contact.
-                  type: string
-                  example: ''
-                atSchoolFlag:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether the contact
-                    is currently at secondary school.
-                  type: string
-                  example: ''
-                atSchoolName:
-                  description: The name of the contact's current secondary school.
-                  type: string
-                  example: ''
-                buildingName:
-                  description: >-
-                    AVETMISS 7.0 fields - will take these fields over address1
-                    and address2 if passed. Note, you cannot search contacts by
-                    these discrete fields.
-                  type: string
-                  example: ''
-                categoryIds:
-                  description: A list of valid category IDs. (adds to Contact ONLY)
-                  type: string
-                  example: ''
-                citizenStatusId:
-                  description: >-
-                    Citizenship status. The valid values are numbers 1-11. For a
-                    list of the meanings of these numbers, please contact
-                    aXcelerate.
-                  type: string
-                  example: ''
-                city:
-                  description: Postal suburb, locality or town.
-                  type: string
-                  example: ''
-                cityOfBirth:
-                  description: >-
-                    City of Birth. This data is used if later creating a USI for
-                    this contact.
-                  type: string
-                  example: ''
-                coachContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Coach for
-                    this Contact.
-                  type: string
-                  example: ''
-                contactActive:
-                  description: Activate or Deactivate the Contact
-                  type: string
-                  example: 'true'
-                country:
-                  description: Postal Country.
-                  type: string
-                  example: ''
-                countryId:
-                  description: >-
-                    Postal Country - a 4-digit SACC code. This is only used if
-                    the full AVETMISS 7.0 address details are passed. Otherwise
-                    this field is ignored. Use Country instead.
-                  type: string
-                  example: ''
-                countryOfBirthId:
-                  description: >-
-                    Country of Birth as a valid 4-digit SACC code. For a list of
-                    codes, please refer to NCVER website www.ncver.edu.au.
-                  type: string
-                  example: ''
-                countryofCitizenId:
-                  description: >-
-                    Country of citizenship as a valid 4-digit SACC code. For a
-                    list of codes, please refer to NCVER website
-                    www.ncver.edu.au.
-                  type: string
-                  example: ''
-                customField_[variableName]:
-                  description: >-
-                    Replace [variableName] with the actual customField variable
-                    name to update a customField value against the contact. If
-                    updating a custom field that supports multiple values, you
-                    can use comma-delimited values or a JSON array. If using
-                    comma-delimited, it is expected the data is URL encoded
-                    first. For example, to get 2 values: 'A,B' and 'C' you would
-                    either pass: "['A,B','C']" or "A%2CB,C".
-                  type: string
-                  example: ''
-                disabilityFlag:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether the contact
-                    considers themselves to have a disability, impairment or
-                    long-term condition.
-                  type: string
-                  example: ''
-                disabilityTypeIds:
-                  description: >-
-                    A comma delimited list of AVETMISS disability type
-                    identifiers. For valid values see the AVETMISS
-                    documentation.
-                  type: string
-                  example: ''
-                division:
-                  description: Division within the organisation.
-                  type: string
-                  example: ''
-                dob:
-                  description: >-
-                    Date of Birth in the format YYYY-MM-DD. This cannot be dated
-                    in the future.
-                  type: string
-                  example: '2018-06-14'
-                domainIds:
-                  description: >-
-                    A list of domainIDs to set against the contact. This will
-                    overwrite any existing domains against the contact. Requires
-                    the Contact Domains feature to be enabled in the account.
-                  type: string
-                  example: ''
-                emailAddress:
-                  description: Email address. Must be a valid email address.
-                  type: string
-                  example: ''
-                emailAddressAlternative:
-                  description: AVETMISS 8.0 Alternate email address.
-                  type: string
-                  example: thomas.mcgregor@prabbit.com
-                emergencyContact:
-                  description: Name of an emergency contact.
-                  type: string
-                  example: ''
-                emergencyContactPhone:
-                  description: The phone number of the emergency contact.
-                  type: string
-                  example: ''
-                emergencyContactRelation:
-                  description: The relationship of the emergency contact (eg sister).
-                  type: string
-                  example: ''
-                employerContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Employer of
-                    this Contact.
-                  type: string
-                  example: ''
-                englishAssistanceFlag:
-                  description: >-
-                    A true/false flag to indicate whether English assistance is
-                    required.
-                  type: string
-                  example: ''
-                englishProficiencyId:
-                  description: >-
-                    AVETMISS Proficiency in spoken English. For valid values see
-                    the AVETMISS documentation.
-                  type: string
-                  example: ''
-                fax:
-                  description: Fax number.
-                  type: string
-                  example: ''
-                givenName:
-                  description: Given (first) name. Maximum 40 characters.
-                  type: string
-                  example: ''
-                highestSchoolLevelId:
-                  description: >-
-                    AVETMISS highest school level completed identifier. For
-                    valid values see the AVETMISS documentation.
-                  type: string
-                  example: ''
-                highestSchoolLevelYear:
-                  description: >-
-                    The year the highest school level was completed. Must be a
-                    valid year no later than the current year.
-                  type: string
-                  example: ''
-                historicClientId:
-                  description: >-
-                    The Historical ID used with the student record. IMPORTANT
-                    IF: you have reported a person previously with a different
-                    SMS.
-                  type: string
-                  example: ''
-                indigenousStatusId:
-                  description: >-
-                    AVETMISS indigenous status identifier to indicates a contact
-                    who self-identifies as being of Australian Aboriginal or
-                    Torres Strait Islander descent. For valid values see the
-                    AVETMISS documentation.
-                  type: string
-                  example: ''
-                internationalContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the International
-                    Contact for this Contact (CRICOS).
-                  type: string
-                  example: ''
-                labourForceId:
-                  description: >-
-                    AVETMISS Labour force status identifier. For valid values
-                    see the AVETMISS documentation.
-                  type: string
-                  example: ''
-                mainLanguageId:
-                  description: >-
-                    AVETMISS Main language other than English spoken at home
-                    identifier as a valid 4-digit SACC code. For a list of
-                    codes, please refer to NCVER website www.ncver.edu.au.
-                  type: string
-                  example: ''
-                middleName:
-                  description: Middle name(s). Maximum 40 characters.
-                  type: string
-                  example: ''
-                mobilephone:
-                  description: Mobile phone number.
-                  type: string
-                  example: ''
-                optionalId:
-                  description: An optional identifier to use for this Contact record.
-                  type: string
-                  example: ''
-                organisation:
-                  description: Organisation name.
-                  type: string
-                  example: ''
-                payerContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Payer of this
-                    Contact.
-                  type: string
-                  example: ''
-                phone:
-                  description: Home phone number.
-                  type: string
-                  example: ''
-                position:
-                  description: Position within the organisation.
-                  type: string
-                  example: ''
-                postcode:
-                  description: Postal postcode.
-                  type: string
-                  example: ''
-                priorEducationIds:
-                  description: >-
-                    A comma delimited list of AVETMISS prior educational
-                    achievement identifiers to indicate prior higher education.
-                    For valid values see the AVETMISS documentation. The
-                    Victorian AVETMISS field Prior Educational Achievement
-                    Recognition Identifier may be appended (e.g. 420A). Also
-                    accepts @ if not specified.
-                  type: string
-                  example: ''
-                priorEducationStatus:
-                  description: >-
-                    A true/false AVETMISS flag to indicate whether a contact has
-                    successfully completed some post-secondary education. A true
-                    value here will be ignored without also passing
-                    PriorEducationIDs.
-                  type: string
-                  example: ''
-                residencyStatusId:
-                  description: >-
-                    Residency status. For a list of valid numbers/codes, please
-                    refer to the TAMS 1.2 specifications.
-                  type: string
-                  example: ''
-                sAddress1:
-                  description: >-
-                    First line of STREET / residential address - address fields
-                    will be deprecated with the coming of AVETMISS 7.0 which
-                    will break the address into further fields (eg Flat/unit
-                    number, Street Name).
-                  type: string
-                  example: ''
-                sAddress2:
-                  description: >-
-                    Second line of street / residential address - to be
-                    deprecated in the future.
-                  type: string
-                  example: ''
-                sBuildingName:
-                  description: >-
-                    AVETMISS 7.0 fields - will take these fields over address1
-                    and address2 if passed. Note, you cannot search contacts by
-                    these discrete fields.
-                  type: string
-                  example: ''
-                sCity:
-                  description: Residential suburb, locality or town.
-                  type: string
-                  example: ''
-                sCountry:
-                  description: Residential Country.
-                  type: string
-                  example: ''
-                sCountryId:
-                  description: >-
-                    Residential Country - a 4-digit SACC code. This is only used
-                    if the full AVETMISS 7.0 address details are passed.
-                    Otherwise this field is ignored. Use SCountry instead.
-                  type: string
-                  example: ''
-                sPoBox:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sPostcode:
-                  description: Residential postcode.
-                  type: string
-                  example: ''
-                sState:
-                  description: >-
-                    Residential state / Territory. NOTE: This field is tailored
-                    for Australia and accepts only the following values: NSW,
-                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                sStreetName:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sStreetNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                sUnitNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                section:
-                  description: Section within the organisation.
-                  type: string
-                  example: ''
-                sex:
-                  description: >-
-                    Must be only a single letter. Valid values are M, F or X
-                    (for Other).
-                  type: string
-                  example: m
-                sourceCodeId:
-                  description: >-
-                    The client-specific sourceID from the list set up in
-                    aXcelerate and returned from the contact/sources resource.
-                  type: string
-                  example: ''
-                state:
-                  description: >-
-                    Postal state / Territory. NOTE: This field is tailored for
-                    Australia and accepts only the following values: NSW, VIC,
-                    QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                streetName:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                streetNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                supervisorContactId:
-                  description: >-
-                    The ContactID of the Contact Record who is the Supervisor of
-                    this Contact.
-                  type: string
-                  example: ''
-                surname:
-                  description: Surname (last name). Maximum 40 characters.
-                  type: string
-                  example: ''
-                surveyContactStatusCode:
-                  description: >-
-                    AVETMISS 8.0 Survey contact status - Survey contact status
-                    identifies reasons to exclude clients from the Student
-                    Outcomes Survey and other communications. For a list of
-                    possible codes, please refer to the data definitions on the
-                    NCVER website AVETMISS Data element definitions.
-                  type: string
-                  example: ''
-                termAddress1:
-                  description: >-
-                    First line of TERM address. Term address is only available
-                    for clients who have enabled the VET Student Loan feature.
-                  type: string
-                  example: ''
-                termAddress2:
-                  description: Second line of term address.
-                  type: string
-                  example: ''
-                termCity:
-                  description: Term Address suburb, locality or town.
-                  type: string
-                  example: ''
-                termCountry:
-                  description: Term Address Country.
-                  type: string
-                  example: ''
-                termCountryId:
-                  description: >-
-                    Term Address Country - a 4-digit SACC code. You can use this
-                    or termCountry.
-                  type: string
-                  example: ''
-                termPostcode:
-                  description: Term Address postcode.
-                  type: string
-                  example: ''
-                termState:
-                  description: >-
-                    Term Address state / Territory. NOTE: This field is tailored
-                    for Australia and accepts only the following values: NSW,
-                    VIC, QLD, SA, WA, TAS, NT, ACT or OTH (which means 'Other
-                    Australian Territory') or OVS (which means 'Overseas').
-                  type: string
-                  example: ''
-                title:
-                  description: |
-                    Tile/salutation
-                  type: string
-                  example: ''
-                unitNo:
-                  description: AVETMISS 7.0 fields.
-                  type: string
-                  example: ''
-                workReadyParticipantNumber:
-                  description: >-
-                    This field was formerly knows as 'Skills for All Number'. A
-                    South Australian student identifier.
-                  type: string
-                  example: ''
-                workphone:
-                  description: Work phone number.
-                  type: string
-                  example: ''
-      responses:
-        '200':
-          description: ''
-  /contact/{contactId}/uploadPhoto:
-    post:
-      tags:
-        - Contact
-      summary: Add a contact photo
-      description: Add a contact photo
-      operationId: addAContactPhoto
-      parameters:
-        - name: contactId
-          required: true
-          in: path
-          schema:
-            type: integer
-            example: '6531423'
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
                 photoFile:
                   type: string
                   format: binary
       responses:
         '200':
-          description: ''
+          description: 'Response with a success message.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  MESSAGE:
+                    type: string
+                    description: 'Success message'
+                    example: 'Photo uploaded successfully.'
+                  SUCCESS:
+                    type: boolean
+                    description: 'Indicates if the operation was successful.'
+                    example: true
+                  OVERWRITE:
+                    type: boolean
+                    description: 'Indicates if the photo was overwritten.'
+                    example: false
   /contacts/search:
     get:
       tags:
         - Contact
       summary: Search for contacts
-      description: Search for contacts
+      description: |
+        Search for contacts using one or more of the following parameters to filter the results.
+
+        This method will return an array of contacts matching all the search parameters.
+
+        The field values must be an exact match OR start with the supplied parameters (i.e. wildcard on the right of the string).
+        You can choose to search on almost any field or use the param `q` to perform search across these fields:
+        - Given Name
+        - Preferred Name
+        - Middle Name
+        - Surname
+        - Email Address
+        - Mobile Phone
       operationId: searchForContacts
       parameters:
+        - name: q
+          in: query
+          schema:
+            type: string
+            description: A Search String. i.e. q='Jeff Bezos'.
+            example: 'Jeff Bezos'
         - name: optionalID
           in: query
           schema:
@@ -2064,36 +1110,62 @@ paths:
         - name: contactID
           in: query
           schema:
-            type: string
-            example: '6341338'
-        - name: lastUpdated
+            type: integer
+            example: 6341338
+        - name: contactIds
           in: query
           schema:
             type: string
-            example: '2024-05-07'
+            description: Comma-separated list of contact IDs. This can be used in conjunction with other filters.
+            example: '6341338,6341339'
         - name: emailAddress
           in: query
           schema:
             type: string
-            example: Sherridan_3@hotmail.com
+            format: email
+            example: jeff.bezos@axcelerate.com
         - name: givenName
           in: query
           schema:
             type: string
-            example: Sherridan
-        - name: displayLength
-          in: query
-          schema:
-            type: string
-            example: '70'
+            example: Jeff
         - name: surname
           in: query
           schema:
             type: string
             example: broadhurst
+        - name: lastUpdated
+          in: query
+          schema:
+            type: string
+            example: '2024-05-07'
+        - name: contactEntryDate
+          in: query
+          schema:
+            type: string
+            description: The date the contact was entered into the system.
+            example: '2024-01-20'
+        - name: displayLength
+          in: query
+          schema:
+            type: integer
+            example: 70
+            default: 10
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            example: 0
+            default: 0
       responses:
         '200':
-          description: ''
+          description: 'A list of Contact objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contact'
   /log/contactMergeHistory:
     post:
       tags:
@@ -5658,6 +4730,479 @@ components:
           nullable: true
           description: Custom field for the Business Development Manager (BDM).
           example: null
+    Contact:
+      type: object
+      properties:
+        title:
+          description: |
+            Title/salutation
+          type: string
+          example: Mr
+        givenName:
+          description: Given (first) name. Maximum 40 characters.
+          type: string
+          example: Thomas
+        middleName:
+          description: Middle name(s). Maximum 40 characters.
+          type: string
+          example: ''
+        surname:
+          description: Surname (last name). Maximum 40 characters.
+          type: string
+          example: Mcgregor
+        preferredName:
+          description: Preferred name. Maximum 40 characters.
+          type: string
+          example: 'Tommy'
+        emailAddress:
+          description: Email address. Must be a valid email address.
+          type: string
+          example: thomas.mcgregor@prabbit.com
+        emailAddressAlternative:
+          description: AVETMISS 8.0 Alternate email address.
+          type: string
+          example: ''
+        dob:
+          description: >
+            Date of Birth in the format YYYY-MM-DD. This cannot be dated
+            in the future.
+          type: string
+          example: '1977-03-18'
+        sex:
+          description: Gender or sex of the contact. Valid values are M, F or X (for Other).
+          type: string
+          enum:
+            - M
+            - F
+            - X
+        phone:
+          description: Home phone number.
+          type: string
+          example: ''
+        mobilephone:
+          description: Mobile phone number.
+          type: string
+          example: ''
+        workphone:
+          description: Work phone number.
+          type: string
+          example: ''
+        fax:
+          description: Fax number.
+          type: string
+          example: ''
+        optionalId:
+          description: An optional identifier to use for this Contact record.
+          type: string
+          example: ''
+        contactActive:
+          description: Activate or Deactivate the Contact
+          type: string
+          example: ''
+        orgId:
+          description: Organisation ID for the Contact
+          type: integer
+          example: 12345
+        organisation:
+          description: Organisation name.
+          type: string
+          example: 'McGreggors Farm'
+        position:
+          description: Position within the organisation.
+          type: string
+          example: 'Web Wizard'
+        section:
+          description: Section within the organisation.
+          type: string
+          nullable: true
+        division:
+          description: Division within the organisation.
+          type: string
+          nullable: true
+        sourceCodeId:
+          description: Identifier for the source code.
+          type: number
+          example: 1234
+        historicClientId:
+          description: >
+            The Historical ID used with the student record. IMPORTANT
+            IF: you have reported a person previously with a different
+            SMS.
+          type: string
+          example: ''
+        USI:
+          description: >
+            Unique Student Identifier (USI). A 10-digit code. If passed,
+            this code must conform to the minimum validation: It must be
+            10 digits in length and consist of only capital letters and
+            numbers, excluding I, 1, 0 and O.
+          type: string
+          example: 'FAKE054321'
+        LUI:
+          description: >
+            The Queensland Studies Authority Learner Unique Identifier
+            (LUI). A 10-digit, numeric code.
+          type: string
+          example: '1234567890'
+        TFN:
+          description: >
+            The student's Tax File Number, used for VET Student Loans
+            reporting. The number must pass the ATO's check algorithm.
+          type: string
+          example: '1234588611'
+        VSN:
+          description: >
+            The Victorian Student Number The VSN is a student
+            identification number that is assigned by the Department of
+            Education and Early Childhood Development.
+          type: string
+          example: ''
+        workReadyParticipantNumber:
+          description: Identifier for Work Ready Participants.
+          type: string
+          example: ''
+        SACEStudentId:
+          description: >
+            South Australian Certificate of Education student
+            identifier. It should consist of six numbers and one alpha
+            letter, for e.g., 123456A.
+          type: string
+          example: ''
+        emergencyContact:
+          description: Name of an emergency contact.
+          type: string
+          example: 'Jane Bloggs'
+        emergencyContactRelation:
+          description: The relationship of the emergency contact (e.g., sister).
+          type: string
+          example: 'Mother'
+        emergencyContactPhone:
+          description: The phone number of the emergency contact.
+          type: string
+          example: '0432 222 222'
+        buildingName:
+          description: >
+            AVETMISS 7.0 fields - will take these fields over address1
+            and address2 if passed.
+          type: string
+          nullable: true
+        unitNo:
+          description: Unit number for the address.
+          type: string
+          nullable: true
+        streetNo:
+          description: Street number for the address.
+          type: string
+          example: '123'
+        streetName:
+          description: Street name for the address.
+          type: string
+          example: 'Fake Avenue'
+        PoBox:
+          description: PO Box number for postal address.
+          type: string
+          nullable: true
+        address1:
+          description: >
+            First line of POSTAL address - address fields will be used
+            only if AVETMISS 7.0 fields are not passed.
+          type: string
+          example: '123 Fake Avenue'
+        address2:
+          description: Second line of postal address.
+          type: string
+          nullable: true
+        city:
+          description: Postal suburb, locality or town.
+          type: string
+          example: 'Brisbane'
+        state:
+          description: |
+            Postal state or territory.
+            OTH means Other Australian Territory.
+            OVS means Overseas.
+          type: string
+          enum:
+            - ACT
+            - NSW
+            - NT
+            - QLD
+            - SA
+            - TAS
+            - VIC
+            - WA
+            - OTH
+            - OVS
+        postcode:
+          description: Postal postcode.
+          type: string
+          example: '4064'
+        countryId:
+          description: >
+            Postal Country - a 4-digit SACC code. This is only used if
+            the full AVETMISS 7.0 address details are passed.
+          type: number
+          example: 1101
+        country:
+          description: Postal Country.
+          type: string
+          example: 'Australia'
+        sBuildingName:
+          description: >
+            AVETMISS 7.0 fields for residential address building name.
+          type: string
+          nullable: true
+        sUnitNo:
+          description: Unit number for the street address.
+          type: string
+          nullable: true
+        sStreetNo:
+          description: Street number for the residential address.
+          type: string
+          nullable: true
+        sStreetName:
+          description: Street name for the residential address.
+          type: string
+          nullable: true
+        sPoBox:
+          description: PO Box number for the residential address.
+          type: string
+          example: 'PO Box 1235'
+        sAddress1:
+          description: First line of residential address.
+          type: string
+          example: 'PO Box 1235'
+        sAddress2:
+          description: Second line of residential address.
+          type: string
+          nullable: true
+        sCity:
+          description: Residential city or suburb.
+          type: string
+          example: 'Brisbane'
+        sState:
+          description: |
+            Residential state or territory.
+            OTH means Other Australian Territory.
+            OVS means Overseas.
+          type: string
+          enum:
+            - ACT
+            - NSW
+            - NT
+            - QLD
+            - SA
+            - TAS
+            - VIC
+            - WA
+            - OTH
+            - OVS
+        sPostcode:
+          description: Residential postcode.
+          type: string
+          example: '4000'
+        sCountryId:
+          description: Residential country (4-digit SACC code).
+          type: number
+          example: 1101
+        sCountry:
+          description: Residential country name.
+          type: string
+          example: 'Australia'
+        termAddress1:
+          description: First line of term address.
+          type: string
+          example: '21 Something Parade'
+        termAddress2:
+          description: Second line of term address.
+          type: string
+          nullable: true
+        termCity:
+          description: City for term address.
+          type: string
+          example: 'Brisbane'
+        termState:
+          description: |
+            State or territory for term address.
+            OTH means Other Australian Territory.
+            OVS means Overseas.
+          type: string
+          enum:
+            - ACT
+            - NSW
+            - NT
+            - QLD
+            - SA
+            - TAS
+            - VIC
+            - WA
+            - OTH
+            - OVS
+        termPostcode:
+          description: Postcode for term address.
+          type: string
+          example: '4000'
+        termCountryId:
+          description: Country ID for term address (4-digit SACC code).
+          type: number
+          example: 1101
+        termCountry:
+          description: Country for term address.
+          type: string
+          example: 'Australia'
+        countryOfBirthId:
+          description: Country of Birth as a valid 4-digit SACC code.
+          type: number
+          example: 1101
+        cityOfBirth:
+          description: City of Birth. Used if later creating a USI for this contact.
+          type: string
+          example: 'Soutport'
+        countryofCitizenId:
+          description: Country of citizenship as a valid 4-digit SACC code.
+          type: number
+          example: 1101
+        citizenStatusId:
+          description: Citizenship status ID.
+          type: number
+          example: 1
+        residencyStatusId:
+          description: Residency status ID.
+          type: number
+          example: 1
+        labourForceId:
+          description: Labour force status identifier.
+          type: number
+          example: 1
+        mainLanguageId:
+          description: Main language spoken at home ID.
+          type: number
+          example: 1
+        englishProficiencyId:
+          description: English proficiency level ID.
+          type: integer
+          example: 1
+        englishAssistanceFlag:
+          description: Flag to indicate whether English assistance is required.
+          type: boolean
+          example: false
+        highestSchoolLevelId:
+          description: Highest school level completed identifier. For valid values see the AVETMISS documentation.
+          type: number
+          example: 02
+        highestSchoolLevelYear:
+          description: Year the highest school level was completed.
+          type: integer
+          example: 11
+        atSchoolFlag:
+          description: Flag indicating if currently at school.
+          type: boolean
+          example: false
+        atSchoolName:
+          description: The name of the contact's current secondary school.
+          type: string
+          example: 'ACME High School'
+        priorEducationStatus:
+          description: >-
+            A true/false AVETMISS flag to indicate whether a contact has
+            successfully completed some post-secondary education. A true
+            value here will be ignored without also passing
+            PriorEducationIDs.
+          type: boolean
+          example: true
+        priorEducationIds:
+          description: >-
+            A comma delimited list of AVETMISS prior educational
+            achievement identifiers to indicate prior higher education.
+            For valid values see the AVETMISS documentation. The
+            Victorian AVETMISS field Prior Educational Achievement
+            Recognition Identifier may be appended (e.g. 420A). Also
+            accepts @ if not specified.
+          type: string
+          example: ''
+        disabilityFlag:
+          description: >-
+            A true/false AVETMISS flag to indicate whether the contact
+            considers themselves to have a disability, impairment or
+            long-term condition.
+          type: boolean
+          example: false
+        disabilityTypeIds:
+          description: >-
+            A comma delimited list of AVETMISS disability type
+            identifiers. For valid values see the AVETMISS
+            documentation.
+          type: string
+          example: ''
+        indigenousStatusId:
+          description: >-
+            AVETMISS indigenous status identifier to indicate a contact
+            who self-identifies as being of Australian Aboriginal or
+            Torres Strait Islander descent. For valid values see the
+            AVETMISS documentation.
+          type: integer
+          example: ''
+        ANZSCOCode:
+          description: >-
+            Australian and New Zealand Standard Classification of
+            Occupations (ANZSCO), ABS catalogue no.1220.0, 2009. The
+            major group of this code is used for the Victorian AVETMISS
+            field Client Occupation Identifier (left most digit).
+          type: string
+          example: ''
+        ANZSICCode:
+          description: >-
+            Australian and New Zealand Standard Industrial
+            Classification (ANZSIC), ABS catalogue no.1292.0, 2006. The
+            division of this code is used for the Victorian AVETMISS
+            field Client Industry of Employment (see ABS catalogue).
+          type: string
+          example: ''
+        surveyContactStatusCode:
+          description: >-
+            Code indicating whether this contact can be contacted for
+            government surveys. Use aXcelerate Support to manage
+            these values.
+          type: string
+          example: ''
+        employerContactId:
+          description: The ContactID of the Contact Record who is the Employer of this Contact.
+          type: integer
+          example: 123456
+        payerContactId:
+          description: The ContactID of the Contact Record who is the Payer of this Contact.
+          type: integer
+          example: 123456
+        supervisorContactId:
+          description: The ContactID of the Contact Record who is the Supervisor of this Contact.
+          type: integer
+          example: 123456
+        agentContactId:
+          description: The ContactID of the Contact Record who is the Agent for this Contact.
+          type: integer
+          example: 123456
+        coachContactId:
+          description: The ContactID of the Contact Record who is the Coach for this Contact.
+          type: integer
+          example: 123456
+        internationalContactId:
+          description: The ContactID of the Contact Record who is the International Contact for this Contact (CRICOS).
+          type: integer
+          example: 123456
+        categoryIds:
+          description: A list of valid category IDs. (adds to Contact ONLY)
+          type: array
+          example: [267,4528,26417]
+        domainIds:
+          description: >-
+            A list of domainIDs to set against the contact. This will
+            overwrite any existing domains against the contact. Requires
+            the Contact Domains feature to be enabled in the account.
+          type: array
+          example: [472, 473]
+      required:
+        - givenName
+        - surname
     ContactCategory:
       type: object
       properties:
