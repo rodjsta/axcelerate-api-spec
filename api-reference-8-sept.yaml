@@ -500,7 +500,7 @@ paths:
             example: '2FA2C39F-B2B6-4301-9943667E7AC43FFE'
       responses:
         '200':
-          description: 'An Invoice Approval object.'
+          description: 'Response with a payment URL.'
           content:
             application/json:
               schema:
@@ -508,8 +508,28 @@ paths:
                 properties:
                   PAYMENTURL:
                     type: string
-                    description: URL to process the payment for the invoice.
+                    description: URL to display the invoice within aXcelerate and process a payment.
                     example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
+  /accounting/invoice/{invoiceGuid}/void:
+    post:
+      tags:
+        - Accounting Invoice
+      summary: Void an invoice
+      description: |
+        This endpoint will allow an invoice to be marked as void.
+
+        Invoices that have payments applied to them cannot be voided. To void an invoice with payments applied, the payments must be removed first.
+      operationId: voidAnInvoice
+      parameters:
+        - name: invoiceGuid
+          required: true
+          in: path
+          schema:
+            type: string
+            example: '2FA2C39F-B2B6-4301-9943667E7AC43FFE'
+      responses:
+        '204':
+          description: 'No Content'
   /accounting/invoice/{invoiceId}/paymenturl:
     get:
       tags:
@@ -522,55 +542,31 @@ paths:
           required: true
           in: path
           schema:
-            type: string
-            example: '3047093'
+            type: integer
+            example: 3047093
       responses:
         '200':
-          description: ''
-  /accounting/ecommerce/payment/form:
-    post:
-      tags:
-        - Accounting Checkout
-      summary: Create a checkout form for payment
-      description: >-
-        Returns the HTML and form action required to process an invoice payment
-        using the payment platform configured in settings.
-      operationId: createACheckoutFormForPayment
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                cancelURL:
-                  description: >-
-                    URL for the address where the user should be redirected if
-                    checkout is canceled. Must include URL protocol.
-                  type: string
-                  example: https://www.example.com/canceled-payment
-                invoiceGUID:
-                  description: GUID of the invoice to create a checkout form.
-                  type: string
-                  example: ''
-                redirectURL:
-                  description: >-
-                    URL for the address where the user should be redirected
-                    after payment processing. Must include URL protocol.
-                  type: string
-                  example: https://www.example.com/thank-you
-                reference:
-                  description: External identifier for the payment flow process.
-                  type: string
-                  example: ''
-      responses:
-        '200':
-          description: ''
+          description: 'Response with a payment URL.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PAYMENTURL:
+                    type: string
+                    description: URL to display the invoice within aXcelerate and process a payment.
+                    example: "https://demo.app.axcelerate.com/payment/invoice/?invGUID=BAB653DF-C813-4C02-90F87BD32545B181"
   /accounting/ecommerce/payment/url:
     get:
       tags:
         - Accounting Checkout
       summary: Create a checkout URL for payment
-      description: Create a checkout URL for payment
+      description: |
+        Returns the HTML and form method/action that can be used to display a form and process
+        payment for an invoice using the payment platform configured in settings.
+
+
+        Alternatively, you can use the `ACTION` URL to redirect the user to the payment page.
       operationId: createACheckoutUrlForPayment
       parameters:
         - name: reference
@@ -579,12 +575,14 @@ paths:
             type: string
             example: ''
           description: External identifier for the payment flow process.
+          required: true
         - name: invoiceGUID
           in: query
           schema:
             type: string
             example: ''
           description: GUID of the invoice to create a checkout URL.
+          required: true
         - name: redirectURL
           in: query
           schema:
@@ -593,6 +591,7 @@ paths:
           description: >-
             URL for the address where the user should be redirected after
             payment processing. Must include URL protocol.
+          required: true
         - name: cancelURL
           in: query
           schema:
@@ -603,7 +602,37 @@ paths:
             is canceled. Must include URL protocol.
       responses:
         '200':
-          description: ''
+          description: Successful response containing details unique to the payment gateway.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  META:
+                    type: object
+                    description: Metadata associated with the payment section.
+                  FORMMETHOD:
+                    type: string
+                    description: The HTTP method to use for the form.
+                    example: POST
+                  SCRIPT:
+                    type: string
+                    description: Script to be included to display the form (if applicable).
+                    example: ""
+                  HTML:
+                    type: string
+                    description: HTML content for rendering the payment section.
+                    example: >
+                      <section id="gateway_payment_section" data-hostedpage="https://example.com">
+                      <div>
+                        Click the button below to proceed to Payment Gateway and process your payment.
+                      </div>
+                      <script src="https://demo.stg.axcelerate.com/Assets/Scripts/accounting/ecommerce/checkout/generic.js"></script>
+                      </section>
+                  ACTION:
+                    type: string
+                    description: The URL to which the form should be submitted.
+                    example: "https://example.com/f61fdc8c"
   /accounting/ecommerce/payment/ref/{reference}:
     get:
       tags:
@@ -621,7 +650,11 @@ paths:
           description: External identifier for the payment flow process.
       responses:
         '200':
-          description: ''
+          description: 'A PaymentFlow object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentFlow'
   /accounting/transaction:
     get:
       tags:
@@ -6185,7 +6218,6 @@ components:
           type: string
           description: Country for this detail entry.
           example: "AUSTRALIA"
-
     OrganisationKeyContact:
       type: object
       properties:
@@ -6221,7 +6253,6 @@ components:
           type: string
           description: URL link to the photo of the key contact.
           example: "https://fs.axcelerate.com.au/images/71456677/students/746012.png"
-
     OrganisationSummary:
       type: object
       properties:
@@ -6523,6 +6554,72 @@ components:
           nullable: true
           description: ID of the employer contact, if applicable.
           example: null
+    PaymentFlow:
+      type: object
+      description: Represents the state and results of a payment process.
+      properties:
+        REQUEST:
+          type: object
+          description: Details of the payment request.
+          properties:
+            CANCELURL:
+              type: string
+              format: uri
+              description: The URL to which the client will be directed if they cancel payment processing.
+            WEBHOOKURL:
+              type: string
+              format: uri
+              description: An internal-use-only property specifying the webhook URL for payment notifications.
+            REDIRECTURL:
+              type: string
+              format: uri
+              description: The URL to which the client will be redirected after completing payment processing.
+            INVOICEGUID:
+              type: string
+              format: uuid
+              description: The unique GUID of the aXcelerate invoice to which this payment will be applied.
+        STATE:
+          type: string
+          enum:
+            - pending
+            - paid
+            - failed
+          description: Indicates the current state of the payment flow process.
+        PLATFORM:
+          type: string
+          description: Identifies the payment platform used to process the payment.
+        RESULT:
+          type: object
+          description: Outcome details of the payment process.
+          properties:
+            ERROR:
+              type: object
+              description: Details of any error encountered during payment processing.
+              properties:
+                CODE:
+                  type: integer
+                  description: The error code encountered during processing, if any.
+                MSG:
+                  type: string
+                  description: A short description of the error raised during payment processing.
+            TRANSACTIONGUID:
+              type: string
+              format: uuid
+              description: The unique aXcelerate identifier for this transaction, available only when the `STATE` is `paid`.
+            TRANSACTIONID:
+              type: string
+              deprecated: true
+              description: Deprecated; this property should not be used in new implementations. Use the `STATE` property instead.
+            OK:
+              type: boolean
+              deprecated: true
+              description: Deprecated; this property should not be used in new implementations. Use the `STATE` property instead.
+            PLATFORM:
+              type: string
+              description: Identifies the payment platform used to process the payment.
+        PLATFORMREFERENCE:
+          type: string
+          description: The payment platform's reference identifier for the payment.
     User:
       type: object
       properties:
