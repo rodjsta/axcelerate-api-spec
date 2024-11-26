@@ -816,23 +816,48 @@ paths:
         - Certificate
       summary: Retrieve a certificate for an enrolment
       description: >-
-        Retrieve an issued certificate PDF for a completed enrolment. The PDF
-        will be returned as a base64 string.
+        Retrieve an issued certificate PDF for a completed enrolment.
+        At a minimum, use one of `enrolId` or `statusId` parameters to
+        retrieve the certificate:
+
+
+        The PDF will be returned as a base64 string.
       operationId: retrieveACertificateForAnEnrolment
       parameters:
         - name: contactId
           in: query
           schema:
-            type: string
-            example: '6531423'
+            type: integer
+            description: The ID of the contact to retrieve the certificate for.
+            example: 6531423
+          required: false
         - name: enrolId
           in: query
           schema:
-            type: string
-            example: '14520487'
+            type: integer
+            description: The ID of the accredited enrolment to retrieve the certificate for.
+            example: 14520487
+          required: false
+        - name: statusId
+          in: query
+          schema:
+            type: integer
+            description: The ID of the non-accredited enrolment to retrieve the certificate for.
+            example: 2448565
+          required: false
       responses:
         '200':
-          description: ''
+          description: 'Response containing the base64 encoded certificate PDF.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  CERTIFICATE:
+                    type: string
+                    format: byte
+                    description: Base64 encoded certificate PDF.
+                    example: 'JVBERi0xLjQKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDYgMCBSL0ZpbHRlci9GbGF0ZURlY29kZT4+CnN0cmVhbQp4nI2TzW7bMAwUHJvZmlsZSB0eXBlCmVuZHN0cmVhbQplbmRvYmoKMyAwIG9iago8PC9UeXBlL1hPYmplY3QvQ29sb3JTcGFjZS9EZXZpY2VHcmF5L0NvbG9yU3BhY2UvU3VidHlwZS9UeXBlL0ZvbnQvQmFzZUZvbnQvQmFzZU'
   /contact/enrolment/verifyCertificate/{certificateId}:
     get:
       tags:
