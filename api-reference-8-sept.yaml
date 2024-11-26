@@ -878,7 +878,55 @@ paths:
             example: '6531423-8918096'
       responses:
         '200':
-          description: ''
+          description: 'A successful verification response containing the certificate details.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  DOCUMENT:
+                    type: object
+                    properties:
+                      HAVEFILE:
+                        type: boolean
+                        description: Indicates whether the document file is available.
+                      DETAIL:
+                        type: object
+                        properties:
+                          AWARDTYPE:
+                            type: string
+                            example: SOA
+                            description: The type of award (e.g., "SOA").
+                          CONTACTID:
+                            type: integer
+                            example: 6531423
+                            description: The unique identifier for the contact.
+                          GIVENNAME:
+                            type: string
+                            example: Thomas
+                            description: The given name of the contact.
+                          SURNAME:
+                            type: string
+                            example: Jefferson
+                            description: The surname of the contact.
+                          ENROLID:
+                            type: integer
+                            example: 14520487
+                            description: The unique identifier for the enrolment.
+                          ISSUEDBY:
+                            type: string
+                            example: 'ACME Training'
+                            description: The entity that issued the award.
+                          ACTIVITYNAME:
+                            type: string
+                            example: 'Certificate III in Business'
+                            description: The name of the activity or course.
+                  RESULT:
+                    type: boolean
+                    description: Indicates whether the operation was successful.
+                  MSG:
+                    type: string
+                    description: A message describing the result of the operation.
   /contact:
     post:
       tags:
