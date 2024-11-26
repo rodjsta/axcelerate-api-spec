@@ -756,7 +756,13 @@ paths:
       operationId: retrieveContactCategories
       responses:
         '200':
-          description: ''
+          description: 'A list of Contact Category objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactCategory'
   /trainingCategories:
     get:
       tags:
@@ -766,7 +772,13 @@ paths:
       operationId: retrieveTrainingCategories
       responses:
         '200':
-          description: ''
+          description: 'A list of Training Category objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrainingCategory'
   /contact/sources:
     get:
       tags:
@@ -791,7 +803,13 @@ paths:
           description: Set to true to return only currently active marketing sources.
       responses:
         '200':
-          description: ''
+          description: 'A list of Contact Source objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactSource'
   /contact/enrolment/certificate:
     get:
       tags:
@@ -5572,6 +5590,43 @@ components:
           nullable: true
           description: Custom field for the Business Development Manager (BDM).
           example: null
+    ContactCategory:
+      type: object
+      properties:
+        CATEGORYID:
+          type: integer
+          description: The unique identifier for the contact category.
+          example: 22548
+        CATEGORYCODE:
+          type: string
+          description: A code representing the category.
+          example: "STU"
+        CATEGORYDESCRIPTOR:
+          type: string
+          description: A description of the category.
+          example: "Student"
+        CATENTRYDATE:
+          type: string
+          description: The date and time when the category was created or entered.
+          example: "August, 22 2017 03:09:06 +1000"
+        ACTIVE:
+          type: integer
+          enum: [0, 1]
+    ContactSource:
+      type: object
+      properties:
+        SOURCECODEID:
+          type: integer
+          description: The unique identifier for the source code.
+        SOURCE:
+          type: string
+          description: The name or description of the source.
+        ISACTIVE:
+          type: boolean
+          description: Indicates whether the source is active.
+        ISPUBLIC:
+          type: boolean
+          description: Indicates whether the source is public.
     Domain:
       type: object
       properties:
@@ -6620,6 +6675,40 @@ components:
         PLATFORMREFERENCE:
           type: string
           description: The payment platform's reference identifier for the payment.
+    TrainingCategory:
+      type: object
+      properties:
+        AREAID:
+          type: integer
+          description: The unique identifier for the training category area.
+          example: 15
+        AREA:
+          type: string
+          description: The name of the training category area.
+          example: "Business"
+        BGCOLOURHEX:
+          type: string
+          description: The background color in HEX format for the training category area. An empty string indicates the default is being used.
+          example: "FF0000"
+        BORDERCOLOURHEX:
+          type: string
+          description: The border color in HEX format for the training category area. An empty string indicates the default is being used.
+          example: "3E8E41"
+        CORE:
+          type: integer
+          enum: [0, 1]
+          description: Indicates if the category is a core category (1) or not (0).
+        CPDFILTER:
+          type: integer
+          enum: [0, 1]
+          description: >-
+            Indicates whether CPD filter is applied (1) or not (0).
+
+            If a Training Category is a CPD Filter, it will appear in the CPD Activity Catalogue to assist Learners when browsing Activities.
+        CPDSECTION:
+          type: string
+          description: The CPD section, if any, associated with the category. Empty string means no section.
+          example: "Business Studies"
     User:
       type: object
       properties:
