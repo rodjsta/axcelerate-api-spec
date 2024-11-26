@@ -1180,32 +1180,30 @@ paths:
 
         An alternative to relying on checking this endpoint is to utilise the `contact_merged` webhook event.
       operationId: searchForMergedContacts
-      parameters:
-        - name: dateStart
-          in: query
-          schema:
-            type: string
-            example: '2024-01-01 00:00:00'
-        - name: dateEnd
-          in: query
-          schema:
-            type: string
-            example: '2024-01-04 23:59:59'
-        - name: mergedByContactID
-          in: query
-          schema:
-            type: integer
-            example: 6341338
-        - name: oldContactID
-          in: query
-          schema:
-            type: integer
-            example: 6341339
-        - name: currentContactID
-          in: query
-          schema:
-            type: integer
-            example: 6341340
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                dateStart:
+                  type: string
+                  example: '2024-01-01 00:00:00'
+                dateEnd:
+                  type: string
+                  example: '2024-01-04 23:59:59'
+                mergedByContactID:
+                  type: integer
+                  example: 6341338
+                oldContactID:
+                  type: integer
+                  example: 6341339
+                currentContactID:
+                  type: integer
+                  example: 6341340
+              required:
+                - dateStart
+                - dateEnd
       responses:
         '200':
           description: 'Where the search was successful, a list of Contact Merge History objects.'
