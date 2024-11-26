@@ -4760,6 +4760,10 @@ paths:
             schema:
               type: object
               properties:
+                type:
+                  description: "Detail type: 'Street Address' or 'Postal Address'"
+                  type: string
+                  example: Postal Address
                 address1:
                   description: Address Line 1.
                   type: string
@@ -4772,6 +4776,14 @@ paths:
                   description: Organisation's City.
                   type: string
                   example: Farmsville
+                state:
+                  description: Organisation's State.
+                  type: string
+                  example: QLD
+                postCode:
+                  description: Organisation's Post Code.
+                  type: string
+                  example: '4074'
                 country:
                   description: Organisation's Country.
                   type: string
@@ -4780,35 +4792,43 @@ paths:
                   description: Email address for the Organisation.
                   type: string
                   example: mac.farm@farmxxxxs.com
-                fax:
-                  description: Fax number for the Organisation.
-                  type: string
-                  example: '0730543558'
                 phone:
                   description: Phone number for the Organisation.
                   type: string
                   example: '0421448666'
-                postCode:
-                  description: Organisation's Post Code.
+                fax:
+                  description: Fax number for the Organisation.
                   type: string
-                  example: '4074'
-                state:
-                  description: Organisation's State.
-                  type: string
-                  example: QLD
-                type:
-                  description: 'Detail type: ''Street Address'' or ''Postal Address''..'
-                  type: string
-                  example: Postal Address
+                  example: '0730543558'
+              required:
+                - type
+                - address1
       responses:
         '200':
-          description: ''
+          description: 'Outcome of the operation with the Organisation Detail Unique ID'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  DETAILID:
+                    type: integer
+                    description: Unique identifier of the created organisation detail.
+                    example: 256796
+                  MESSAGE:
+                    type: string
+                    description: Message indicating the result of the organisation detail creation.
+                    example: "Organisation Details Created Successfully"
+                  STATUS:
+                    type: string
+                    description: Status of the organisation detail creation process.
+                    example: "success"
   /organisation/{orgId}/detail/{detailId}:
     get:
       tags:
         - Organisation Detail
       summary: Retrieve existing organisation details
-      description: Retrieve a specific Detail record for an Organistion\\.
+      description: Retrieve a specific Detail record for an Organistion.
       operationId: retrieveExistingOrganisationDetails
       parameters:
         - name: orgId
@@ -4823,16 +4843,20 @@ paths:
           in: path
           schema:
             type: integer
-            example: 1120758
+            example: 524273
           description: The ID of the Detail record.
       responses:
         '200':
-          description: ''
+          description: 'An organisation detail object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationDetail'
     put:
       tags:
         - Organisation Detail
       summary: Update organisation details
-      description: Update a specific Detail record for an Organistion\\.
+      description: Update a specific Detail record for an Organistion.
       operationId: updateOrganisationDetails
       parameters:
         - name: orgId
@@ -4855,10 +4879,14 @@ paths:
             schema:
               type: object
               properties:
+                type:
+                  description: "Detail type: 'Street Address' or 'Postal Address'"
+                  type: string
+                  example: Postal Address
                 address1:
                   description: Address Line 1.
                   type: string
-                  example: Mac Farmer
+                  example: Mac Farm
                 address2:
                   description: Address Line 2.
                   type: string
@@ -4867,6 +4895,14 @@ paths:
                   description: Organisation's City.
                   type: string
                   example: Farmsville
+                state:
+                  description: Organisation's State.
+                  type: string
+                  example: QLD
+                postCode:
+                  description: Organisation's Post Code.
+                  type: string
+                  example: '4074'
                 country:
                   description: Organisation's Country.
                   type: string
@@ -4875,29 +4911,34 @@ paths:
                   description: Email address for the Organisation.
                   type: string
                   example: mac.farm@farmxxxxs.com
-                fax:
-                  description: Fax number for the Organisation.
-                  type: string
-                  example: '0730543558'
                 phone:
                   description: Phone number for the Organisation.
                   type: string
                   example: '0421448666'
-                postCode:
-                  description: Organisation's Post Code.
+                fax:
+                  description: Fax number for the Organisation.
                   type: string
-                  example: '4074'
-                state:
-                  description: Organisation's State.
-                  type: string
-                  example: QLD
-                type:
-                  description: 'Detail type: ''Street Address'' or ''Postal Address''..'
-                  type: string
-                  example: Postal Address
+                  example: '0730543558'
       responses:
         '200':
-          description: ''
+          description: 'Outcome of the operation with the Organisation Detail Unique ID'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  DETAILID:
+                    type: integer
+                    description: Unique identifier of the created organisation detail.
+                    example: 256796
+                  MESSAGE:
+                    type: string
+                    description: Message indicating the result of the organisation detail update.
+                    example: "Organisation Details Updated Successfully"
+                  STATUS:
+                    type: string
+                    description: Status of the organisation detail update process.
+                    example: "success"
   /report/run:
     post:
       tags:
