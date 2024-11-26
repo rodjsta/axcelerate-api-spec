@@ -1171,42 +1171,87 @@ paths:
       tags:
         - Contact
       summary: Search for merged contacts
-      description: Search for merged contacts
+      description: |
+        Search for merged contacts using one or more of the following parameters to filter the results.
+        This method will return an array of contacts matching all the search parameters.
+
+        This endpoint is particularly useful for identifying contacts that have been merged together
+        allowing you to correctly sync your data with aXcelerate.
+
+        An alternative to relying on checking this endpoint is to utilise the `contact_merged` webhook event.
       operationId: searchForMergedContacts
       parameters:
         - name: dateStart
           in: query
           schema:
             type: string
-            example: '2024-01-01'
+            example: '2024-01-01 00:00:00'
         - name: dateEnd
           in: query
           schema:
             type: string
-            example: '2024-01-04'
+            example: '2024-01-04 23:59:59'
         - name: mergedByContactID
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 6341338
         - name: oldContactID
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 6341339
         - name: currentContactID
           in: query
           schema:
-            type: string
-            example: ''
-        - name: sampleRow
-          in: query
-          schema:
-            type: string
-            example: ''
+            type: integer
+            example: 6341340
       responses:
         '200':
-          description: ''
+          description: 'Where the search was successful, a list of Contact Merge History objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    USERID:
+                      type: integer
+                      description: The unique identifier for the user associated with the old contact.
+                      example: 726322
+                      nullable: true
+                    MERGEDTIME:
+                      type: integer
+                      description: Time in miliseconds that it took to perform the merge action.
+                      example: 1485
+                    MERGEDUTC:
+                      type: string
+                      format: date-time
+                      description: The UTC timestamp of when the contact was merged.
+                      example: "2023-07-23 04:29"
+                    CURRENTCONTACTID:
+                      type: integer
+                      description: The current contact ID after the merge.
+                      example: 8801
+                    OLDCONTACTID:
+                      type: integer
+                      description: The old contact ID before the merge.
+                      example: 1872391
+                    MERGEDBY:
+                      type: integer
+                      description: The Contact ID of the user who performed the merge.
+                      example: 12345
+                    MERGED:
+                      type: boolean
+                      description: Indicates whether the contact has been merged.
+                      example: true
+                    DELETED:
+                      example: false
+                      type: boolean
+                      description: |
+                        Indicates whether the contact has been deleted.
+                        This will be true where the contact was not merged, but deleted.
   /contact/note:
     post:
       tags:
