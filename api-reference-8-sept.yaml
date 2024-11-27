@@ -4581,6 +4581,8 @@ paths:
       description: >-
         This endpoint allows you to check the availability of a trainer for a
         specific date and time range.
+
+        The response will be an array of clashes (if any) with the specified time range.
       operationId: checkATrainerSAvailability
       requestBody:
         content:
@@ -4590,23 +4592,29 @@ paths:
               properties:
                 contactId:
                   description: The Contact ID of the Trainer
-                  type: string
-                  example: '13955380'
+                  type: integer
+                  example: 13955380
                 date:
                   description: The date to check
                   type: string
                   example: '2024-08-12'
-                finishTime:
-                  description: The end time of the range to check
-                  type: string
-                  example: 2024-08-12 19:58
                 startTime:
                   description: The start time of the range to check
                   type: string
                   example: 2024-08-12 04:58
+                finishTime:
+                  description: The end time of the range to check
+                  type: string
+                  example: 2024-08-12 19:58
       responses:
         '200':
-          description: ''
+          description: 'An array of clashes with the specified time range for the trainer.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Clash'
   /user:
     post:
       tags:
@@ -4914,6 +4922,65 @@ components:
           nullable: true
           description: Custom field for the Business Development Manager (BDM).
           example: null
+    Clash:
+      type: object
+      properties:
+        clashID:
+          type: integer
+          description: "Unique identifier for the clash."
+          example: 14005554
+        startTime:
+          type: string
+          description: "Scheduled start time of the clash."
+          example: "8:30 AM"
+        endTime:
+          type: string
+          description: "Scheduled end time of the clash."
+          example: "12:30 PM"
+        startTimeOverride:
+          type: string
+          description: "Override for the start time of the clash."
+          example: "8:30 AM"
+        endTimeOverride:
+          type: string
+          description: "Override for the end time of the clash."
+          example: "12:30 PM"
+        source:
+          type: string
+          description: "The source that caused the clash."
+          example: "Complex"
+        linkID:
+          type: integer
+          description: "Identifier of the source of the clash."
+          example: 13970845
+        editID:
+          type: integer
+          description: "Identifier for where the clash was detected."
+          example: 1944624
+        clashDate:
+          type: string
+          description: "The date of the clash."
+          example: "November, 22 2024 00:00:00 +1000"
+        clashOf:
+          type: string
+          description: "Type of entity involved in the clash (e.g., Trainer, Room)."
+          example: "Trainer"
+        name:
+          type: string
+          description: "Name of the entity involved in the clash."
+          example: "Anthony Davis"
+        Reason:
+          type: string
+          description: "Reason or description for the clash."
+          example: "Initial Spill Response Training"
+        tzNameIANA:
+          type: string
+          description: "IANA time zone name for the location of the clash."
+          example: "Australia/Sydney"
+        tzOffset:
+          type: integer
+          description: "Time zone offset in minutes from UTC."
+          example: 660
     Contact:
       type: object
       properties:
