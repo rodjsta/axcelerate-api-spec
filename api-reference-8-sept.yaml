@@ -1255,7 +1255,10 @@ paths:
       tags:
         - Contact Note
       summary: Create a contact note
-      description: Create a contact note
+      description: |
+        Create a note for a specific contact.
+
+        A copy of the note can be emailed to other contacts by specifying their contact ID in the `emailNote` array.
       operationId: createAContactNote
       requestBody:
         content:
@@ -1286,7 +1289,24 @@ paths:
                 - contactNote
       responses:
         '200':
-          description: ''
+          description: 'Response containing outcome and newly created noteId.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  NOTEID:
+                    type: integer
+                    description: The unique identifier for the note.
+                    example: 123456
+                  MESSAGE:
+                    type: string
+                    description: 'Message indicating the outcome of the operation.'
+                    example: 'Note was added to Contact: 12661901'
+                  STATUS:
+                    type: boolean
+                    description: 'Status indicating the outcome of the operation.'
+                    example: "success"
   /contact/{contactId}/message:
     get:
       tags:
