@@ -1253,31 +1253,37 @@ paths:
   /contact/note:
     post:
       tags:
-        - Contact
+        - Contact Note
       summary: Create a contact note
       description: Create a contact note
       operationId: createAContactNote
-      parameters:
-        - name: contactId
-          in: query
-          schema:
-            type: string
-            example: '12661901'
-        - name: noteTypeID
-          in: query
-          schema:
-            type: string
-            example: ''
-        - name: contactNote
-          in: query
-          schema:
-            type: string
-            example: new note here
-        - name: emailNote
-          in: query
-          schema:
-            type: string
-            example: 1234,12345
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  type: integer
+                  description: The ID of the contact to record the note against.
+                  example: 12661901
+                contactNote:
+                  type: string
+                  description: The note to record against the contact.
+                  example: this is the note I want to record
+                noteTypeID:
+                  type: integer
+                  description: The ID of the note type.
+                  example: 123
+                emailNote:
+                  type: array
+                  items:
+                    type: integer
+                    description: A list of Contact IDs to email the note to.
+                    example: 12661901
+              required:
+                - contactId
+                - contactNote
       responses:
         '200':
           description: ''
@@ -4712,6 +4718,7 @@ tags:
   - name: Certificate
   - name: Contact
   - name: Contact Message
+  - name: Contact Note
   - name: Course
   - name: Course Instance
   - name: Course Instance Attendance
