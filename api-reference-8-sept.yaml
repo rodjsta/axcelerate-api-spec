@@ -1307,6 +1307,63 @@ paths:
                     type: boolean
                     description: 'Status indicating the outcome of the operation.'
                     example: "success"
+  /contact/notes/{contactId}:
+    get:
+      tags:
+        - Contact Note
+      summary: Retrieve contact notes
+      description: Retrieve a list of notes for a specific contact.
+      operationId: retrieveContactNotes
+      parameters:
+        - name: contactId
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 6531423
+        - name: search
+          in: query
+          schema:
+            type: string
+            example: 'student feedback'
+          description: Search string to filter notes.
+        - name: hideSystemNotes
+          in: query
+          schema:
+            type: boolean
+            example: false
+            default: false
+          description: Set to true to hide system notes.
+        - name: purgeCache
+          in: query
+          schema:
+            type: boolean
+            example: false
+            default: false
+          description: Set to true to purge the cache and force system to retrive from database.
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            example: 0
+            default: 0
+          description: Paging, start at record X.
+        - name: displayLength
+          in: query
+          schema:
+            type: integer
+            example: 10
+            default: 10
+          description: Paging, total number of records to retrieve.
+      responses:
+        '200':
+          description: 'A list of Contact Note objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactNote'
   /contact/{contactId}/message:
     get:
       tags:
@@ -5309,6 +5366,53 @@ components:
       required:
         - message
         - showAlert
+    ContactNote:
+      type: object
+      properties:
+        ID:
+          type: integer
+          description: Unique identifier for the contact note.
+          example: 117773094
+        TEXT:
+          type: string
+          description: The content of the contact note.
+          example: "Called and enquired about deferring Course XYZ"
+        TYPE:
+          type: string
+          description: The type or category of the note.
+          example: "Client Satisfaction Call"
+        DATEINSERTED:
+          type: string
+          description: The date and time the note was created.
+          example: "2024-11-27 11:00"
+        DATEUPDATED:
+          type: string
+          nullable: true
+          description: The date and time the note was last updated.
+          example: "2024-11-27 11:02"
+        ADDEDBY:
+          type: string
+          description: The name of the person who added the note.
+          example: "Jim Jeffreys"
+        UPDATEDBY:
+          type: string
+          nullable: true
+          description: The name of the person who last updated the note.
+          example: "Jeff Bezos"
+        ADDEDBYCONTACTID:
+          type: integer
+          description: Contact ID of the person who added the note.
+          example: 6341338
+        UPDATEDBYCONTACTID:
+          type: integer
+          nullable: true
+          description: Contact ID of the person who last updated the note.
+          example: 6341338
+        ATTACHMENTS:
+          type: string
+          nullable: true
+          description: File attachments related to the note (comma separated).
+          example: "document.pdf"
     ContactSource:
       type: object
       properties:
