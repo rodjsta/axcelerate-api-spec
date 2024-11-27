@@ -1253,6 +1253,7 @@ paths:
   /contact/noteTypes:
     get:
       tags:
+        - Categories
         - Contact Note
       summary: Retrieve contact note types
       description: |
