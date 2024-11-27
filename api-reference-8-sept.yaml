@@ -1250,6 +1250,25 @@ paths:
                       description: |
                         Indicates whether the contact has been deleted.
                         This will be true where the contact was not merged, but deleted.
+  /contact/noteTypes:
+    get:
+      tags:
+        - Contact Note
+      summary: Retrieve contact note types
+      description: |
+        Retrieve a list of note types available in the system.
+
+        Note types are used to categorise notes recorded against contacts.
+      operationId: retrieveContactNoteTypes
+      responses:
+        '200':
+          description: 'A list of Contact Note Type objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactNoteType'
   /contact/note:
     post:
       tags:
@@ -5413,6 +5432,31 @@ components:
           nullable: true
           description: File attachments related to the note (comma separated).
           example: "document.pdf"
+    ContactNoteType:
+      type: object
+      properties:
+        NOTETYPEID:
+          type: integer
+          description: "Unique identifier for the contact note type."
+          example: 1588
+        DESCRIPTOR:
+          type: string
+          description: "Description of the contact note type."
+          example: "Account Management Follow Up"
+        ENTRYDATE:
+          type: string
+          description: "The date and time when the contact note type was created."
+          example: "2011-10-11 10:36"
+        ACTIVE:
+          type: boolean
+          description: "Indicates if the contact note type is currently active."
+          example: true
+        COLOUR:
+          type: string
+          nullable: true
+          description: "Deprecated/Not Implemented."
+          deprecated: true
+          example: null
     ContactSource:
       type: object
       properties:
