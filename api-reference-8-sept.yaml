@@ -660,26 +660,36 @@ paths:
       tags:
         - Accounting Payment
       summary: Search for payments by a contact
-      description: Retrieve a list of transactions for a contact.
+      description: |
+        Retrieve a list of transactions for a contact.
+
+        To determine which invoices a payment has been applied to, use the
+        `includeFragments` paramater.
       operationId: searchForPaymentsByAContact
       parameters:
         - name: contactId
           in: query
           schema:
-            type: string
-            example: '13955776'
+            type: integer
+            example: 13955776
           description: >-
             The contact to search the transaction against. This should be the
             person who paid.
         - name: includeFragments
           in: query
           schema:
-            type: string
-            example: 'true'
+            type: boolean
+            example: true
           description: Optionally include a fragments array with each transaction.
       responses:
         '200':
-          description: ''
+          description: 'A list of Payment Transaction objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentTransaction'
     post:
       tags:
         - Accounting Payment
@@ -692,10 +702,46 @@ paths:
             schema:
               type: object
               properties:
+                contactId:
+                  description: >-
+                    The contact to record the transaction against. This should
+                    be the person who paid.
+                  type: integer
+                  example: 13968282
                 amount:
                   description: Transaction amount in dollars.
+                  type: number
+                  example: 150.75
+                invoiceId:
+                  description: >-
+                    If applied, this transaction will be recorded and then
+                    applied against this invoice.
+                  type: integer
+                  example: 3047133
+                reference:
+                  description: An optional reference / reciept number.
                   type: string
-                  example: '150'
+                  example: 'ABC123'
+                description:
+                  description: An optional description.
+                  type: string
+                  example: ''
+                transDate:
+                  description: The date of the transaction (yyyy-mm-dd). Default will be now.
+                  type: string
+                  example: '2024-05-02'
+                paymentMethodId:
+                  description: >-
+                    Recorded payment method. The options are: 1=Cash, 2=Credit
+                    Card, 4=Direct Deposit, 5=Cheque, 6=EFTPOS.
+                  type: string
+                  enum:
+                    - '1'
+                    - '2'
+                    - '4'
+                    - '5'
+                    - '6'
+                  default: '2'
                 bankBSB:
                   description: Optional. For cheque types (5).
                   type: string
@@ -712,41 +758,17 @@ paths:
                   description: Optional. For cheque types (5).
                   type: string
                   example: ''
-                contactId:
-                  description: >-
-                    The contact to record the transaction against. This should
-                    be the person who paid.
-                  type: string
-                  example: '13968282'
-                description:
-                  description: An optional description.
-                  type: string
-                  example: ''
-                invoiceId:
-                  description: >-
-                    If applied, this transaction will be recorded and then
-                    applied against this invoice.
-                  type: string
-                  example: '3047133'
-                paymentMethodId:
-                  description: >-
-                    Recorded payment method. The options are: 1=Cash, 2=Credit
-                    Card, 4=Direct Deposit, 5=Cheque, 6=EFTPOS.
-                  type: string
-                  example: '4'
-                reference:
-                  description: An optional reference / reciept number.
-                  type: string
-                  example: ''
-                transDate:
-                  description: >-
-                    The date of the transaction (yyyy-mm-dd). Default will be
-                    now.
-                  type: string
-                  example: '2024-05-02'
+              required:
+                - contactId
+                - amount
       responses:
         '200':
-          description: ''
+          description: 'A list of Payment Transaction objects.'
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/PaymentTransaction'
   /contactCategories:
     get:
       tags:
@@ -6521,6 +6543,119 @@ components:
         PLATFORMREFERENCE:
           type: string
           description: The payment platform's reference identifier for the payment.
+    PaymentTransaction:
+      type: object
+      properties:
+        PAYMENTMETHOD:
+          type: string
+          description: "The method used for the payment."
+          example: "Direct Deposit"
+        TRANSACTIONPROVIDERID:
+          type: string
+          description: "Identifier for the transaction provider."
+          example: "1"
+        GUID:
+          type: string
+          format: uuid
+          description: "Unique identifier for the payment transaction."
+          example: "f8575b67-bda2-414b-a21f-b68fba16b0f5"
+        CONTACTID:
+          type: string
+          description: "Identifier for the contact associated with the transaction."
+          example: "13971191"
+        UNASSIGNEDAMOUNT:
+          type: string
+          description: "Amount of the payment that is not assigned to any invoice or credit note."
+          example: "0"
+        TRANSACTIONID:
+          type: string
+          description: "Identifier for the transaction."
+          example: "3784049"
+        TRANSACTIONPROVIDER:
+          type: string
+          description: "Provider of the transaction processing."
+          example: "Manual Entry"
+        REFERENCE:
+          type: string
+          description: "Reference number for the transaction."
+          example: "000119"
+        TRANSDATE:
+          type: string
+          format: date
+          description: "Date of the transaction."
+          example: "2024-11-27"
+        TRANSACTIONTYPE:
+          type: string
+          description: "Type of the transaction."
+          example: "Money Received"
+        PAYMENTMETHODID:
+          type: string
+          description: "Identifier for the payment method."
+          example: "4"
+        CURRENCY:
+          type: string
+          description: "Currency in which the transaction was made."
+          example: "AUD"
+        DESCRIPTION:
+          type: string
+          nullable: true
+          description: "Optional description of the transaction."
+          example: null
+        FRAGMENTS:
+          type: array
+          description: "Details of the payment transaction fragments."
+          items:
+            $ref: "#/components/schemas/PaymentTransactionFragment"
+        AMOUNT:
+          type: string
+          description: "Total amount of the transaction in dollars."
+          example: "155"
+        TRANSACTIONTYPEID:
+          type: string
+          description: "Identifier for the transaction type."
+          example: "1"
+    PaymentTransactionFragment:
+      type: object
+      properties:
+        INVOICENR:
+          type: string
+          description: "Invoice number associated with the fragment."
+          example: "aX311"
+        INVOICEID:
+          type: string
+          description: "Invoice identifier for the fragment."
+          example: "3047161"
+        LOCKEDDATE:
+          type: string
+          nullable: true
+          description: "Date when the fragment was locked, if applicable."
+          example: null
+        CREDITNOTEID:
+          type: string
+          nullable: true
+          description: "Identifier for the credit note, if applicable."
+          example: null
+        CREDITNOTENR:
+          type: string
+          nullable: true
+          description: "Credit note number, if applicable."
+          example: null
+        ISLOCKED:
+          type: boolean
+          description: "Indicates if the fragment is locked."
+          example: false
+        AMOUNT:
+          type: string
+          description: "Amount associated with this fragment in dollars."
+          example: "155"
+        FRAGMENTID:
+          type: string
+          description: "Unique identifier for the fragment."
+          example: "6540572"
+        APPLIEDDATE:
+          type: string
+          description: "Date when the fragment was applied."
+          example: "2024-11-27 14:13"
     TrainingCategory:
       type: object
       properties:
