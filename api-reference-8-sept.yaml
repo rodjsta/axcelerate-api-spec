@@ -4498,10 +4498,7 @@ paths:
       tags:
         - Trainer
       summary: Create a new trainer
-      description: |-
-        ### Create New Trainer
-
-        Create a new Trainer
+      description: Create a new Trainer
       operationId: createANewTrainer
       requestBody:
         content:
@@ -4509,37 +4506,51 @@ paths:
             schema:
               type: object
               properties:
+                contactID:
+                  description: The ID of the Contact.
+                  type: integer
+                  example: 13955224
                 contactHrs:
                   description: The Trainer's Contact Hours.
-                  type: string
-                  example: '23'
+                  type: integer
+                  example: 23
                 contactHrsTimeFrame:
                   description: The Trainer's Contact Hours - Time Frame.
                   type: string
-                  example: week
-                contactID:
-                  description: The ID of the Contact.
-                  type: string
-                  example: '13955224'
+                  example: WK
                 empType:
-                  description: The Trainer's Employment Type.
-                  type: string
-                  example: FT
+                  description: |
+                    Employment type of the trainer (e.g., FT for full-time, PT for Part Time
+                    CAS for Casual, VOL for Volunteer, CONT for Contractor).
+                  example: "FT"
+                  enum:
+                    - FT
+                    - PT
+                    - VOL
+                    - CONT
+                    - CAS
                 experience:
                   description: The Trainer's Experience.
                   type: string
-                  example: ''
+                  example: 'A brief description of experience'
                 fillInOnly:
-                  description: Is this Trainer a 'fill-in'?.
-                  type: string
-                  example: 'false'
+                  description: Is this Trainer a 'fill-in' (i.e. emergency only)?.
+                  type: boolean
+                  default: false
+                  example: false
                 rateAmount:
                   description: The Trainer's Rate.
-                  type: string
-                  example: '11.65'
+                  type: number
+                  example: 11.65
+              required:
+                - contactID
       responses:
         '200':
-          description: ''
+          description: 'A trainer object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trainer'
   /trainer/{contactId}:
     get:
       tags:
@@ -4557,7 +4568,11 @@ paths:
           description: The Contact ID of the Trainer.
       responses:
         '200':
-          description: ''
+          description: 'A Trainer object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trainer'
   /trainer/availability:
     post:
       tags:
@@ -6653,6 +6668,96 @@ components:
           type: string
           description: "Date when the fragment was applied."
           example: "2024-11-27 14:13"
+    Trainer:
+      type: object
+      properties:
+        CONSULTANTID:
+          type: integer
+          description: "Unique identifier for the trainer."
+          example: 103
+        CONTACTID:
+          type: integer
+          description: "Unique identifier for the contact associated with the trainer."
+          example: 13315
+        NAME:
+          type: string
+          description: "Name of the trainer."
+          example: "Jim Jeffreys"
+        EMAIL:
+          type: string
+          format: email
+          description: "Email address of the contact associated to the Trainer."
+          example: "jim@jeffreys.com"
+        EMPTYPE:
+          type: string
+          description: |
+            Employment type of the trainer (e.g., FT for full-time, PT for Part Time
+            CAS for Casual, VOL for Volunteer, CONT for Contractor).
+          example: "FT"
+          enum:
+            - FT
+            - PT
+            - VOL
+            - CONT
+            - CAS
+        DOMAINID:
+          type: integer
+          nullable: true
+          description: "Domain ID associated with the trainer, if applicable."
+          example: null
+        RATEAMOUNT:
+          type: string
+          description: "Pay rate for the nominated PayTimeFrame."
+          example: "22.50"
+        PAYTIMEFRAME:
+          type: string
+          description: |
+            Timeframe for pay rate (e.g., HR for hourly, D for Day, WK for Week,
+            FTN for Fortnight, MTH for Month).
+          example: "HR"
+          enum:
+            - HR
+            - D
+            - WK
+            - FTN
+            - MTH
+        CONTACTHRS:
+          type: integer
+          description: "Number of contact hours for the trainer."
+          example: 15
+        CONTACTHRSTIMEFRAME:
+          type: string
+          description: "Timeframe for contact hours (e.g., WK for weekly)."
+          example: "WK"
+        ACTIVE:
+          type: boolean
+          description: "Indicates whether the trainer is active."
+          example: true
+        EXPERIENCE:
+          type: string
+          description: "Description of the trainer's experience."
+          example: "A long description here of the trainer's experience."
+        FILLINONLY:
+          type: boolean
+          description: "Indicates whether the trainer is a fill-in (emergency) only."
+          example: false
+        PAGE:
+          type: string
+          description: "External website for the trainer."
+          example: "jeffreys.com"
+        IMAGE:
+          type: string
+          description: "File name of the trainer's image."
+          example: "headshot.jpg"
+        CONENTRYDATE:
+          type: string
+          description: "Entry date of the trainer in the system."
+          example: "2010-01-12 00:00"
+        CONSULTANTUPDATEDDATETIMEUTC:
+          type: string
+          nullable: true
+          description: "Last updated date and time for the consultant in UTC."
+          example: "2010-03-12 16:30"
     TrainingCategory:
       type: object
       properties:
