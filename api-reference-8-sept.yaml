@@ -1247,7 +1247,6 @@ paths:
                       example: 1485
                     MERGEDUTC:
                       type: string
-                      format: date-time
                       description: The UTC timestamp of when the contact was merged.
                       example: "2023-07-23 04:29"
                     CURRENTCONTACTID:
@@ -5692,7 +5691,6 @@ components:
           example: null
         LASTUPDATEDUTC:
           type: string
-          format: date-time
           example: "2024-07-11 05:19"
     Domain:
       type: object
