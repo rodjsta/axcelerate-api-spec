@@ -1464,6 +1464,7 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required: [programCode, program]
               properties:
                 programCode:
                   description: Program Code for new Workshop Type instance
