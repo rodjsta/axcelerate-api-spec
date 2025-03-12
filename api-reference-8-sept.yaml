@@ -1523,47 +1523,50 @@ paths:
         - name: id
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 12345
           description: ID of the course to filter.
-        - name: type
-          in: query
-          schema:
-            type: string
-            example: ''
-          description: >-
-            Course type to return. w = workshop, p = accredited program, el =
-            e-learning, all = All types.
         - name: searchTerm
           in: query
           schema:
             type: string
-            example: ''
+            example: 'First Aid'
           description: The term to use when filtering activities.
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [w, p, el, all]
+            example: ''
+          description: >-
+            Course type to return. w = workshop, p = accredited program, el =
+            e-learning, all = All types.
         - name: trainingArea
           in: query
           schema:
             type: string
-            example: ''
+            example: 'Online'
           description: Training Area (Training Category) to search.
         - name: current
           in: query
           schema:
-            type: string
+            type: boolean
+            default: true
             example: ''
           description: Current courses flag. True to show only current courses.
         - name: public
           in: query
           schema:
-            type: string
+            type: boolean
+            default: true
             example: ''
           description: >-
-            Whether to include public courses only. If false, returns all couse
+            Whether to include public courses only. If false, returns all course
             types regardless of public settings.
         - name: isActive
           in: query
           schema:
-            type: string
+            type: boolean
             example: ''
           description: >-
             Whether to include active/inactive courses only. By default both
@@ -1572,7 +1575,7 @@ paths:
           in: query
           schema:
             type: string
-            example: ''
+            example: '2025-03-01 00:00'
           description: >-
             In 'YYYY-MM-DD hh:mm' format. The course last updated date must be
             greater than or equal to this datetime. Courses last updated prior
@@ -1582,7 +1585,7 @@ paths:
           in: query
           schema:
             type: string
-            example: ''
+            example: '2025-03-18 23:59'
           description: >-
             In 'YYYY-MM-DD hh:mm' format. The course last updated date must be
             less than or equal to this datetime. Courses last updated prior to
@@ -1591,30 +1594,57 @@ paths:
         - name: offset
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 0
+            default: 0
           description: Paging, start at record X
         - name: displayLength
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 10
+            default: 10
           description: Paging, total number of records to retrieve.
         - name: sortColumn
           in: query
           schema:
-            type: string
-            example: ''
+            type: integer
+            example: 1
+            default: 1
           description: Column index to sort results by.
         - name: sortDirection
           in: query
           schema:
             type: string
-            example: ''
+            enum: [ASC, DESC]
+            example: 'ASC'
+            default: 'ASC'
           description: Sort by direction 'ASC' or 'DESC'.
       responses:
         '200':
-          description: ''
+          description: |
+            An array of Course objects.
+
+            These objects could be one of the following types: Workshop, Qualification or E-Learning.
+            Some properties are specific to the type of course (for example, Qualifications do not have
+            the concept of duration and duration type).
+
+            Each object will include RowID and Count properties that are specific to this endpoint.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Course'
+                    - type: object
+                      properties:
+                        ROWID:
+                          type: integer
+                          example: 1
+                        COUNT:
+                          type: integer
+                          example: 103
   /course/detail:
     get:
       tags:
@@ -5601,6 +5631,69 @@ components:
         ISPUBLIC:
           type: boolean
           description: Indicates whether the source is public.
+    Course:
+      type: object
+      properties:
+        ID:
+          type: integer
+          example: 105650
+        NAME:
+          type: string
+          example: 'Certificate II in Irrigation'
+        STREAMNAME:
+          type: string
+          nullable: true
+          example: 'Level 3'
+        DIPLOMAVERSION:
+          type: string
+          nullable: true
+          example: null
+        CODE:
+          type: string
+          example: "AHC21116"
+        GST_TYPE:
+          type: integer
+          enum: [0, 1, 2]
+          description: "0 = no GST, 1 = GST Included, 2 = GST Excluded"
+        COST:
+          type: number
+          example: 0
+        DELIVERY:
+          type: string
+          nullable: true
+          example: "Face-to-Face"
+        DURATION:
+          type: integer
+          nullable: true
+          example: 0
+        DURATIONTYPE:
+          type: string
+          enum: ['hour', 'half-day', 'day', 'session', 'week', 'month']
+          nullable: true
+          example: "months"
+        ISACTIVE:
+          type: boolean
+          example: true
+        TYPE:
+          type: string
+          enum: ['w', 'p', 'el']
+          example: "w"
+        SHORTDESCRIPTION:
+          type: string
+          nullable: true
+          example: null
+        PRIMARYIMAGE:
+          type: string
+          nullable: true
+          example: '//fs.stg.axcelerate.com/images/71456451/ThisIsAnImage.jpg'
+        SECONDARYIMAGE:
+          type: string
+          nullable: true
+          example: null
+        LASTUPDATEDUTC:
+          type: string
+          format: date-time
+          example: "2024-07-11 05:19"
     Domain:
       type: object
       properties:
