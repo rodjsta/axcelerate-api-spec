@@ -1465,33 +1465,52 @@ paths:
             schema:
               type: object
               properties:
+                programCode:
+                  description: Program Code for new Workshop Type instance
+                  type: string
+                  example: 'HLTAID011'
+                program:
+                    description: Title for new Workshop Type instance
+                    type: string
+                    example: 'Provide First Aid'
+                cost:
+                      description: The cost per student for new Workshop Type instance
+                      type: string
+                      example: ''
+                shortDescription:
+                      description: The short Description for new Workshop Type instance
+                      type: string
+                      example: ''
                 GST_type:
                   description: GST type; 0- no GST, 1- GST included, 2 - GST excluded
-                  type: string
-                  example: ''
-                cost:
-                  description: The cost per student for new Workshop Type instance
-                  type: string
-                  example: ''
+                  type: integer
+                  enum: [0, 1, 2]
+                  example: '0'
                 optionalID:
                   description: The optionalID for new Workshop Type instance
                   type: string
                   example: ''
-                program:
-                  description: Title for new Workshop Type instance
-                  type: string
-                  example: ''
-                programCode:
-                  description: Program Code for new Workshop Type instance
-                  type: string
-                  example: ''
-                shortDescription:
-                  description: The short Description for new Workshop Type instance
-                  type: string
-                  example: ''
       responses:
         '200':
-          description: ''
+          description: 'Course created successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  PROGRAMCODE:
+                    type: string
+                    example: "HLTAID011"
+                  MESSAGE:
+                    type: string
+                    example: "Workshop Type Created."
+                  PROGRAMCODEID:
+                    type: integer
+                    example: 105777
+                  STATUS:
+                    type: string
+                    example: "success"
+
   /courses:
     get:
       tags:
@@ -5438,6 +5457,10 @@ components:
           example: 123456
         internationalContactId:
           description: The ContactID of the Contact Record who is the International Contact for this Contact (CRICOS).
+          type: integer
+          example: 123456
+        parentContactID:
+          description: The ContactID of the Contact Record who is the Parent/Guardian for this Contact.
           type: integer
           example: 123456
         categoryIds:
