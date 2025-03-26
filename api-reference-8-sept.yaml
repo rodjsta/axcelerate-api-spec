@@ -1648,8 +1648,8 @@ paths:
     get:
       tags:
         - Course
-      summary: Retrieve details for a Workshop Type, Qualification or E-Learning
-      description: Returns details of a specific course or activity.
+      summary: Retrieve details for a Course
+      description: Retrieve details for a Workshop Type, Qualification or E-Learning
       operationId: retrieveCourseDetails
       parameters:
         - name: id
