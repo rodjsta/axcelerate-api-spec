@@ -961,8 +961,8 @@ paths:
 
         **Custom Fields**
 
-        Contact Custom Field values may be added by specifying their variable name prefixed by `custom_field_` EG: `custom_field_region`,
-        `custom_field_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        Contact Custom Field values may be added by specifying their variable name prefixed by `customField_` EG: `customField_region`,
+        `customField_specialty`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
         must already exist.
 
         If updating a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
@@ -3831,6 +3831,15 @@ paths:
       description: |
         Enrols a Contact in an Activity Instance. This method will also send an email to the student, the payer, and a notification to your administrator.
         Enrolments into linked E-Learning will be scheduled and performed later by the system.
+
+        **Custom Fields**
+
+        Enrolment Custom Field (Workshop Booking or Class Enrolment) values may be added by specifying their variable name prefixed by `customField_` EG: `customField_trainingpack`,
+        `customField_interestedIn`. Values used should correspond to the custom field specified. Note: this will not create custom fields, they
+        must already exist.
+
+        If adding a custom field that supports multiple values, you can use comma-delimited values or a JSON array. If using comma-delimited,
+        it is expected the data is URL encoded first. For example, to get 2 values: 'A,B' and 'C' you would either pass: "['A,B','C']" or "A%2CB,C".
       operationId: createACourseEnrolment
       requestBody:
         content:
