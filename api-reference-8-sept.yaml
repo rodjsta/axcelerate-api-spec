@@ -1648,31 +1648,37 @@ paths:
     get:
       tags:
         - Course
-      summary: Retrieve course details
+      summary: Retrieve details for a Workshop Type, Qualification or E-Learning
       description: Returns details of a specific course or activity.
       operationId: retrieveCourseDetails
       parameters:
+        - name: id
+          in: query
+          schema:
+            type: integer
+            example: 368
         - name: type
           in: query
           schema:
             type: string
+            enum: [w, p, el]
             example: p
-        - name: id
-          in: query
-          schema:
-            type: string
-            example: '368'
       responses:
         '200':
           description: |
             Depending on the type of course, the response will be either a
-            CourseDetail or WorkshopDetail object.
+            `CourseDetailWorkshop`, `CourseDetailQualification` or `CourseDetailElearning` object.
+
+            Each of these objects contain similar properties, but some are specific to the type of course.
+            Some properties are also redundant and will always return null for a specific type of course (i.e. `Duration` on a Qualification
+            or `LastUpdateUtc` on Elearning).
           content:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/CourseDetailQualification'
                   - $ref: '#/components/schemas/CourseDetailWorkshop'
+                  - $ref: '#/components/schemas/CourseDetailElearning'
+                  - $ref: '#/components/schemas/CourseDetailQualification'
   /venues:
     post:
       tags:
@@ -5700,6 +5706,39 @@ components:
         LASTUPDATEDUTC:
           type: string
           example: "2024-07-11 05:19"
+    CourseDetailElearning:
+      type: object
+      properties:
+        ID:
+          type: integer
+          description: Unique identifier for the ELearning
+        TYPE:
+          type: string
+          description: For a ELearning, type will be 'el'
+        NAME:
+          type: string
+          description: Name of the ELearning
+        CODE:
+          type: string
+          description: This will be null
+          nullable: true
+        DESCRIPTION:
+          type: string
+          description: Detailed description of the ELearning, may contain HTML formatting
+        COST:
+          type: number
+          description: Cost of the ELearning
+        DURATION:
+          type: string
+          description: Duration of the Elearning. This will be a concatenated string of the duration and the unit of time (e.g., '2 hours')
+          nullable: true
+        OUTLINE:
+          type: string
+          description: Course outline in HTML format
+        LASTUPDATEUTC:
+          type: string
+          description: Last update timestamp in UTC
+          nullable: true
     CourseDetailQualification:
       type: object
       properties:
