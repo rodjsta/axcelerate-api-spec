@@ -4023,7 +4023,24 @@ paths:
                   description: A comma-separated list of extra booking item IDs to apply to the enrolment.
       responses:
         '200':
-          description: ''
+          description: 'A summary containing the cost, invoiceId and learnerId'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  INVOICEID:
+                    type: integer
+                    example: 3047100
+                  CONTACTID:
+                    type: integer
+                    example: 13969085
+                  LEARNERID:
+                    type: integer
+                    example: 13969085
+                  AMOUNT:
+                    type: string
+                    example: "100.00"
   /organisations:
     get:
       tags:
