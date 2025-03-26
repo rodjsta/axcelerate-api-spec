@@ -1686,10 +1686,7 @@ paths:
       tags:
         - Course
       summary: Search for venues
-      description: |-
-        ### Search Venues
-
-        Search for Venues using any venue related field.
+      description: Search for Venues using any related venue field.
       operationId: searchForVenues
       requestBody:
         content:
@@ -1699,14 +1696,8 @@ paths:
               properties:
                 contactID:
                   description: The ID of the related Contact.
-                  type: string
-                  example: '6432069'
-                displayLength:
-                  description: >-
-                    Maximum number of records to return (up to a system maximum
-                    of 100).
-                  type: string
-                  example: '10'
+                  type: integer
+                  example: 6432069
                 mobilePhone:
                   description: Venue Contact mobile phone.
                   type: string
@@ -1715,10 +1706,16 @@ paths:
                   description: The Name of the Venue.
                   type: string
                   example: ''
+                displayLength:
+                  description: Maximum number of records to return (up to a system maximum of 100)
+                  type: integer
+                  default: 10
+                  example: 10
                 offset:
                   description: Used for paging - start at record.
-                  type: string
-                  example: '0'
+                  type: integer
+                  default: 0
+                  example: 0
                 sAddress1:
                   description: Venue address line 1.
                   type: string
@@ -1741,7 +1738,22 @@ paths:
                   example: ''
       responses:
         '200':
-          description: ''
+          description: 'An array of Venue objects.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/Venue'
+                    - type: object
+                      properties:
+                        ROWID:
+                          type: integer
+                          example: 1
+                        COUNT:
+                          type: integer
+                          example: 103
   /course/enquire:
     post:
       tags:
@@ -7246,6 +7258,41 @@ components:
         CANDELETE:
           type: integer
           example: 0
+    Venue:
+      type: object
+      properties:
+        CONTACTID:
+          type: integer
+          description: "The unique identifier for the contact associated with the venue."
+          example: 13971191
+        NAME:
+          type: string
+          description: "The name of the venue."
+          example: "Sydney Convention Centre"
+        SADDRESS1:
+          type: string
+          description: "The street address of the venue."
+          example: "123 Main Street"
+        SADDRESS2:
+          type: string
+          description: "The secondary address line of the venue."
+          example: "Suite 200"
+        SCITY:
+          type: string
+          description: "The city where the venue is located."
+          example: "Sydney"
+        SSTATE:
+          type: string
+          description: "The state where the venue is located."
+          example: "NSW"
+        SPOSTCODE:
+          type: string
+          description: "The postal code of the venue."
+          example: "2000"
+        MOBILEPHONE:
+          type: string
+          description: "The mobile phone number of the venue."
+          example: "0400 000 000"
 security:
   - AxToken: []
     WsToken: []
