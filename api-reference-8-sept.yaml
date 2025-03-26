@@ -1664,7 +1664,15 @@ paths:
             example: '368'
       responses:
         '200':
-          description: ''
+          description: |
+            Depending on the type of course, the response will be either a
+            CourseDetail or WorkshopDetail object.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CourseDetailQualification'
+                  - $ref: '#/components/schemas/CourseDetailWorkshop'
   /venues:
     post:
       tags:
@@ -5692,6 +5700,133 @@ components:
         LASTUPDATEDUTC:
           type: string
           example: "2024-07-11 05:19"
+    CourseDetailQualification:
+      type: object
+      properties:
+        ID:
+          type: integer
+          description: Unique identifier for the Qualification
+        TYPE:
+          type: string
+          description: For a Qualification, type will be 'p'
+        NAME:
+          type: string
+          description: Name of the Qualification
+        CODE:
+          type: string
+          description: Qualification code
+        DESCRIPTION:
+          type: string
+          description: Detailed description of the Qualification, may contain HTML formatting
+        COST:
+          type: number
+          description: Cost of the Qualification
+        GST_TYPE:
+          type: integer
+          enum: [0, 1, 2]
+          description: "0 = no GST, 1 = GST Included, 2 = GST Excluded"
+        DURATION:
+          type: string
+          description: A Qualification does not include a Duration and this field will be null
+          nullable: true
+        OUTLINE:
+          type: string
+          description: Course outline in HTML format
+        LASTUPDATEUTC:
+          type: string
+          description: Last update timestamp in UTC
+        STREAMNAME:
+          type: string
+          description: Name of the course stream
+          nullable: true
+        STREAMPUBLIC:
+          type: boolean
+          description: Indicates if the course stream is publicly available
+        LEARNERPORTALIMAGE:
+          type: string
+          format: uri
+          description: URL of the learner portal image
+        ASSOCIATEDCOURSEIDENTIFIER:
+          type: string
+          description: Identifier as part of VET Data Requirements
+    CourseDetailWorkshop:
+      type: object
+      properties:
+        ID:
+          type: integer
+          description: Unique identifier for the Workshop Type
+        TYPE:
+          type: string
+          description: For a Workshop Type, type will be 'w'
+        NAME:
+          type: string
+          description: Name of the Workshop Type
+        CODE:
+          type: string
+          description: Workshop Type code
+        DESCRIPTION:
+          type: string
+          description: Detailed description of the Workshop Type, may contain HTML formatting
+        COST:
+          type: number
+          description: Cost of the Workshop Type
+        GST_TYPE:
+          type: integer
+          enum: [0, 1, 2]
+          description: "0 = no GST, 1 = GST Included, 2 = GST Excluded"
+        DURATION:
+          type: string
+          description: Duration of the Workshop Type. This will be a concatenated string of the duration and the unit of time (e.g., '2 days')
+        OUTLINE:
+          type: string
+          description: Course outline in HTML format
+        OUTLINEELEMENTS:
+          type: array
+          items:
+            $ref: "#/components/schemas/CourseDetailWorkshopOutlineElement"
+          description: List of outline elements
+        LASTUPDATEUTC:
+          type: string
+          description: Last update timestamp in UTC
+    CourseDetailWorkshopOutlineElement:
+      type: object
+      properties:
+        CONTENT:
+          type: array
+          items:
+            type: string
+          description: List of topics covered in the course
+        SHORTDESCRIPTION:
+          type: string
+          description: Brief summary of the course
+        INTRODUCTION:
+          type: string
+          description: Introduction to the course, may contain HTML formatting
+        IMAGES:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: List of image URLs related to the course
+        TARGETAUDIENCE:
+          type: string
+          description: Description of the intended audience for the course, may contain HTML formatting
+        ADDITIONALINFORMATION:
+          type: string
+          description: Any additional details about the course
+        LEARNINGMETHODS:
+          type: string
+          description: Explanation of teaching and learning methods used
+        LEARNINGOUTCOMES:
+          type: array
+          items:
+            type: string
+          description: List of learning objectives and outcomes for participants
+        PROGRAMBENEFITS:
+          type: array
+          items:
+            type: string
+          description: Key benefits of completing the course
     Domain:
       type: object
       properties:
