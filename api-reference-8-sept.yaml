@@ -1657,12 +1657,14 @@ paths:
           schema:
             type: integer
             example: 368
+          required: true
         - name: type
           in: query
           schema:
             type: string
             enum: [w, p, el]
             example: p
+          required: true
       responses:
         '200':
           description: |
