@@ -1683,6 +1683,10 @@ paths:
                   - $ref: '#/components/schemas/CourseDetailQualification'
                 discriminator:
                   propertyName: type
+                  mapping:
+                    w: '#/components/schemas/CourseDetailWorkshop'
+                    p: '#/components/schemas/CourseDetailQualification'
+                    el: '#/components/schemas/CourseDetailElearning'
   /venues:
     post:
       tags:
@@ -5911,6 +5915,7 @@ components:
           description: Unique identifier for the ELearning
         TYPE:
           type: string
+          example: 'el'
           description: For a ELearning, type will be 'el'
         NAME:
           type: string
@@ -5944,6 +5949,7 @@ components:
           description: Unique identifier for the Qualification
         TYPE:
           type: string
+          example: 'p'
           description: For a Qualification, type will be 'p'
         NAME:
           type: string
@@ -5993,6 +5999,7 @@ components:
           description: Unique identifier for the Workshop Type
         TYPE:
           type: string
+          example: 'w'
           description: For a Workshop Type, type will be 'w'
         NAME:
           type: string
