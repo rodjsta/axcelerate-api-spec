@@ -3828,44 +3828,199 @@ paths:
       tags:
         - Enrolment
       summary: Create a course enrolment
-      description: Create a course enrolment
+      description: |
+        Enrols a Contact in an Activity Instance. This method will also send an email to the student, the payer, and a notification to your administrator.
+        Enrolments into linked E-Learning will be scheduled and performed later by the system.
       operationId: createACourseEnrolment
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - contactID
+                - instanceID
+                - type
               properties:
-                PONumber:
-                  type: string
-                  example: 3PHO3oH1kgp6peSg1Oek0krH
                 contactID:
-                  type: string
-                  example: '13969085'
-                extraBookingItemIds:
-                  type: string
-                  example: '12306'
-                forceBooking:
-                  type: string
-                  example: '1'
-                generateInvoice:
-                  type: string
-                  example: '1'
+                  type: integer
+                  example: 13969085
                 instanceID:
                   type: string
                   example: '1885842'
-                invoiceID:
-                  type: string
-                  example: '3047100'
-                lockInvoiceItems:
-                  type: string
-                  example: '0'
-                tentative:
-                  type: string
-                  example: '0'
                 type:
                   type: string
+                  enum: [w, p, el]
                   example: w
+                tentative:
+                  type: boolean
+                  example: false
+                  default: false
+                generateInvoice:
+                  type: boolean
+                  example: true
+                  default: true
+                  description: |
+                    Determines whether you would like a new invoice to be generated as a result of this booking. This will only work if the course cost
+                    is greater than $0. This also will not work if your aXcelerate System Settings are set to 'Free Online Bookings'.
+                payerId:
+                  type: integer
+                  example: 13969085
+                  description: The ID of the Contact that is paying for the course. If omitted, it will be assumed that the student (contactID) is paying.
+                invoiceID:
+                  type: integer
+                  example: 3047100
+                  description: |
+                    The ID of the invoice you wish to add this enrolment to.
+                    If an invoiceID is not provided, a new invoice will be created where there is a cost.
+                PONumber:
+                  type: string
+                  example: 'PO 123456'
+                  description: The Purchase Order number for this enrolment (if applicable).
+                lockInvoiceItems:
+                  type: boolean
+                  example: false
+                  default: true
+                  description: |
+                    If an new invoice is generated, determines whether the items are locked. Leaving items unlocked allows for further enrolments to be added.
+                    However, some invoice details can later be changed, such as address and purchase order numbers. Items must be locked before a payment can be applied against an invoice.
+                serviceDate:
+                  type: string
+                  example: '2024-09-08'
+                  description: The invoice item service date.
+                archiveInvoice:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    If an new invoice is generated, determines whether it is completely locked and archived. Once archived, no invoice details can later be changed.
+                    This paramater matches the 'Finalise' checbox within the aXcelerate interface.
+                forceBooking:
+                  type: boolean
+                  example: true
+                  default: false
+                  description: Before enroling, should the system check if enrolment is closed?
+                bookOnDefaultWorkshops:
+                  type: boolean
+                  example: true
+                  default: true
+                  description: |
+                    If the course is a Class (type = p), this will book the contact into any workshops linked to the Class's units.
+                    For this to work, each Unit in the Class can only be linked to a single workshop. An error will be thrown if more
+                    than one workshop is against a Class Unit and this parameter is set to true.
+                syncDatesWithWorkshop:
+                  type: boolean
+                  example: true
+                  default: true
+                  description: |
+                    Applicable only to Class enrolments (type = p) and where `bookOnDefaultWorkshops` is true.
+                    This will set unit start/end dates to the same as that of the linked workshops.
+                syncUOCdates:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    Applicable only to Class enrolments (type = p). Will set the Unit of Competency start and end dates
+                    to match those of the Unit. It will only work if `syncDatesWithWorkshop` set to `false`.
+                syncWithClassSchedule:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    Applicable only to Class enrolments (type = p) and passing the `dateCommenced` parameter.
+                    This will offset all Unit start/end dates based on the offset between the student's date
+                    commenced and the class start.
+                GST_type:
+                  type: string
+                  enum: [0, 1]
+                  example: 0
+                  description: The GST type for the enrolment. 0 = No GST, 1 = GST.
+                cost:
+                  type: number
+                  example: 100.00
+                  description: The discounted cost of the enrolment.
+                discountIdList:
+                  type: string
+                  example: '12345,67890'
+                  description: |
+                    A comma-separated list of discount IDs to apply to the enrolment. Required when `cost` is provided.
+                autoGrantCT:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    Applicable to any accredited enrolments. The system will automatically set the Unit outcome to CT for students where
+                    it detects a pre-existing competency. This will also prevent the student from being enrolled into any linked workshops
+                    or E-Learning for that Unit. Units that expire will not have competencies automatically granted.
+                dateCommenced:
+                  type: string
+                  example: '2024-09-08'
+                  description: Applicable only to Class enrolments (type = p) - The Enrolment Commencement Date.
+                dateCompletionExpected:
+                  type: string
+                  example: '2024-12-08'
+                  description: Applicable only to Class enrolments (type = p) - The Expected Completion Date. Ignored if using syncWithClassSchedule.
+                suppressNotifications:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: Option to prevent sending any email booking notifications. Auto-generate user emails will still send.
+                sendAdminNotification:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: If `suppressNotifications` is true, this allows the admin booking notification to still be sent.
+                blockAdminNotification:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: Explicitly blocks the admin notification, regardless of suppress setting.
+                useRegistrationFormDefaults:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    Used for direct or linked accredited program enrolments (type = p). If true, the system will apply the default enrolment
+                    form values set against the system settings. This form can be edited under Settings > Registration Form > Class Enrolment Form.
+                studyReasonId:
+                  type: integer
+                  example: 1
+                  description: |
+                    AVETMISS Study Reason (For accredited enrolments). See Codes & Identifiers: Study Reason Identifiers.
+                fundingNational:
+                  type: integer
+                  example: 11
+                  description: |
+                    AVETMISS Funding Source - National (For accredited enrolments). See Codes & Identifiers: Funding National.
+                fundingState:
+                  type: string
+                  example: '2GT'
+                  description: |
+                    AVETMISS Funding Source - State (For accredited enrolments). See Codes & Identifiers: Funding State.
+                marketingAgentContactId:
+                  type: integer
+                  example: 123456
+                  description: |
+                    The ID of the Contact that should be set as the marketing agent for the contact.
+                commencingProgramCohortIdentifiers:
+                  type: string
+                  example: '123456'
+                  description: Commencing program cohort ID. Maximum of first 6 characters considered.
+                PSTACDateVIC:
+                  type: string
+                  example: ''
+                  description: |
+                    [Type=P] Program Supervised Teaching Activity Completion Date for Victorian AVETMISS reporting.
+                commencedWhileAtSchool:
+                  type: boolean
+                  example: false
+                  default: false
+                  description: |
+                    [Type=P] Commenced While at School Flag for Victorian AVETMISS reporting.
+                extraBookingItemIds:
+                  type: string
+                  example: '12306'
+                  description: A comma-separated list of extra booking item IDs to apply to the enrolment.
       responses:
         '200':
           description: ''
