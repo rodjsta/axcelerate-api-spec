@@ -1451,6 +1451,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContactMessage'
+  /contact/portfolio:
+    get:
+      tags:
+        - Contact Portfolio
+      summary: Retrieve a contact's portfolio
+      description: Retrieve documents and data stored in a contact's portfolio
+      operationId: retrieveAContactSPortfolio
+      parameters:
+        - name: contactId
+          required: true
+          in: query
+          description: The ID of the contact to retrieve the portfolio for.
+          schema:
+            type: integer
+            example: 6531423
+        - name: portfolioId
+          in: query
+          description: The ID of the portfolio item to retrieve.
+          schema:
+            type: integer
+            example: 123456
+        - name: portfolioTypeId
+          in: query
+          description: The ID of the client defined Portfolio Type. These IDs can be found by checking Portfolio Types endpoint.
+          schema:
+            type: integer
+            example: 789
+        - name: portfolioChecklistID
+          in: query
+          description: |
+            If provided, portfolio objects will be returned which match those in the checklist.
+
+            Missing items will be returned as placeholders with `PORTFOLIOID` = `0`. These can be found by checking endpoint Portfolio Checkslists endpoint.
+          schema:
+            type: integer
+            example: 456
+        - name: isCRICOS
+          in: query
+          description: |
+            If provided, will return the documents against the defined CRICOS checklist. The output is the same as passing a `portfolioChecklistId`.
+
+            This feature must be enabled and the checklist must defined in the client's System Settings or an error will be thrown.
+          schema:
+            type: boolean
+            default: false
+            example: false
+      responses:
+        '200':
+          description: |
+            Where the request contains a portfolioId, a single PortfolioItem object will be returned.
+
+            Where the request does not contain a portfolioId, an array of PortfolioItem objects will be returned.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/PortfolioItem'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/PortfolioItem'
   /course:
     post:
       tags:
@@ -5125,6 +5185,7 @@ tags:
   - name: Contact
   - name: Contact Message
   - name: Contact Note
+  - name: Contact Portfolio
   - name: Course
   - name: Course Instance
   - name: Course Instance Attendance
@@ -7228,6 +7289,93 @@ components:
           type: string
           description: "Date when the fragment was applied."
           example: "2024-11-27 14:13"
+    PortfolioItem:
+      type: object
+      properties:
+        PORTFOLIOID:
+          type: integer
+          format: int64
+          description: Unique ID of the portfolio item
+        CONTACTID:
+          type: integer
+          format: int64
+          description: ID of the related contact
+        PORTFOLIOTYPEID:
+          type: integer
+          format: int64
+          description: ID of the portfolio type
+        PORTFOLIOTYPE:
+          type: string
+          description: General category of the portfolio item (e.g., Licence, Qualification)
+        PORTFOLIOTYPENAME:
+          type: string
+          description: Specific name of the portfolio type
+        NUMBER:
+          type: string
+          nullable: true
+          description: Document or licence number (if applicable)
+        FILES:
+          type: array
+          items:
+            type: object
+            properties:
+              FILENAME:
+                type: string
+              FOLDER:
+                type: string
+              ACCESSMIN:
+                type: integer
+                format: int32
+              PORTFOLIODOCID:
+                type: integer
+                format: int64
+              TEMPORARYACCESSURL:
+                type: string
+                format: uri
+          description: List of files attached to the portfolio item
+        DATEEXPIRES:
+          type: string
+          format: date
+          nullable: true
+          description: Expiry date, if applicable
+        ISSUEDBY:
+          type: string
+          nullable: true
+          description: Issuing organisation
+        DATEISSUED:
+          type: string
+          format: date
+          nullable: true
+          description: Date the item was issued
+        DETAILS:
+          type: string
+          nullable: true
+          description: Additional information or notes
+        STARTDATE:
+          type: string
+          format: date
+          nullable: true
+          description: Start date (if applicable)
+        SPECIALTY:
+          type: string
+          nullable: true
+          description: Area of specialty (if applicable)
+        NAME:
+          type: string
+          nullable: true
+          description: Name of the portfolio item
+        CUSTOMFIELD_MYFIRSTFIELD:
+          type: string
+          description: Custom field containing the first field's information.
+          example: "This is my first field"
+        CUSTOMFIELD_MYMULTISELECT:
+          type: array
+          items:
+            type: string
+          description: Multiselect custom field with multiple options.
+          example: ["A", "B"]
+      required:
+        - CONTACTID
     Trainer:
       type: object
       properties:
