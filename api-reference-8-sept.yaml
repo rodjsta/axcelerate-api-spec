@@ -7322,7 +7322,6 @@ components:
                 type: string
               ACCESSMIN:
                 type: integer
-                format: int32
               PORTFOLIODOCID:
                 type: integer
               TEMPORARYACCESSURL:
