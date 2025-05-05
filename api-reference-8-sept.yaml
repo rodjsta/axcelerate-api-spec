@@ -7294,15 +7294,12 @@ components:
       properties:
         PORTFOLIOID:
           type: integer
-          format: int64
           description: Unique ID of the portfolio item
         CONTACTID:
           type: integer
-          format: int64
           description: ID of the related contact
         PORTFOLIOTYPEID:
           type: integer
-          format: int64
           description: ID of the portfolio type
         PORTFOLIOTYPE:
           type: string
@@ -7328,7 +7325,6 @@ components:
                 format: int32
               PORTFOLIODOCID:
                 type: integer
-                format: int64
               TEMPORARYACCESSURL:
                 type: string
                 format: uri
