@@ -7359,6 +7359,10 @@ components:
           type: string
           nullable: true
           description: Name of the portfolio item
+        REGISTRATION:
+          type: string
+          nullable: true
+          description: Registration number (if applicable). Used only for Registration type portfolio objects.
         CUSTOMFIELD_MYFIRSTFIELD:
           type: string
           description: Custom field containing the first field's information.
