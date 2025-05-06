@@ -4777,7 +4777,7 @@ paths:
         - Portfolio
       summary: Retrieve portfolio types
       description: Returns a list of Contact Portfolio document types as defined in the system. These types are used retrieve or creating portfolio items for a Contact
-      operationId: retrieveAListOfPortfolioTypes
+      operationId: retrievePortfolioTypes
       responses:
         '200':
           description: 'An array of PortfolioType objects'
@@ -7554,11 +7554,6 @@ components:
           type: integer
           example: 1234
           description: Unique identifier for the portfolio type
-      required:
-        - PORTFOLIOTYPE
-        - PORTFOLIOTYPENAME
-        - PORTFOLIOTYPEID
-
     Trainer:
       type: object
       properties:
