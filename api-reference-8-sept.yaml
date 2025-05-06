@@ -1590,7 +1590,7 @@ paths:
     post:
       tags:
         - Contact Portfolio
-      summary: Create a portfolio item for a Contact.
+      summary: Create a contact portfolio item
       description: Create document or data in a contact's portfolio
       operationId: createContactPortfolioItem
       requestBody:
