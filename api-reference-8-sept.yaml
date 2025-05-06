@@ -4770,6 +4770,23 @@ paths:
                     type: string
                     description: Status of the organisation detail update process.
                     example: "success"
+  # Get Portfolio Types
+  /portfolio/types:
+    get:
+      tags:
+        - Portfolio
+      summary: Retrieve portfolio types
+      description: Returns a list of Contact Portfolio document types as defined in the system. These types are used retrieve or creating portfolio items for a Contact
+      operationId: retrieveAListOfPortfolioTypes
+      responses:
+        '200':
+          description: 'An array of PortfolioType objects'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PortfolioType'
   /report/run:
     post:
       tags:
@@ -5346,6 +5363,7 @@ tags:
   - name: Enrolment
   - name: Organisation
   - name: Organisation Detail
+  - name: Portfolio
   - name: Report
   - name: Resource
   - name: Trainer
@@ -7523,6 +7541,24 @@ components:
           example: ["A", "B"]
       required:
         - CONTACTID
+    PortfolioType:
+      type: object
+      properties:
+        PORTFOLIOTYPE:
+          type: string
+          description: Category of the portfolio item (e.g., Licence, Qualification, Other)
+        PORTFOLIOTYPENAME:
+          type: string
+          description: Descriptive name of the specific portfolio type
+        PORTFOLIOTYPEID:
+          type: integer
+          example: 1234
+          description: Unique identifier for the portfolio type
+      required:
+        - PORTFOLIOTYPE
+        - PORTFOLIOTYPENAME
+        - PORTFOLIOTYPEID
+
     Trainer:
       type: object
       properties:
