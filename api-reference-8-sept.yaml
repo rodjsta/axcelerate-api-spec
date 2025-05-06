@@ -1591,8 +1591,8 @@ paths:
       tags:
         - Contact Portfolio
       summary: Create a portfolio item for a Contact.
-      description: Update document or data stored in a contact's portfolio
-      operationId: updateContactPortfolioItem
+      description: Create document or data in a contact's portfolio
+      operationId: createContactPortfolioItem
       requestBody:
         content:
           multipart/form-data:
