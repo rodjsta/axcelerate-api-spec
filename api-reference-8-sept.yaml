@@ -1587,6 +1587,78 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PortfolioItem'
+    post:
+      tags:
+        - Contact Portfolio
+      summary: Create a portfolio item for a Contact.
+      description: Update document or data stored in a contact's portfolio
+      operationId: updateContactPortfolioItem
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                contactId:
+                  type: integer
+                  description: The ID of the contact to update the portfolio for.
+                  example: 6531423
+                portfolioTypeId:
+                  type: integer
+                  description: The ID of the client defined Portfolio Type. These IDs can be found by checking Portfolio Types endpoint.
+                  example: 789
+                number:
+                  type: string
+                  description: The number of the portfolio item.
+                  example: '123456'
+                dateIssued:
+                  type: string
+                  description: The date the portfolio item was issued.
+                  example: '2024-01-01'
+                dateExpires:
+                  type: string
+                  description: The date the portfolio item expires.
+                  example: '2025-01-01'
+                issuedBy:
+                  type: string
+                  description: The entity that issued the portfolio item.
+                  example: 'ACME Training'
+                details:
+                  type: string
+                  description: Additional details about the portfolio item.
+                  example: 'This is a sample portfolio item.'
+                registration:
+                  type: string
+                  description: The registration number of the portfolio item. Used only for Registration type portfolio objects.
+                  example: '2AA'
+                name:
+                  type: string
+                  description: The name of the portfolio item. Used only for Qualification type portfolio objects.
+                  example: 'First Aid Certificate'
+                specialty:
+                  type: string
+                  description: The specialty of the portfolio item. Used only for Qualification type portfolio objects.
+                  example: 'First Aid'
+                startDate:
+                  type: string
+                  description: The start date of the portfolio item. Used only for Qualification type portfolio objects.
+                  example: '2024-01-01'
+                status:
+                  type: string
+                  description: |
+                    Used only for Qualification type portfolio objects and only for clients who have enabled the system setting.
+                    Valid values are: Completed, Commenced, Attended, Suspended, Canceled, Withdrawn, and Pending
+                  example: 'Completed'
+              required:
+                - contactId
+                - portfolioTypeId
+      responses:
+        '200':
+          description: 'A PortfolioItem object.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioItem'
   /course:
     post:
       tags:
