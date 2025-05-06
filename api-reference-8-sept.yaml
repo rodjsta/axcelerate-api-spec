@@ -1514,7 +1514,7 @@ paths:
     put:
       tags:
         - Contact Portfolio
-      summary: Update a portfolio item.
+      summary: Update a specific portfolio item
       description: Update document or data stored in a contact's portfolio
       operationId: updateContactPortfolioItem
       requestBody:
